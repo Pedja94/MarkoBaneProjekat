@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZipMoving", "ZipMoving\ZipMoving.csproj", "{0F39DDD4-23D3-4F42-9FED-DA03947CA572}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{F439E717-F0E0-4E20-89B0-013F88B63D99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0F39DDD4-23D3-4F42-9FED-DA03947CA572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F39DDD4-23D3-4F42-9FED-DA03947CA572}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F39DDD4-23D3-4F42-9FED-DA03947CA572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F439E717-F0E0-4E20-89B0-013F88B63D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F439E717-F0E0-4E20-89B0-013F88B63D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F439E717-F0E0-4E20-89B0-013F88B63D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F439E717-F0E0-4E20-89B0-013F88B63D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

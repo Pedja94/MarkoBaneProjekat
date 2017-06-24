@@ -33,9 +33,9 @@ namespace Business
     partial void InsertAdmin(Admin instance);
     partial void UpdateAdmin(Admin instance);
     partial void DeleteAdmin(Admin instance);
-    partial void InsertRoomItem(RoomItem instance);
-    partial void UpdateRoomItem(RoomItem instance);
-    partial void DeleteRoomItem(RoomItem instance);
+    partial void InsertZipCode(ZipCode instance);
+    partial void UpdateZipCode(ZipCode instance);
+    partial void DeleteZipCode(ZipCode instance);
     partial void InsertCalendar(Calendar instance);
     partial void UpdateCalendar(Calendar instance);
     partial void DeleteCalendar(Calendar instance);
@@ -57,6 +57,9 @@ namespace Business
     partial void InsertRoom(Room instance);
     partial void UpdateRoom(Room instance);
     partial void DeleteRoom(Room instance);
+    partial void InsertRoomItem(RoomItem instance);
+    partial void UpdateRoomItem(RoomItem instance);
+    partial void DeleteRoomItem(RoomItem instance);
     #endregion
 		
 		public DatabaseDataContext() : 
@@ -97,11 +100,11 @@ namespace Business
 			}
 		}
 		
-		public System.Data.Linq.Table<RoomItem> RoomItems
+		public System.Data.Linq.Table<ZipCode> ZipCodes
 		{
 			get
 			{
-				return this.GetTable<RoomItem>();
+				return this.GetTable<ZipCode>();
 			}
 		}
 		
@@ -158,6 +161,14 @@ namespace Business
 			get
 			{
 				return this.GetTable<Room>();
+			}
+		}
+		
+		public System.Data.Linq.Table<RoomItem> RoomItems
+		{
+			get
+			{
+				return this.GetTable<RoomItem>();
 			}
 		}
 	}
@@ -348,21 +359,19 @@ namespace Business
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoomItem")]
-	public partial class RoomItem : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ZipCode")]
+	public partial class ZipCode : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _Id;
 		
-		private System.Nullable<int> _RoomId;
+		private string _ZipCode1;
 		
-		private System.Nullable<int> _ItemId;
+		private string _Town;
 		
-		private EntityRef<Item> _Item;
-		
-		private EntityRef<Room> _Room;
+		private string _State;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -370,16 +379,16 @@ namespace Business
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnRoomIdChanging(System.Nullable<int> value);
-    partial void OnRoomIdChanged();
-    partial void OnItemIdChanging(System.Nullable<int> value);
-    partial void OnItemIdChanged();
+    partial void OnZipCode1Changing(string value);
+    partial void OnZipCode1Changed();
+    partial void OnTownChanging(string value);
+    partial void OnTownChanged();
+    partial void OnStateChanging(string value);
+    partial void OnStateChanged();
     #endregion
 		
-		public RoomItem()
+		public ZipCode()
 		{
-			this._Item = default(EntityRef<Item>);
-			this._Room = default(EntityRef<Room>);
 			OnCreated();
 		}
 		
@@ -403,118 +412,62 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", DbType="Int")]
-		public System.Nullable<int> RoomId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="ZipCode", Storage="_ZipCode1", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		public string ZipCode1
 		{
 			get
 			{
-				return this._RoomId;
+				return this._ZipCode1;
 			}
 			set
 			{
-				if ((this._RoomId != value))
+				if ((this._ZipCode1 != value))
 				{
-					if (this._Room.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRoomIdChanging(value);
+					this.OnZipCode1Changing(value);
 					this.SendPropertyChanging();
-					this._RoomId = value;
-					this.SendPropertyChanged("RoomId");
-					this.OnRoomIdChanged();
+					this._ZipCode1 = value;
+					this.SendPropertyChanged("ZipCode1");
+					this.OnZipCode1Changed();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemId", DbType="Int")]
-		public System.Nullable<int> ItemId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Town", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Town
 		{
 			get
 			{
-				return this._ItemId;
+				return this._Town;
 			}
 			set
 			{
-				if ((this._ItemId != value))
+				if ((this._Town != value))
 				{
-					if (this._Item.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnItemIdChanging(value);
+					this.OnTownChanging(value);
 					this.SendPropertyChanging();
-					this._ItemId = value;
-					this.SendPropertyChanged("ItemId");
-					this.OnItemIdChanged();
+					this._Town = value;
+					this.SendPropertyChanged("Town");
+					this.OnTownChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_RoomItem", Storage="_Item", ThisKey="ItemId", OtherKey="Id", IsForeignKey=true)]
-		public Item Item
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_State", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string State
 		{
 			get
 			{
-				return this._Item.Entity;
+				return this._State;
 			}
 			set
 			{
-				Item previousValue = this._Item.Entity;
-				if (((previousValue != value) 
-							|| (this._Item.HasLoadedOrAssignedValue == false)))
+				if ((this._State != value))
 				{
+					this.OnStateChanging(value);
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Item.Entity = null;
-						previousValue.RoomItems.Remove(this);
-					}
-					this._Item.Entity = value;
-					if ((value != null))
-					{
-						value.RoomItems.Add(this);
-						this._ItemId = value.Id;
-					}
-					else
-					{
-						this._ItemId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Item");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomItem", Storage="_Room", ThisKey="RoomId", OtherKey="Id", IsForeignKey=true)]
-		public Room Room
-		{
-			get
-			{
-				return this._Room.Entity;
-			}
-			set
-			{
-				Room previousValue = this._Room.Entity;
-				if (((previousValue != value) 
-							|| (this._Room.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Room.Entity = null;
-						previousValue.RoomItems.Remove(this);
-					}
-					this._Room.Entity = value;
-					if ((value != null))
-					{
-						value.RoomItems.Add(this);
-						this._RoomId = value.Id;
-					}
-					else
-					{
-						this._RoomId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Room");
+					this._State = value;
+					this.SendPropertyChanged("State");
+					this.OnStateChanged();
 				}
 			}
 		}
@@ -1482,9 +1435,9 @@ namespace Business
 		
 		private System.Nullable<decimal> _Cost;
 		
-		private EntitySet<RoomItem> _RoomItems;
-		
 		private EntitySet<InventoryItem> _InventoryItems;
+		
+		private EntitySet<RoomItem> _RoomItems;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1506,8 +1459,8 @@ namespace Business
 		
 		public Item()
 		{
-			this._RoomItems = new EntitySet<RoomItem>(new Action<RoomItem>(this.attach_RoomItems), new Action<RoomItem>(this.detach_RoomItems));
 			this._InventoryItems = new EntitySet<InventoryItem>(new Action<InventoryItem>(this.attach_InventoryItems), new Action<InventoryItem>(this.detach_InventoryItems));
+			this._RoomItems = new EntitySet<RoomItem>(new Action<RoomItem>(this.attach_RoomItems), new Action<RoomItem>(this.detach_RoomItems));
 			OnCreated();
 		}
 		
@@ -1631,19 +1584,6 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_RoomItem", Storage="_RoomItems", ThisKey="Id", OtherKey="ItemId")]
-		public EntitySet<RoomItem> RoomItems
-		{
-			get
-			{
-				return this._RoomItems;
-			}
-			set
-			{
-				this._RoomItems.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_InventoryItem", Storage="_InventoryItems", ThisKey="Id", OtherKey="ItemId")]
 		public EntitySet<InventoryItem> InventoryItems
 		{
@@ -1654,6 +1594,19 @@ namespace Business
 			set
 			{
 				this._InventoryItems.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_RoomItem", Storage="_RoomItems", ThisKey="Id", OtherKey="ItemId")]
+		public EntitySet<RoomItem> RoomItems
+		{
+			get
+			{
+				return this._RoomItems;
+			}
+			set
+			{
+				this._RoomItems.Assign(value);
 			}
 		}
 		
@@ -1677,18 +1630,6 @@ namespace Business
 			}
 		}
 		
-		private void attach_RoomItems(RoomItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Item = this;
-		}
-		
-		private void detach_RoomItems(RoomItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Item = null;
-		}
-		
 		private void attach_InventoryItems(InventoryItem entity)
 		{
 			this.SendPropertyChanging();
@@ -1696,6 +1637,18 @@ namespace Business
 		}
 		
 		private void detach_InventoryItems(InventoryItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Item = null;
+		}
+		
+		private void attach_RoomItems(RoomItem entity)
+		{
+			this.SendPropertyChanging();
+			entity.Item = this;
+		}
+		
+		private void detach_RoomItems(RoomItem entity)
 		{
 			this.SendPropertyChanging();
 			entity.Item = null;
@@ -2485,9 +2438,9 @@ namespace Business
 		
 		private string _IconLink;
 		
-		private EntitySet<RoomItem> _RoomItems;
-		
 		private EntitySet<InventoryRoom> _InventoryRooms;
+		
+		private EntitySet<RoomItem> _RoomItems;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2505,8 +2458,8 @@ namespace Business
 		
 		public Room()
 		{
-			this._RoomItems = new EntitySet<RoomItem>(new Action<RoomItem>(this.attach_RoomItems), new Action<RoomItem>(this.detach_RoomItems));
 			this._InventoryRooms = new EntitySet<InventoryRoom>(new Action<InventoryRoom>(this.attach_InventoryRooms), new Action<InventoryRoom>(this.detach_InventoryRooms));
+			this._RoomItems = new EntitySet<RoomItem>(new Action<RoomItem>(this.attach_RoomItems), new Action<RoomItem>(this.detach_RoomItems));
 			OnCreated();
 		}
 		
@@ -2590,19 +2543,6 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomItem", Storage="_RoomItems", ThisKey="Id", OtherKey="RoomId")]
-		public EntitySet<RoomItem> RoomItems
-		{
-			get
-			{
-				return this._RoomItems;
-			}
-			set
-			{
-				this._RoomItems.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_InventoryRoom", Storage="_InventoryRooms", ThisKey="Id", OtherKey="RoomId")]
 		public EntitySet<InventoryRoom> InventoryRooms
 		{
@@ -2613,6 +2553,19 @@ namespace Business
 			set
 			{
 				this._InventoryRooms.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomItem", Storage="_RoomItems", ThisKey="Id", OtherKey="RoomId")]
+		public EntitySet<RoomItem> RoomItems
+		{
+			get
+			{
+				return this._RoomItems;
+			}
+			set
+			{
+				this._RoomItems.Assign(value);
 			}
 		}
 		
@@ -2636,6 +2589,18 @@ namespace Business
 			}
 		}
 		
+		private void attach_InventoryRooms(InventoryRoom entity)
+		{
+			this.SendPropertyChanging();
+			entity.Room = this;
+		}
+		
+		private void detach_InventoryRooms(InventoryRoom entity)
+		{
+			this.SendPropertyChanging();
+			entity.Room = null;
+		}
+		
 		private void attach_RoomItems(RoomItem entity)
 		{
 			this.SendPropertyChanging();
@@ -2647,17 +2612,197 @@ namespace Business
 			this.SendPropertyChanging();
 			entity.Room = null;
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoomItem")]
+	public partial class RoomItem : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_InventoryRooms(InventoryRoom entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _RoomId;
+		
+		private System.Nullable<int> _ItemId;
+		
+		private EntityRef<Item> _Item;
+		
+		private EntityRef<Room> _Room;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnRoomIdChanging(System.Nullable<int> value);
+    partial void OnRoomIdChanged();
+    partial void OnItemIdChanging(System.Nullable<int> value);
+    partial void OnItemIdChanged();
+    #endregion
+		
+		public RoomItem()
 		{
-			this.SendPropertyChanging();
-			entity.Room = this;
+			this._Item = default(EntityRef<Item>);
+			this._Room = default(EntityRef<Room>);
+			OnCreated();
 		}
 		
-		private void detach_InventoryRooms(InventoryRoom entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
 		{
-			this.SendPropertyChanging();
-			entity.Room = null;
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", DbType="Int")]
+		public System.Nullable<int> RoomId
+		{
+			get
+			{
+				return this._RoomId;
+			}
+			set
+			{
+				if ((this._RoomId != value))
+				{
+					if (this._Room.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoomIdChanging(value);
+					this.SendPropertyChanging();
+					this._RoomId = value;
+					this.SendPropertyChanged("RoomId");
+					this.OnRoomIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemId", DbType="Int")]
+		public System.Nullable<int> ItemId
+		{
+			get
+			{
+				return this._ItemId;
+			}
+			set
+			{
+				if ((this._ItemId != value))
+				{
+					if (this._Item.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnItemIdChanging(value);
+					this.SendPropertyChanging();
+					this._ItemId = value;
+					this.SendPropertyChanged("ItemId");
+					this.OnItemIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_RoomItem", Storage="_Item", ThisKey="ItemId", OtherKey="Id", IsForeignKey=true)]
+		public Item Item
+		{
+			get
+			{
+				return this._Item.Entity;
+			}
+			set
+			{
+				Item previousValue = this._Item.Entity;
+				if (((previousValue != value) 
+							|| (this._Item.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Item.Entity = null;
+						previousValue.RoomItems.Remove(this);
+					}
+					this._Item.Entity = value;
+					if ((value != null))
+					{
+						value.RoomItems.Add(this);
+						this._ItemId = value.Id;
+					}
+					else
+					{
+						this._ItemId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Item");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomItem", Storage="_Room", ThisKey="RoomId", OtherKey="Id", IsForeignKey=true)]
+		public Room Room
+		{
+			get
+			{
+				return this._Room.Entity;
+			}
+			set
+			{
+				Room previousValue = this._Room.Entity;
+				if (((previousValue != value) 
+							|| (this._Room.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Room.Entity = null;
+						previousValue.RoomItems.Remove(this);
+					}
+					this._Room.Entity = value;
+					if ((value != null))
+					{
+						value.RoomItems.Add(this);
+						this._RoomId = value.Id;
+					}
+					else
+					{
+						this._RoomId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Room");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

@@ -10,13 +10,12 @@
       <Association Name="Admin_Offer" Member="Offers" ThisKey="Id" OtherKey="AdminId" Type="Offer" />
     </Type>
   </Table>
-  <Table Name="dbo.RoomItem" Member="RoomItems">
-    <Type Name="RoomItem">
+  <Table Name="dbo.ZipCode" Member="ZipCodes">
+    <Type Name="ZipCode">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="RoomId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ItemId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Item_RoomItem" Member="Item" ThisKey="ItemId" OtherKey="Id" Type="Item" IsForeignKey="true" />
-      <Association Name="Room_RoomItem" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
+      <Column Name="ZipCode" Member="ZipCode1" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Town" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="State" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Calendar" Member="Calendars">
@@ -72,8 +71,8 @@
       <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Weight" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
-      <Association Name="Item_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="ItemId" Type="RoomItem" />
       <Association Name="Item_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="ItemId" Type="InventoryItem" />
+      <Association Name="Item_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="ItemId" Type="RoomItem" />
     </Type>
   </Table>
   <Table Name="dbo.Offer" Member="Offers">
@@ -114,8 +113,17 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Association Name="Room_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="RoomId" Type="RoomItem" />
       <Association Name="Room_InventoryRoom" Member="InventoryRooms" ThisKey="Id" OtherKey="RoomId" Type="InventoryRoom" />
+      <Association Name="Room_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="RoomId" Type="RoomItem" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RoomItem" Member="RoomItems">
+    <Type Name="RoomItem">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoomId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Item_RoomItem" Member="Item" ThisKey="ItemId" OtherKey="Id" Type="Item" IsForeignKey="true" />
+      <Association Name="Room_RoomItem" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

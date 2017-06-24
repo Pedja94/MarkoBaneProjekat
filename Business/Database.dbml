@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZipMoving" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;D:\Pedja\Projekti\Zip Moving\ZipMoving\Database\ZipMoving.mdf&quot;;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Admin" Member="Admins">
+    <Type Name="Admin">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Username" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Association Name="Admin_Offer" Member="Offers" ThisKey="Id" OtherKey="AdminId" Type="Offer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.RoomItem" Member="RoomItems">
+    <Type Name="RoomItem">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RoomId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Item_RoomItem" Member="Item" ThisKey="ItemId" OtherKey="Id" Type="Item" IsForeignKey="true" />
+      <Association Name="Room_RoomItem" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Calendar" Member="Calendars">
+    <Type Name="Calendar">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Morning" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="Afternoon" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LateAfternoon" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Information" Member="Informations">
+    <Type Name="Information">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="ZipCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="TypeOfBuilding" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="UOElevatorFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="UOElevatorDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="UOStairsFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="UOStairsDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="TypeOfAccess" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="IntervalStart" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IntervalEnd" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="FullSelfPack" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Information_Offer" Member="Offers" ThisKey="Id" OtherKey="InformationFromId" Type="Offer" />
+      <Association Name="Information_Offer1" Member="Offers1" ThisKey="Id" OtherKey="InformationToId" Type="Offer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InventoryItem" Member="InventoryItems">
+    <Type Name="InventoryItem">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OfferId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ItemId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Item_InventoryItem" Member="Item" ThisKey="ItemId" OtherKey="Id" Type="Item" IsForeignKey="true" />
+      <Association Name="Offer_InventoryItem" Member="Offer" ThisKey="OfferId" OtherKey="Id" Type="Offer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.InventoryRoom" Member="InventoryRooms">
+    <Type Name="InventoryRoom">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="OfferId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RoomId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Offer_InventoryRoom" Member="Offer" ThisKey="OfferId" OtherKey="Id" Type="Offer" IsForeignKey="true" />
+      <Association Name="Room_InventoryRoom" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Item" Member="Items">
+    <Type Name="Item">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Weight" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Association Name="Item_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="ItemId" Type="RoomItem" />
+      <Association Name="Item_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="ItemId" Type="InventoryItem" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Offer" Member="Offers">
+    <Type Name="Offer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.Decimal" DbType="Decimal(2,0) NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EstimateFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EstimateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="EstimateTime" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="InformationFromId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InformationToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AdminId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WhatToMove" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="WhoIsPresentAtPickup" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="AdditionStop" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="RegureasCOI" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="AdditionalService" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="HowDidYouFindUs" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VideoFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VideoLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="InventoryFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="Offer_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="OfferId" Type="InventoryItem" />
+      <Association Name="Offer_InventoryRoom" Member="InventoryRooms" ThisKey="Id" OtherKey="OfferId" Type="InventoryRoom" />
+      <Association Name="Admin_Offer" Member="Admin" ThisKey="AdminId" OtherKey="Id" Type="Admin" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Association Name="Information_Offer" Member="Information" ThisKey="InformationFromId" OtherKey="Id" Type="Information" IsForeignKey="true" />
+      <Association Name="Information_Offer1" Member="Information1" ThisKey="InformationToId" OtherKey="Id" Type="Information" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Room" Member="Rooms">
+    <Type Name="Room">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="Room_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="RoomId" Type="RoomItem" />
+      <Association Name="Room_InventoryRoom" Member="InventoryRooms" ThisKey="Id" OtherKey="RoomId" Type="InventoryRoom" />
+    </Type>
+  </Table>
+</Database>

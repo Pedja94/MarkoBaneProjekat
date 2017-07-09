@@ -1,0 +1,1075 @@
+﻿@model ZipMoving.Models.questionaireModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Zip Moving - Quote</title>
+    <!-- Bootstrap DATEPICKER -->
+    <link href="~/Content/vendor/datepicker/css/bootstrap-datepicker3.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Plugin CSS -->
+    <link href="~/Content/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link href="~/Content/css/creative.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top">
+
+
+        <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="height:70px;">
+            <div class="container-fluid" style="height:70px;">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header" style="padding-top:10px;">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand page-scroll" href="#page-top" style="font-size:large;">ZIP Moving</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding-top:10px;">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li>
+                            <a class="page-scroll" href="#contact" style="font-size:medium;"><span class="glyphicon glyphicon-arrow-left"></span> &nbsp Home</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+
+        <!-- SURVEY PART 1 START -->
+        <header style="background-image:none; background-color:#838383;" id="homeHeading1">
+            <div class="header-content">
+                <div class="header-content-inner">
+                    <h1 id="homeHeading">Let's start with your quote</h1>
+                    <p style="font-size:x-large;">In this survey we will determine requirements for your move.</p><hr>
+                    <p>Survey can be compited in less then 15min,no obligation, no phone calls, no spam emails, find about your price online if you use our online inventory. We do not shere your information with the trth party.</p>
+                    <a href="#about" class="btn btn-primary btn-xl page-scroll">Go</a>
+                </div>
+            </div>
+        </header>
+        <!-- SURVEY PART 1 END -->
+        <!-- SURVEY PART 2 START -->
+        <form method="post" action="@Url.Action("SubmitEverything", "questionaire")">
+
+
+        <section class="bg-primary" id="about" style="font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-offset-2 text-center">
+                        <div class="row">
+
+                            <!-- FULL NAME START -->
+                            <div class="col-md-8 col-md-offset-2 ">
+                                <h3>Your full name?</h3>
+                                @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @id = "fullname", @name = "fullname", @placeholder = "Full name", })
+                                @*<input type="text" class="form-control" id="fullname" placeholder="Full name">*@
+                            </div>
+                        </div>
+                        <hr>
+
+                        <!-- FULL NAME END -->
+                        <!-- TYPE OF MOVE START -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>
+                                    What type of move is this?
+                                </h3>
+                                <hr>
+
+                                <div class="form-group">
+                                    <div class="radio" style="font-size:medium; text-align:center;">
+                                        <label class="onHoverOurs">
+                                            @Html.RadioButtonFor(m => m.TypeOfMove, "In State - Local Move (Charged by Hourly Rate + Additional Services)") In State - Local Move (Charged by Hourly Rate + Additional Services)
+                                            @*<input type="radio" style="display:none;" name="optradio"><span>In State - Local Move (Charged by Hourly Rate + Additional Services)</span>*@
+                                        </label><br><br>
+                                        <label class="onHoverOurs">
+                                            @Html.RadioButtonFor(m => m.TypeOfMove, "Out Of the State - Interstate Move (Charged by Weight or Cuft)") Out Of the State - Interstate Move (Charged by Weight or Cuft)
+                                            @*<input type="radio" style="display:none;" name="optradio"><span>Out Of the State - Interstate Move (Charged by Weight or Cuft)</span>*@
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <hr>
+                        <!-- TYPE OF MOVE END -->
+                        <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Next: Pickup Information</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        @*<button type="submit">Click</button>
+            </form>*@
+        <!-- SURVEY PART 2 END -->
+        <!-- SURVEY PART 3 START -->
+        <section id="services">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading">Pickup Information</h2>
+                        <hr class="primary">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <!-- 1st row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">What do you want to move?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ToMove, "Everything") Everything
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Everything </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ToMove, "Just A Few Things") Just A Few Things
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Just A Few Things </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 1st row end -->
+                <br><br><br>
+                <!-- 2nd row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Who is going to be present at the pickup location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.PresentAtPickup, "My self") My self
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> My self </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.PresentAtPickup, "Someone Else") Someone Else
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Someone Else </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.PresentAtPickup, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 2nd row end -->
+                <br><br><br>
+                <!-- 3rd row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">What is the ZIP code of the pickup location?</h3>
+                    </div>
+
+                    <div class="col-md-4 col-md-offset-4 text-center" style="font-size:medium;">
+                        @Html.TextBoxFor(m => m.ZIPPickup, new { @class = "form-control", @id = "zipINPUT", @name = "zipINPUT", @placeholder = "ZIP CODE", @style = "text-align:center;", })
+                        @*<input type="text" class="form-control" id="zipINPUT" placeholder="ZIP CODE" style="text-align:center;">*@
+                    </div>
+                </div>
+                <!-- 3rd row end -->
+                <br><br><br>
+                <!-- 4th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Do you have additional stop off at the pickup location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Yes") Yes
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "No") No
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Not Sure") Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Not Sure </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 4th row end -->
+                <br><br><br>
+
+                <!-- 5th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Where are you moving from?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "House") House
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> House </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Townhouse") Townhouse
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Townhouse </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Apartment") Apartment
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Apartment </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Office") Office
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Office </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Storage") Storage
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Storage </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 5th row end -->
+                <br><br><br>
+                <!--6th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">What is the size of your office storage?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            @Html.DropDownListFor(m => m.SizeOfOfficePickup, Model.GetAllSizes(), new { @size = "7", @class = "form-control" })
+                            @*<select class="form-control" name="category">
+                                    <option value=""></option>
+                                    <option value="0"> 10x5 </option>
+                                    <option value="1"> 10x10 </option>
+                                    <option value="2"> 10x15 </option>
+                                    <option value="3"> 10x20 </option>
+                                    <option value="4"> 10x25 </option>
+                                    <option value="5"> 10x30 </option>
+                                    <option value="6"> > 30 </option>
+                                </select>*@
+                        </div>
+                    </div>
+                </div>
+                <!-- 6th row end -->
+                <br><br><br>
+
+                <!-- 7th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">
+                            Does your apartment building/office regulate COI?
+                        </h3>
+                        <p style="font-size:small; color:gray;">(Certificate of Insurance)</p>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.COIPickup, "Yes") Yes
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.COIPickup, "No") No
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.COIPickup, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 7th row end -->
+                <br><br><br>
+                <!-- 8th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Are movers required to use elevator at the pickup location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "Yes") Yes
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "No") No
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 8th row end -->
+                <br><br><br>
+                <!-- 9th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Are movers required to use any stairs (Besides the stairs inside of the House/Apartment/Office)?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "No, only stairs inside of the House/Apartments") No, only stairs inside of the House/Apartments
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> No, only stairs inside of the House/Apartments </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "Yes, more than 10 steps") Yes, more than 10 steps
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, more than 10 steps </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "Yes, more than 20 steps") Yes, more than 20 steps
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, more than 20 steps </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 9th row end -->
+                <br><br><br>
+                <!-- 10th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">How is the parking on the pickup location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Private Driveway") Private Driveway
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Private Driveway </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Street Parking in Front (Less than 75ft)") Street Parking in Front (Less than 75ft)
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking in Front (Less than 75ft) </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Street Parking Further Away (more than 75ft)") Street Parking Further Away (more than 75ft)
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking Further Away (more than 75ft) </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <br><br><br><br><br>
+
+                            <a href="#about" class="page-scroll btn btn-primary btn-xl sr-button">Previous: Basic Information</a> &nbsp;
+                            <a href="#deliveryINFO" class="btn btn-primary btn-xl page-scroll">Next: Delivery Information</a>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 10th row end -->
+
+            </div>
+        </section>
+        <!-- SURVEY PART 3 END -->
+        <!-- SURVEY PART 4 START -->
+        <section id="deliveryINFO" style="background-color:#F05F40; color:white;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 class="section-heading">Delivery Information</h2>
+                        <hr class="primary" style="border-color:white;">
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <!-- 1st row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">What is the ZIP code of your new residence?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        <div class="col-md-4 col-md-offset-4 text-center" style="font-size:medium;">
+                            @Html.TextBoxFor(m => m.ZIPDelivery, new { @class = "form-control", @id = "zipINPUT1", @name = "zipINPUT1", @placeholder = "ZIP CODE", @style = "text-align:center;", })
+                            @*<input type="text" class="form-control" id="zipINPUT" placeholder="ZIP CODE" style="text-align:center;">*@
+                        </div>
+                    </div>
+                </div>
+                <!-- 1st row end -->
+                <br><br><br>
+                <!-- 2nd row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Where are you moving to?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingTo, "House") House
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> House </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Townhouse") Townhouse
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Townhouse </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Apartment") Apartment
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Apartment </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Office") Office
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Office </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Public Storage") Public Storage
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Public Storage </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 2nd row end -->
+                <br><br><br>
+                <!-- 3rd row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">
+                            Does your apartment building/office regulate COI?
+                        </h3>
+                        <p style="font-size:small; color:#FFF;">(Certificate of Insurance)</p>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.COIDelivery, "Yes") Yes
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.COIDelivery, "No") No
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.COIDelivery, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 3rd row end -->
+                <br><br><br>
+                <!-- 4th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Are movers required to use elevator at the delivery location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "Yes") Yes
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "No") No
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 4th row end -->
+                <br><br><br>
+
+                <!-- 5th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Are movers required to use any stairs (Beside the stairs inside of the House/Apartment/Office)?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> No, only stairs inside of the House/Apartment/Office </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, more than 10 steps </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, more than 20 steps </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 5th row end -->
+                <br><br><br>
+                <!--6th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">How is the parking on the delivery location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Private Driveway </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking in Front </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking in Front, Further Away (more than 75ft) </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        </div>
+                    </div>
+                </div>
+                <!-- 6th row end -->
+                <br><br><br>
+
+                <!-- 7th row start -->
+                <div class="row">
+
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">When do you want to move?</h3>
+                    </div>
+
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+
+                        <!-- DATEPICKER START -->
+
+                        <div id="sandbox-container">
+                            <div>
+                                <div class="datepicker">
+                                    <div class="input-group date" data-provide="datepicker-inline">
+                                        <input type="text" class="form-control">
+                                        <div class="input-group-addon">
+                                            <span class="glyphicon glyphicon-th"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- DATEPICKER END -->
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>
+                            </label>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- 7th row end -->
+                <br><br><br>
+                <!-- 8th row start -->
+                <div class="row">
+
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Is your pickup date flexible?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, up to 1-2 days </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, up to 2-4 days </span>
+                            </label>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- 8th row end -->
+                <br><br><br>
+                <!-- 9th row start -->
+                <div class="row">
+
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">When can you accept the delivery?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Next day after the pickup is completed </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> 2 days after the pickup is completed </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+                        <div>
+                            Something else - please specify the number of days <input type="text" style="width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;"> after the pickup is completed:<br><br>
+                        </div>
+                    </div>
+                </div>
+                <!-- 9th row end -->
+                <br><br><br>
+                <!-- 10th row start -->
+                <div class="row">
+
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">
+                            What additional service do you need?
+                        </h3>
+                        <p> Multiple options available: </p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Full Parking Service</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Storage Services (First Month Free)</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Piano Upright</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Baby Grand Piano</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Motorcycle</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Kayak / Canoe</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Pool Table</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Jacuzzi</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Safe (More Than 300lbs)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-offset-2">
+                            <div class="checkbox">
+                                <label><input type="checkbox" value="">Aquarium</label>
+                            </div>
+                        </div>
+
+                    </div><br><br>
+
+                    <div class="row text-center">
+                        <div class="col-md-12">
+                            <p> Something else, please specify: </p>
+                        </div>
+
+                        <div class="col-md-12 text-center">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="5" id="comment" style="resize:none;"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div><br><br>
+
+                    <div class="col-md-12 text-center">
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Thank you, nothing </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- 10th row end -->
+                <br><br><br>
+
+                <!-- 11th row start -->
+                <!-- 11th row end -->
+            </div>
+            <br><br><br>
+            <div class="text-center">
+                <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Previous: Pickup Information</a> &nbsp;
+                <a href="#asd" class="page-scroll btn btn-default btn-xl sr-button">Next: Upload A Video</a>
+            </div>
+        </section>
+        <!-- SURVEY PART 4 END -->
+        <!-- SURVEY PART 5 START -->
+        <aside class="bg-dark" id="asd" style="background-color:white; color:black;">
+            <div class="container text-center">
+                <div class="call-to-action">
+                    <h2 style="color:black;">Guide For The Best Video</h2>
+                </div>
+                <hr><br><br>
+
+                <!-- 1st video guide row start -->
+                <div class="row text-center">
+                    <div class="col-md-12">
+
+                        <div class="col-md-4">
+                            <img src="~/Content/img/VideoPhoto1.png" style="width:auto; height:auto;" alt="Keep your phone horizontal!">
+                            <p style="font-size:small;"> Keep your phone horizontal </p>
+                            <p style="font-size:small;">
+                                Keep your smartphone horizontal and then start filming. Make sure to use
+                                landscape orientation and not portrait orientation while filming.
+                            </p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="~/Content/img/VideoPhoto2.png" style="width:auto; height:auto;" alt="Avoid Zoom!">
+                            <p style="font-size:small;"> Avoid Zoom </p>
+                            <p style="font-size:small;">
+                                In order to zoom in while recording without losing the crisp
+                                quality we desire in videos, you'll have to get closer to your object.
+                            </p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="~/Content/img/VideoPhoto3.png" style="auto; height:auto;" alt="Slowly Rotate!">
+                            <br> <p style="font-size:small;"> Slowly Rotate </p>
+                            <p style="font-size:small;"> Rotate slowly so the camera can adjust the focus. </p>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- 1st video guide row end -->
+                <br><br><br><br>
+                <!-- 2nd video guide row start -->
+                <div class="row text-center">
+                    <div class="col-md-12">
+
+                        <div class="col-md-4">
+                            <img src="~/Content/img/VideoPhoto4.png" style="width:auto; height:auto;" alt="Light On!">
+                            <p style="font-size:small;"> Light On </p>
+                            <p style="font-size:small;"> Switch all the lights on and turn the flash on your phone off. </p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="~/Content/img/VideoPhoto5.png" style="width:auto; height:auto;" alt="Did you forget to film something?">
+                            <p style="font-size:small;"> Did you forget to film something </p>
+                            <p style="font-size:small;"> Garage, Patio, Attic, Basement, Porch? </p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <img src="~/Content/img/VideoPhoto6.png" style="auto; height:auto;" alt="Access!">
+                            <br> <p style="font-size:small;"> Access </p>
+                            <p style="font-size:small;"> Show us the access to your place, lift. </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 2nd video guide row end -->
+                <br><br><br><br>
+                <!-- 3rd video guide row start -->
+                <div class="row text-center">
+                    <div class="col-md-12">
+
+                        <div class="col-md-12">
+                            <img src="~/Content/img/VideoPhoto7.png" style="width:auto; height:auto;" alt="Forget about editing!">
+                            <p style="font-size:small;"> Forget about editing </p>
+                            <p style="font-size:small;"> We are not looking for "wow" videos, no worries about the mistakes. Send your videos raw and simple. </p>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br><br>
+                <!-- 3rd video guide row end -->
+                <!-- VIDEO UPLOAD START -->
+                <div class="call-to-action">
+                    <h2 style="color:black;">Upload Your Video & Get The Estimates</h2>
+                </div>
+                <hr><br><br>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="file" id="myFileInput" style="display:none;" class="form-control">
+                        <div>
+
+
+                            <span>
+                                <a type="button" href="#deliveryINFO" class="page-scroll btn btn-primary">Previous: Delivery Information</a>
+                            </span> <br><br>
+
+
+
+                            <span>
+                            @*button type="button" omogucava da dugme ne submituje formu*@
+                                <button type="button" onclick="document.getElementById('myFileInput').click()"
+                                        value="Select a File" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;Upload a Video
+                                </button>
+                            </span> <br> <br>
+
+
+                            <span>
+                                <button type="submit" class="btn btn-success">Submit Everything&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
+                            </span>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VIDEO UPLOAD END -->
+            </div>
+            @*<button type="submit" class="btn btn-success">Submit Everything&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>*@
+
+        </aside>
+        <!-- SURVEY PART 5 END -->
+        </form>
+
+        <!-- jQuery -->
+        <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+
+        <!-- BOOTSTRAP DATEPICKER JS -->
+        <script src="~/Content/vendor/datepicker/js/bootstrap-datepicker.js"></script>
+
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Plugin JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script src="~/Content/vendor/scrollreveal/scrollreveal.min.js"></script>
+        <script src="~/Content/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+
+        <!-- Theme JavaScript -->
+        <script src="~/Content/js/creative.min.js"></script>
+
+
+</body>
+
+</html>
+

@@ -14,5 +14,6 @@ namespace Business.DTO
         public string IconLink { get; set; }
         public Nullable<decimal> Weight { get; set; }
         public Nullable<decimal> Cost { get; set; }
+        public System.Nullable<decimal> Dimension { get; set; }
     }
 }

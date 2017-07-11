@@ -21,7 +21,8 @@ namespace Business.DataAccess
                     Description = itemCreate.Description,
                     IconLink = itemCreate.IconLink,
                     Name = itemCreate.Name,
-                    Weight = itemCreate.Weight
+                    Weight = itemCreate.Weight,
+                    Dimension = itemCreate.Dimension
                 };
 
                 db.Items.InsertOnSubmit(item);
@@ -57,7 +58,8 @@ namespace Business.DataAccess
                     IconLink = query.IconLink,
                     Name = query.Name,
                     Weight = query.Weight,
-                    Id = query.Id
+                    Id = query.Id,
+                    Dimension = query.Dimension
                 };
             }
             catch (Exception ex)
@@ -89,7 +91,8 @@ namespace Business.DataAccess
                         IconLink = item.IconLink,
                         Name = item.Name,
                         Weight = item.Weight,
-                        Id = item.Id
+                        Id = item.Id,
+                        Dimension = item.Dimension
                     };
 
                     items.Add(itemRead);
@@ -173,6 +176,7 @@ namespace Business.DataAccess
                 query.IconLink = updateItem.IconLink;
                 query.Name = updateItem.Name;
                 query.Weight = updateItem.Weight;
+                query.Dimension = updateItem.Dimension;
 
                 db.SubmitChanges();
             }

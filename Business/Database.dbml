@@ -71,6 +71,7 @@
       <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Weight" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
       <Column Name="Cost" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Dimension" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
       <Association Name="Item_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="ItemId" Type="InventoryItem" />
       <Association Name="Item_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="ItemId" Type="RoomItem" />
     </Type>

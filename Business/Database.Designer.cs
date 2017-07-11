@@ -1435,6 +1435,8 @@ namespace Business
 		
 		private System.Nullable<decimal> _Cost;
 		
+		private System.Nullable<decimal> _Dimension;
+		
 		private EntitySet<InventoryItem> _InventoryItems;
 		
 		private EntitySet<RoomItem> _RoomItems;
@@ -1455,6 +1457,8 @@ namespace Business
     partial void OnWeightChanged();
     partial void OnCostChanging(System.Nullable<decimal> value);
     partial void OnCostChanged();
+    partial void OnDimensionChanging(System.Nullable<decimal> value);
+    partial void OnDimensionChanged();
     #endregion
 		
 		public Item()
@@ -1580,6 +1584,26 @@ namespace Business
 					this._Cost = value;
 					this.SendPropertyChanged("Cost");
 					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dimension", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> Dimension
+		{
+			get
+			{
+				return this._Dimension;
+			}
+			set
+			{
+				if ((this._Dimension != value))
+				{
+					this.OnDimensionChanging(value);
+					this.SendPropertyChanging();
+					this._Dimension = value;
+					this.SendPropertyChanged("Dimension");
+					this.OnDimensionChanged();
 				}
 			}
 		}

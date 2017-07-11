@@ -106,7 +106,7 @@
                 <h1 id="homeHeading">You're moving?</h1>
                 <hr>
                 <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-                <a href="findOutMore.html" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+                <a href="@Url.Action("findOutMore", "findOutMore")" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
             </div>
         </div>
     </header>
@@ -128,17 +128,17 @@
                         <div class="col-md-12 col-sm-12  text-center">
 
                             <div class="col-md-4">
-                                <a href="#estimate" class="btn btn-default btn-xl page-scroll">Online Inventory</a> &nbsp;
+                                <a href="@Url.Action("questionaire2", "questionaire2")" class="btn btn-default btn-xl page-scroll">Online Inventory</a> &nbsp;
                             </div>
 
                             <div class="col-md-4">
-                                <a href="#estimate" class="btn btn-default btn-xl page-scroll">Video</a> &nbsp;
+                                <a href="@Url.Action("questionaire", "questionaire")" class="btn btn-default btn-xl page-scroll">Video</a> &nbsp;
                             </div>
 
 
 
                             <div class="col-md-4">
-                                <a href="#estimate" class="btn btn-default btn-xl page-scroll">Book In Home Estimate</a>
+                                <a href="@Url.Action("bookInHomeEstimate", "bookInHomeEstimate")" class="btn btn-default btn-xl page-scroll">Book In Home Estimate</a>
                             </div>
 
                         </div>

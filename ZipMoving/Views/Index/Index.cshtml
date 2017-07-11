@@ -24,9 +24,9 @@
     <script src="~/Content/manifestinteractive-jqvmap-0a5a420/dist/jquery.vmap.js"></script>
     <script src="~/Content/manifestinteractive-jqvmap-0a5a420/dist/maps/jquery.vmap.usa.js"></script>
     <script type="text/javascript">
-    jQuery(document).ready(function() {
-      jQuery('#vmap').vectorMap({ map: 'usa_en',backgroundColor: 'gray',borderColor: '#F05F40',borderOpacity: 0.1, color: 'white', hoverColor: '#f05f40', });
-    });
+        jQuery(document).ready(function () {
+            jQuery('#vmap').vectorMap({ map: 'usa_en', backgroundColor: 'gray', borderColor: '#F05F40', borderOpacity: 0.1, color: 'white', hoverColor: '#f05f40', });
+        });
     </script>
 
 
@@ -106,25 +106,7 @@
                 <h1 id="homeHeading">You're moving?</h1>
                 <hr>
                 <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-
-                <!-- ZIP FORM START -->
-                <div class="col-md-4 col-sm-4"></div>
-                <div class="col-md-4 col-sm-4">
-                    <form method="post" action="@Url.Action("findOutMore", "findOutMore")" class="well" style="background-color:rgba(200,200,200,0.4); border-color:#969696;">
-                        <div class="form-group">
-                            <label for="ZIP" style="font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;">Enter ZIP Code:</label>
-                            <div class="row">
-                                <div class="col-md-2 col-sm-2"></div>
-                                <div class="col-md-8 col-sm-8">
-                                    <input type="text" class="form-control" style="text-align:center;" id="ZIP">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-xl page-scroll">Find Out More</button>
-                    </form>
-                </div>
-                <div class="col-md-4"></div>
-                <!-- ZIP FORM END -->
+                <a href="findOutMore.html" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
             </div>
         </div>
     </header>

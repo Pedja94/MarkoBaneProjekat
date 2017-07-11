@@ -38,6 +38,8 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- FURNITURE ICONS FONT CSS -->
+    <link href="~/Content/css/icons 2 font/font/flaticon.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -667,7 +669,7 @@
 
                     <!-- DATEPICKER START -->
 
-                    <div id="sandbox-container">
+                    <div id="sandbox-container" class="col-md-6 col-md-offset-3">
                         <div>
                             <div class="datepicker">
                                 <div class="input-group date" data-provide="datepicker-inline">
@@ -680,16 +682,14 @@
                         </div>
                     </div>
                     <!-- DATEPICKER END -->
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>
 
 
-                    <div class="form-group radio">
+                    <div class="form-group radio col-md-6 col-md-offset-3">
                         <label class="onHoverOurs">
                             <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>
                         </label>
                     </div>
-
-
                 </div>
             </div>
             <!-- 7th row end -->
@@ -697,32 +697,31 @@
             <!-- 8th row start -->
             <div class="row">
 
-
                 <div class="col-md-12 text-center">
                     <h3 style="font-weight:bold;">Is your pickup date flexible?<h3>
                 </div>
 
                 <div class="col-md-12 text-center" style="font-size:medium;">
-                    <div class="form-group radio">
-                        <label class="onHoverOurs">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>
-                        </label>
-                    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <form class="form">
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> No </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, up to 1-2 days </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-                    <div class="form-group radio">
-                        <label class="onHoverOurs">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, up to 1-2 days </span>
-                        </label>
-                    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="form-group radio">
+                            <label class="onHoverOurs">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, up to 2-4 days </span>
+                            </label>
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-                    <div class="form-group radio">
-                        <label class="onHoverOurs">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, up to 2-4 days </span>
-                        </label>
-                    </div>
-
-
+                    </form>
                 </div>
             </div>
             <!-- 8th row end -->
@@ -749,9 +748,12 @@
                     </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-                    <div>
-                        Something else - please specify the number of days <input type="text" style="width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;"> after the pickup is completed:<br><br>
-                    </div>
+
+                    <div class="form-group radio">
+                        <label class="onHoverOurs">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Something else - please specify the number of days <input type="text" style="width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;"> after the pickup is completed:<br><br> </span>
+                        </label>
+                    </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </div>
             </div>
             <!-- 9th row end -->
@@ -841,7 +843,7 @@
                 <div class="col-md-12 text-center">
                     <div class="form-group radio">
                         <label class="onHoverOurs">
-                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Thank you, nothing </span>
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2s" value="option1"><span> Thank you, nothing </span>
                         </label>
                     </div>
                 </div>
@@ -855,7 +857,7 @@
         <br><br><br>
         <div class="text-center">
             <a href="#services" class="page-scroll btn btn-default btn-xl sr-button">Previous: Pickup Information</a> &nbsp;
-            <a href="#asd" class="page-scroll btn btn-default btn-xl sr-button">Next: Upload A Video</a>
+            <a href="#asd" class="page-scroll btn btn-default btn-xl sr-button">Next: Create Your Online Inventory</a>
         </div>
     </section>
     <!-- SURVEY PART 4 END -->
@@ -863,10 +865,6 @@
     <aside class="bg-dark" id="asd" style="background-color:white; color:black;">
         <div class="container text-center">
 
-            <div class="call-to-action">
-                <h2 style="color:black;">Create Your Online Inventory & Get The Estimates</h2>
-            </div>
-            <hr><br><br>
 
             <div class="row">
                 <div class="col-md-12">
@@ -879,39 +877,435 @@
                         </span> <br><br>
 
 
-                        <span>
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-menu-hamburger"></span>&nbsp;&nbsp;Create Your Online Inventory</button>
-                        </span> <br><br>
+                        <!-- CREATE YOUR ONLNE INVENTORY START -->
+                        <section id="services">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <h2 class="section-heading">Create Your Online Inventory</h2>
+                                        <p> Use our Online Inventory Creation tool to create rooms of your own choice. </p>
+                                        <p style="font-size:small;"> After You are finished creating your Online Inventory, just scroll down to the bottom of the page and click on "Submit" to go back to Questionaire. </p>
+                                        <hr class="primary">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+
+
+                                <div class="row  well text-center" style="background-color:white;">
+
+
+                                    <!-- VAZNO:
+
+                                        IKONICE SU U BOJI JEDINO AKO SE UBACUJU U HTML KAO <IMG> ELEMENT (Format im je PNG)
+                                        AKO SE UBACUJU KAO FONT ONDA CE DA BUDU SIVE ILI NEKE DRUGE IZABRANE BOJE!!!
+
+                                        -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Living Room</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span> <img src="../icons/png/001-stool-2.png" width="24" height="24" alt="" /> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span> <img src="../icons/png/002-armchair.png" width="24" height="24" alt="" /> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span> <img src="../icons/png/003-stool-1.png" width="24" height="24" alt="" /> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span> <img src="../icons/png/004-grand-piano.png" width="24" height="24" alt="" /> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span> <img src="../icons/png/005-piano-1.png" width="24" height="24" alt="" /> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Office</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span><img src="../icons/png/006-piano.png" width="24" height="24" alt="" /> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span><img src="../icons/png/007-couch-1.png" width="24" height="24" alt="" /> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span><img src="../icons/png/008-sofa-1.png" width="24" height="24" alt="" /> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span><img src="../icons/png/009-sofa.png" width="24" height="24" alt="" /> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span><img src="../icons/png/010-coffee-table.png" width="24" height="24" alt="" /> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Dining Room</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bed"> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-trash"> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-hdd"> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bell"> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-phone"> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Bedroom</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bed"> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-trash"> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-hdd"> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bell"> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-phone"> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Porch / Outdoor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bed"> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-trash"> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-hdd"> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bell"> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-phone"> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Kitchen</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bed"> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-trash"> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-hdd"> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bell"> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-phone"> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Nursery</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bed"> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-trash"> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-hdd"> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bell"> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-phone"> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ROOM -->
+                                    <div class="col-md-12" style="margin-top:20px;">
+                                        <table class="table table-bordered" style="background-color:white; border-right:none; border-bottom:none;">
+                                            <thead>
+                                                <tr>
+                                                    <th class="col-md-2" style="background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;">Garage</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody">
+                                                <tr style="text-align:center;">
+                                                    <td style="text-align:center;font-weight:700;">Room Items:</td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bed"> x10</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-trash"> x1</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-hdd"> x23</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-bell"> x5</span></span></td>
+                                                    <td><span class="badge" style="border-radius:5px;font-size:medium;"><span class="glyphicon glyphicon-phone"> x2</span></span></td>
+                                                    <!-- EDIT ROOM I AKTIVACIJA MODALA (MODAL SE NALAZI DOLE U HTMLU -->
+                                                    <td>
+                                                        <span data-toggle="modal" data-target="#editModal">
+                                                            <span class="glyphicon glyphicon-edit" style="cursor:pointer;color:#F05F40;" data-toggle="tooltip" title="Edit Existing                 	 Room">
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                        </table>
+                                        <br>
+                                    </div>
+                                    <!-- ROOM ENDING -->
+                                    <!-- ADD NEW ROOM -->
+                                    <div class="col-md-12">
+                                        <span>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#roomModal">&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
+                                        </span>
+                                    </div>
+
+
+                                    <!-- ADD NEW ROOM ENDING -->
 
 
 
+                                </div>
+                            </div>
+                        </section>
+
+
+
+
+                        <!-- ROOM EDIT MODAL START -->
+                        <!-- Modal -->
+                        <div id="editModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog" style="width:70%;">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header " style="background-color:white; color:#F05F40;">
+
+                                        <h4 class="modal-title" style="font-weight:700;">Dining Room Edit</h4>
+                                    </div>
+                                    <!-- ROOM ICONS START -->
+                                    <div class="modal-body text-center" style="border-bottom:none;">
+
+
+                                        <!-- ROW OF 6 ICONS -->
+                                        <div class="row" style="margin-left:10px; margin-right:10px;">
+
+                                            <!-- ICON START -->
+                                            <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="col-md-12">
+                                                    <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-bed"> x10</span></span>
+                                                </div>
+                                                <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                    </div>
+
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ICON END -->
+                                            <!-- ICON START -->
+                                            <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="col-md-12">
+                                                    <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-trash"> x1</span></span>
+                                                </div>
+                                                <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                    </div>
+
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ICON END -->
+                                            <!-- ICON START -->
+                                            <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="col-md-12">
+                                                    <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-hdd"> x23</span></span>
+                                                </div>
+                                                <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                    </div>
+
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ICON END -->
+                                            <!-- ICON START -->
+                                            <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="col-md-12">
+                                                    <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-bell"> x5</span></span>
+                                                </div>
+                                                <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                    </div>
+
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ICON END -->
+                                            <!-- ICON START -->
+                                            <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
+                                                <div class="col-md-12">
+                                                    <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-phone"> x2</span></span>
+                                                </div>
+                                                <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                    </div>
+
+                                                    <div class="col-xs-6">
+                                                        <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- ICON END -->
+                                        </div>
+                                        <!-- END OF ROW OF 6 ICONS -->
+                                    </div>
+                                    <!-- ROOM ICONS ENDING -->
+                                    <div class="modal-footer" style="text-align:center; border-top:none;">
+                                        <p style="font-size:small;color:#F05f40;"> Editing Your Room: After you have finished adding and substracting your items, click on "Save & Close" to go back to Your Online Inventory. </p>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" style="color:#F05f40;">Save & Close <span class="glyphicon glyphicon-ok"></span></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- ROOM EDIT MODAL ENDING -->
+                        <!-- NEW ROOM MODAL START -->
+                        <!-- Modal -->
+                        <div id="roomModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog" style="width:70%;">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header " style="background-color:white; color:green;">
+                                        <h4 class="modal-title" style="font-weight:700;">Add New Room</h4>
+                                    </div>
+
+                                    <div class="modal-body " style="border-bottom:none;">
+                                        <form>
+                                            <div style="color:green;">
+                                                <label for="text">Room Name:</label>
+                                                <input type="text" class="form-control" id="text" placeholder="Room Name:">
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="modal-footer" style="text-align:center; border-top:none;">
+                                        <p style="font-size:small;color:green;"> Creating New Room: After you have entered a name for your room, click "Save & Close" to go back to Your Online Inventory and fill the room with items of your choice. </p>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" style="color:green;">Save & Close <span class="glyphicon glyphicon-ok"></span></button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- NEW ROOM MODAL ENDING -->
+                        <!-- CREATE YOUR ONLINE INVENTORY ENDING -->
 
 
                         <span>
                             <button type="button" class="btn btn-success">Submit Everything&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
                         </span>
 
-
                     </div>
                 </div>
             </div>
-
-            <!-- VIDEO UPLOAD END -->
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </aside>
     <!-- SURVEY PART 5 END -->
@@ -931,7 +1325,7 @@
     <script src="~/Content/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="~/Content/js/creative.min.js"></script>
+    <script src="~/Scripts/creative.min.js"></script>
 
 
 

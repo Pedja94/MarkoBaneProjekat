@@ -24,9 +24,9 @@
     <script src="~/Content/manifestinteractive-jqvmap-0a5a420/dist/jquery.vmap.js"></script>
     <script src="~/Content/manifestinteractive-jqvmap-0a5a420/dist/maps/jquery.vmap.usa.js"></script>
     <script type="text/javascript">
-    jQuery(document).ready(function() {
-      jQuery('#vmap').vectorMap({ map: 'usa_en',backgroundColor: 'gray',borderColor: '#F05F40',borderOpacity: 0.1, color: 'white', hoverColor: '#f05f40',selectedRegions: 'KS' });
-    });
+        jQuery(document).ready(function () {
+            jQuery('#vmap').vectorMap({ map: 'usa_en', backgroundColor: 'gray', borderColor: '#F05F40', borderOpacity: 0.1, color: 'white', hoverColor: '#f05f40', selectedRegions: 'KS' });
+        });
     </script>
 
     <script>
@@ -128,19 +128,19 @@
                     <div class="col-md-12 col-sm-12  text-center">
 
                         <div class="col-md-4">
-                            <a href="@Url.Action("questionaire2", "questionaire2" )" class="btn btn-primary btn-xl page-scroll">Online Inventory</a> &nbsp;
+                            <a href="questionaire2.html" class="btn btn-primary btn-xl page-scroll">Online Inventory</a> &nbsp;
                         </div>
 
                         <div class="col-md-4">
-                            <a href="@Url.Action("questionaire", "questionaire" )" class="btn btn-primary btn-xl page-scroll">Video</a> &nbsp;
+                            <a href="questionaire.html" class="btn btn-primary btn-xl page-scroll">Video</a> &nbsp;
                         </div>
 
 
 
                         <div class="col-md-4">
-                            <a href="@Url.Action("bookInHomeEstimate", "bookInHomeEstimate")" class="btn btn-primary btn-xl page-scroll">Book In Home Estimate</a>
+                            <a href="bookInHomeEstimate.html" class="btn btn-primary btn-xl page-scroll">Book In Home Estimate</a>
                         </div>
-                        
+
                     </div>
 
                 </div>
@@ -165,12 +165,10 @@
     <script src="~/Content/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="~/Content/js/creative.min.js"></script>
+    <script src="~/Scripts/creative.min.js"></script>
 
 
 
 </body>
 
 </html>
-
-

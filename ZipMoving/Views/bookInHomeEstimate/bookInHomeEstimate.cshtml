@@ -16,8 +16,11 @@
 
     <title>Zip Moving - Book In Home Estimate</title>
 
-
-
+    <!-- jQuery -->
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <!-- ZABUTO CALENDAR -->
+    <script src="~/Scripts/Zabuto Calendar/calendar-master/zabuto_calendar.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Scripts/Zabuto Calendar/calendar-master/zabuto_calendar.min.css">
 
 
 
@@ -45,7 +48,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" style="font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;">
 
 
 
@@ -75,7 +78,7 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     <li>
-                        <a class="page-scroll" href="#contact" style="font-size:medium;"><span class="glyphicon glyphicon-arrow-left"></span> &nbsp Home</a>
+                        <a class="page-scroll" href="#" style="font-size:medium;"><span class="glyphicon glyphicon-arrow-left"></span> &nbsp Home</a>
                     </li>
                 </ul>
             </div>
@@ -95,42 +98,122 @@
                 <!-- MESTO ZA MAPU -->
                 <hr><br><br>
                 <div class="col-md-12">
-                    <div id="vmap" style="height:500px;"></div>
+
+                    <div id="my-calendar" style="color:black;"></div>
+
                 </div>
-                <!-- KRAJ MESTA ZA MAPU -->
+
+                <script type="application/javascript">
+
+                    // INICIJALIZACIJA KALENDARA
+                        $(document).ready(function () {
+                            $("#my-calendar").zabuto_calendar({language: "en",cell_border: true,
+                          today: true,
+                          show_days: true,
+                          weekstartson: 0,
+                          data: eventData,
+                          action: function () {
+                                    return myDateFunction(this.id, false);
+                                }
+                          });
+                        });
+
+                    // eventData je niz datuma (u njega ubacamo datume koji su zauzeti)
+                    // plava boja je trenutni datum, crvena boja je zauzeti datum (moze da se menja ako ne odgovara)
+                    var eventData = [
+                        {"date":"2017-06-06","badge":true,},
+                        {"date":"2017-06-07","badge":true,}
+                    ];
+                </script>
+
+
+
+                <script>
+                    // OVA FUNKCIJA PRIKAZUJE NA KOJI JE DATUM KLIKNUTO
+                    function myDateFunction(id, fromModal) {
+
+                        $("#date-popover").hide("slow");
+                        $("#timeofday").hide("slow");
+
+
+                        if (fromModal) {
+                            $("#" + id + "_modal").modal("hide");
+                        }
+                        var date = $("#" + id).data("date");
+                        var hasEvent = $("#" + id).data("hasEvent");
+                        if (hasEvent && !fromModal) {
+                            return false;
+                        }
+
+                        $("#date-popover-content").html('Selected Pick Up Date: ' + date + "<hr>");
+                        $("#timeofday").html('<div class="col-md-4 col-sm-4"> <div class="radio"> <label><input type="radio" name="optradio"> Morning </label> </div> </div>'
+                            + ' <div class="col-md-4 col-sm-4"> <div class="radio"> <label><input type="radio" name="optradio"> Before Noon </label> </div> </div> '
+                            + ' <div class="col-md-4 col-sm-4"> <div class="radio"> <label><input type="radio" name="optradio"> Afternoon </label> </div> </div>');
+
+
+                        $("#date-popover").slideDown("slow");
+                        $("#timeofday").slideDown("fast");
+                        return true;
+                    }
+                </script>
+
             </div>
+
+            <div class="col-md-12 text-center">
+                <div id="date-popover" style="color:white;font-size:medium; font-weight:500; margin-top:10px; margin-bottom:5px; display:none;">
+                    <div id="date-popover-content" class="popover-content"></div>
+                </div>
+                <div id="timeofday" style="color:white; font-weight:500;font-size:medium;display:none;"></div>
+
+            </div>
+        </div>
+
+
+
     </aside>
 
-    <section id="contact">
+    <section id="bookinhomeform">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Available Options For Your ZIP Code:</h2>
+                    <h2 class="section-heading">Enter Your Information & Submit:</h2>
                     <hr class="primary">
-                    <p>You can choose to upload a video, create your online inventory or simply contact us about quote.</p>
                 </div>
 
 
                 <div class="row text-center" style="font-family:'Open Sans','Helvetica Neue',Arial,sans-serif;">
+                    <div class="col-md-6 col-md-offset-3">
+                        <form>
+                            <div class="form-group">
+                                <label for="text">Full Name:</label>
+                                <input type="text" class="form-control" id="email" placeholder="Full Name">
+                            </div>
 
-                    <div class="col-md-12 col-sm-12  text-center">
+                            <div class="form-group">
+                                <label for="email">E-mail Address / Phone Number:</label>
+                                <input type="email" class="form-control" id="email" placeholder="E-mail Address / Phone Number">
+                            </div>
+                            <div class="form-group">
+                                <label for="text">Pickup Address:</label>
+                                <input type="text" class="form-control" id="address" placeholder="Pickup Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="text">Delivery ZIP Code:</label>
+                                <input type="text" class="form-control" id="zip" placeholder="Delivery ZIP Code">
+                            </div>
 
-                        <div class="col-md-4">
-                            <a href="questionaire2.html" class="btn btn-primary btn-xl page-scroll">Online Inventory</a> &nbsp;
-                        </div>
-
-                        <div class="col-md-4">
-                            <a href="questionaire.html" class="btn btn-primary btn-xl page-scroll">Video</a> &nbsp;
-                        </div>
 
 
 
-                        <div class="col-md-4">
-                            <a href="#estimate" class="btn btn-primary btn-xl page-scroll">Book In Home Estimate</a>
-                        </div>
+
+
+
+
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
 
                     </div>
-
                 </div>
 
 
@@ -140,10 +223,8 @@
         </div>
     </section>
 
-    <!-- jQuery -->
-    <!-- MOZDA ZATREBA NE BRISI
-    <script src="vendor/jquery/jquery.min.js"></script>
-    -->
+
+
     <!-- Bootstrap Core JavaScript -->
     <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
 
@@ -153,12 +234,10 @@
     <script src="~/Content/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
     <!-- Theme JavaScript -->
-    <script src="~/Content/js/creative.min.js"></script>
+    <script src="~/Scripts/creative.min.js"></script>
 
 
 
 </body>
 
 </html>
-
-

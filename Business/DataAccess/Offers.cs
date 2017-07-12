@@ -28,8 +28,6 @@ namespace Business.DataAccess
                     EstimateFlag = offerCreate.EstimateFlag,
                     EstimateTime = offerCreate.EstimateTime,
                     HowDidYouFindUs = offerCreate.HowDidYouFindUs,
-                    InformationFromId = offerCreate.InforamtionFrom.Id,
-                    InformationToId = offerCreate.InforamtionTo.Id,
                     InventoryFlag = offerCreate.InventoryFlag,
                     Name = offerCreate.Name,
                     RegureasCOI = offerCreate.RegureasCOI,
@@ -56,6 +54,12 @@ namespace Business.DataAccess
                 }
 
                 db.Offers.InsertOnSubmit(offer);
+                db.SubmitChanges();
+
+                Random rnd = new Random(offer.Id);
+
+                offer.Serial = offer.Serial + (rnd.Next() % 10000).ToString();
+
                 db.SubmitChanges();
 
                 foreach (int Id in offerCreate.ItemIds)

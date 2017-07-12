@@ -33,5 +33,11 @@ namespace Business.DTO
         public bool InventoryFlag { get; set; }
         public List<int> RoomIds { get; set; }
         public List<int> ItemIds { get; set; }
+
+        public OfferDTO()
+        {
+            RoomIds = new List<int>();
+            ItemIds = new List<int>();
+        }
     }
 }

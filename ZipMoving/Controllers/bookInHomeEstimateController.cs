@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ZipMoving.Models;
 
 namespace ZipMoving.Controllers
 {
@@ -11,7 +12,24 @@ namespace ZipMoving.Controllers
         // GET: bookInHomeEstimate
         public ActionResult bookInHomeEstimate()
         {
-            return View();
+            bookInHomeEstimateModel model = new bookInHomeEstimateModel();
+            model.LoadDates();
+            return View(model);
+        }
+
+        public ActionResult SubmitEverything(bookInHomeEstimateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int id;
+                id = model.ToDatabase();
+                model.ToEmail(id);
+
+                return RedirectToAction("Index", "Index");
+            }
+
+            model.LoadDates();
+            return View("bookInHomeEstimate", model);
         }
     }
 }

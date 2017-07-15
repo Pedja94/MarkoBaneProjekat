@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ZipMoving.Models
 {
-    public class questionaireModel
+    public class questionaire2Model
     {
         public class AdditionalService
         {
@@ -104,7 +104,7 @@ namespace ZipMoving.Models
             return listItems;
         }
 
-        public questionaireModel()
+        public questionaire2Model()
         {
             Additional = new List<AdditionalService>();
 
@@ -119,6 +119,5 @@ namespace ZipMoving.Models
             Additional.Add(new AdditionalService { isChecked = false, text = "Safe (More Than 300lbs)" });
             Additional.Add(new AdditionalService { isChecked = false, text = "Aquarium" });
         }
-
     }
 }

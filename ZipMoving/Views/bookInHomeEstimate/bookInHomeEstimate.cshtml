@@ -104,75 +104,18 @@
 
                     </div>
 
-                    <script type="application/javascript">
-
-                        // INICIJALIZACIJA KALENDARA
-                            $(document).ready(function () {
-                                $("#my-calendar").zabuto_calendar({language: "en",cell_border: true,
-                              today: true,
-                              show_days: true,
-                              weekstartson: 0,
-                              data: eventData,
-                              action: function () {
-                                        return myDateFunction(this.id, false);
-                                    }
-                              });
-                            });
-
-                        // eventData je niz datuma (u njega ubacamo datume koji su zauzeti)
-                        // plava boja je trenutni datum, crvena boja je zauzeti datum (moze da se menja ako ne odgovara)
-                        var eventData = [
-                            {"date":"2017-06-06","badge":true,},
-                            {"date":"2017-06-07","badge":true,}
-                        ];
-                    </script>
-
-
-
-                    <script>
-                        // OVA FUNKCIJA PRIKAZUJE NA KOJI JE DATUM KLIKNUTO
-                        function myDateFunction(id, fromModal) {
-
-                            $("#date-popover").hide("slow");
-                            $("#timeofday").hide("slow");
-
-
-                            if (fromModal) {
-                                $("#" + id + "_modal").modal("hide");
-                            }
-                            var date = $("#" + id).data("date");
-                            var hasEvent = $("#" + id).data("hasEvent");
-                            if (hasEvent && !fromModal) {
-                                return false;
-                            }
-
-                            $("#date-popover-content").html('Selected Pick Up Date: ' + date + "<hr>");
-                            $("#hidden").html('<input type="hidden" name="estimateDate" value=' + date + '>');
-                            @*$("#timeofday").html('<div class="col-md-4 col-sm-4"> <div class="radio"> <label><input type="radio" name="optradio"> Morning </label> </div> </div>'
-                             + ' <div class="col-md-4 col-sm-4"> <div class="radio"> <label><input type="radio" name="optradio"> Before Noon </label> </div> </div> '
-                             + ' <div class="col-md-4 col-sm-4"> <div class="radio"> <label><input type="radio" name="optradio"> Afternoon </label> </div> </div>');*@
-
-                            $("#timeofday").html('<div class="col-md-4 col-sm-4"> <div class="radio"> <label>@Html.RadioButtonFor(m => m.estimateTime, 0) Morning</label> </div> </div>'
-                                + ' <div class="col-md-4 col-sm-4"> <div class="radio"> <label>@Html.RadioButtonFor(m => m.estimateTime, 1) Before Noon</label> </div> </div> '
-                                + ' <div class="col-md-4 col-sm-4"> <div class="radio"> <label>@Html.RadioButtonFor(m => m.estimateTime, 2) Afternoon</label> </div> </div>');
-
-                            $("#date-popover").slideDown("slow");
-                            $("#timeofday").slideDown("fast");
-                            return true;
-                        }
-                    </script>
-
                 </div>
 
                 <div class="col-md-12 text-center">
-                    <div id="date-popover" style="color:white;font-size:medium; font-weight:500; margin-top:10px; margin-bottom:5px; display:none;">
-                        <div id="date-popover-content" class="popover-content"></div>
+                    <div id="date-popover" style="color:white;font-size:medium; font-weight:500; margin-top:10px; margin-bottom:5px; display:none">
+                        <div id="date-popover-content" class="popover-content">
+                        </div>
                     </div>
                     <div id="timeofday" style="color:white; font-weight:500;font-size:medium;display:none;"></div>
 
+
                 </div>
             </div>
-
 
 
         </aside>
@@ -193,32 +136,39 @@
                                     <label for="text">Full Name:</label>
                                     @Html.TextBoxFor(m => m.FullName, new { @class = "form-control", @id = "fullname", @name = "fullname", @placeholder = "Full name", })
                                     @*<input type="text" class="form-control" id="email" placeholder="Full Name">*@
+                                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
 
+                                
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">E-mail Address / Phone Number:</label>
                                     @*<input type="email" class="form-control" id="email" placeholder="E-mail Address / Phone Number">*@
                                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @name = "email", @placeholder = "E-mail Address / Phone Number", })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
                                     <label for="text">Pickup Address:</label>
                                     @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address", @name = "address", @placeholder = "Pickup Address", })
+                                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                                     @*<input type="text" class="form-control" id="address" placeholder="Pickup Address">*@
                                 </div>
                                 <div class="form-group">
                                     <label for="text">Delivery ZIP Code:</label>
                                     @Html.TextBoxFor(m => m.ZIPCode, new { @class = "form-control", @id = "zipCode", @name = "zipCode", @placeholder = "Delivery ZIP Code", })
+                                    @Html.ValidationMessageFor(model => model.ZIPCode, "", new { @class = "text-danger" })
                                     @*<input type="text" class="form-control" id="zip" placeholder="Delivery ZIP Code">*@
                                 </div>
 
-                                <div id="hidden"></div>
+
+                                <div id="hidden">
+                                    @Html.ValidationMessageFor(model => model.estimateDate, "", new { @class = "text-danger" })
+                                </div>
 
 
 
 
-
-
+ 
 
 
 
@@ -250,7 +200,25 @@
         <!-- Theme JavaScript -->
         <script src="~/Scripts/creative.min.js"></script>
 
+        <!-- Calendar script-->
+        <script>
+            //Loading dates
+            var takenDates = @Html.Raw(Json.Encode(Model.takenDates));
+            var partialyTakenDates = @Html.Raw(Json.Encode(Model.partialyTakenDates));
+            var morning = @Html.Raw(Json.Encode(Model.partialyTakenDatesMorning));
+            var afternoon = @Html.Raw(Json.Encode(Model.partialyTakenDatesAfternoon));
+            var lateAfternoon = @Html.Raw(Json.Encode(Model.partialyTakenDatesLateAfternoon));
+            var todayDate = @Html.Raw(Json.Encode(Model.today));
+        </script>
 
+        <script src="~/Scripts/bookInHomeEstimate.js"></script>
+
+        <script>
+            //date validation
+            forDate(@Html.Raw(Json.Encode(Model.estimateDate)), @Html.Raw(Json.Encode(Model.estimateTime)));
+        </script>
+
+    <input type="radio" name="estimateTime" value="0" checked disabled>
 
 </body>
 

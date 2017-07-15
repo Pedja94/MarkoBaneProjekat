@@ -10,8 +10,10 @@ namespace ZipMoving.Controllers
     public class bookInHomeEstimateController : Controller
     {
         // GET: bookInHomeEstimate
-        public ActionResult bookInHomeEstimate(bookInHomeEstimateModel model)
+        public ActionResult bookInHomeEstimate()
         {
+            bookInHomeEstimateModel model = new bookInHomeEstimateModel();
+            model.LoadDates();
             return View(model);
         }
 
@@ -19,13 +21,14 @@ namespace ZipMoving.Controllers
         {
             if (ModelState.IsValid)
             {
-              //  int id;
-                //id = model.ToDatabase();
-                //model.ToEmail(id);
+                int id;
+                id = model.ToDatabase();
+                model.ToEmail(id);
 
-                //return RedirectToAction("Index", "Index");
+                return RedirectToAction("Index", "Index");
             }
 
+            model.LoadDates();
             return View("bookInHomeEstimate", model);
         }
     }

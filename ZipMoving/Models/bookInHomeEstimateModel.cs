@@ -10,13 +10,36 @@ namespace ZipMoving.Models
 {
     public class bookInHomeEstimateModel
     {
+        [Required(ErrorMessage = "You have to pick a date.")]
         public string estimateDate { get; set; }
         public int estimateTime { get; set; } //0 - morning 1 - afternoon 2 - late afternoon
+        [Required(ErrorMessage = "This field is required")]
         public string FullName { get; set; }
+        [CustomEmailPhoneValidator]
         public string Email { get; set; }
+        [Required(ErrorMessage = "This field is required")]
         public string Address { get; set; }
+        [Required(ErrorMessage = "This field is required")]
         public string ZIPCode { get; set; }
 
+        public List<string> takenDates { get; set; }
+        public List<string> partialyTakenDates { get; set; }
+        public List<int> partialyTakenDatesMorning { get; set; }
+        public List<int> partialyTakenDatesAfternoon { get; set; }
+        public List<int> partialyTakenDatesLateAfternoon { get; set; }
+        public string today { get; set; }
+
+
+        public bookInHomeEstimateModel()
+        {
+            takenDates = new List<string>();
+            partialyTakenDates = new List<string>();
+            partialyTakenDatesMorning = new List<int>();
+            partialyTakenDatesAfternoon = new List<int>();
+            partialyTakenDatesLateAfternoon = new List<int>();
+        }
+
+        //functions
         public int ToDatabase()
         {
             InformationDTO infFrom = new InformationDTO()
@@ -88,6 +111,58 @@ namespace ZipMoving.Models
             smtp.Send(m);
 
             return true;
+        }
+
+        public void LoadDates()
+        {
+            DateTime from, to;
+            List<CalendarDTO> dates = new List<CalendarDTO>();
+
+            from = DateTime.Today;
+            to = from.AddYears(1);
+            dates = Calendars.Read(from, to);
+
+            for (int i = 0; i < dates.Count; i++)
+            {
+                if (dates[i].Morning && dates[i].Afternoon && dates[i].LateAfternoon)
+                {
+                    takenDates.Add(CreateString(dates[i].Date));
+                }
+                else
+                {
+                    partialyTakenDates.Add(CreateString(dates[i].Date));
+                    partialyTakenDatesMorning.Add(Convert.ToInt32(dates[i].Morning));
+                    partialyTakenDatesAfternoon.Add(Convert.ToInt32(dates[i].Afternoon));
+                    partialyTakenDatesLateAfternoon.Add(Convert.ToInt32(dates[i].LateAfternoon));
+                }
+            }
+
+            today = CreateString(DateTime.Today);
+        }
+
+        private string CreateString(DateTime date)
+        {
+            string s;
+
+            s = date.Year.ToString() + "-";
+            if (date.Month < 10)
+            {
+                s += "0" + date.Month.ToString() + "-";
+            }
+            else
+            {
+                s += date.Month.ToString() + "-";
+            }
+            if (date.Day < 10)
+            {
+                s += "0" + date.Day.ToString();
+            }
+            else
+            {
+                s += date.Day.ToString();
+            }
+
+            return s;
         }
     }
 }

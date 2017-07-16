@@ -23,7 +23,8 @@ namespace ZipMoving.Controllers
             {
                 int id;
                 id = model.ToDatabase();
-                model.ToEmail(id);
+                if (id != -1)
+                    model.ToEmail(id);
 
                 return RedirectToAction("Index", "Index");
             }

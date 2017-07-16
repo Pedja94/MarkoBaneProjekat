@@ -13,13 +13,13 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "You have to pick a date.")]
         public string estimateDate { get; set; }
         public int estimateTime { get; set; } //0 - morning 1 - afternoon 2 - late afternoon
-        [Required(ErrorMessage = "This field is required")]
+        [Required(ErrorMessage = "Field can't be empty")]
         public string FullName { get; set; }
         [CustomEmailPhoneValidator]
         public string Email { get; set; }
-        [Required(ErrorMessage = "This field is required")]
+        [Required(ErrorMessage = "Field can't be empty")]
         public string Address { get; set; }
-        [Required(ErrorMessage = "This field is required")]
+        [Required(ErrorMessage = "Field can't be empty")]
         public string ZIPCode { get; set; }
 
         public List<string> takenDates { get; set; }
@@ -52,18 +52,16 @@ namespace ZipMoving.Models
             };
 
             string[] name = FullName.Split(' ');
-            Random rnd = new Random(DateTime.Now.Millisecond);
-            string srNum = "ZM" + (rnd.Next() % 10000).ToString();
             DateTime date = new DateTime(Int32.Parse(estimateDate.Substring(0, 4)),
                 Int32.Parse(estimateDate.Substring(5, 2)), Int32.Parse(estimateDate.Substring(8, 2)));
 
             OfferDTO offer = new OfferDTO()
             {
-                Serial = srNum,
+                Serial = "",
                 Name = name[0],
                 Surname = name[1],
                 Email = Email,
-                Type = 0,
+                Type = "",
                 StartDate = DateTime.Now,
                 EstimateFlag = true,
                 EstimateDate = date,
@@ -84,7 +82,7 @@ namespace ZipMoving.Models
 
             System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
                 new System.Net.Mail.MailAddress("zipmovingsender@outlook.com", "Book in home estimate Serial:" + offer.Serial),
-                new System.Net.Mail.MailAddress("djape94@gmail.com"));
+                new System.Net.Mail.MailAddress("zipmovingreceiver@outlook.com"));
             m.Subject = "Book in home estimate Serial:" + offer.Serial;
 
             string format = "<B>Full name:</B> {0}</BR>" +

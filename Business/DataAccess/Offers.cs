@@ -17,6 +17,9 @@ namespace Business.DataAccess
             {
                 DatabaseDataContext db = new DatabaseDataContext();
 
+                Random rnd = new Random(DateTime.Now.Millisecond);
+                string srNum = "ZM" + (rnd.Next() % 10000).ToString();
+
                 Offer offer = new Offer()
                 {
                     AdditionalService = offerCreate.AdditionalService,
@@ -30,8 +33,7 @@ namespace Business.DataAccess
                     HowDidYouFindUs = offerCreate.HowDidYouFindUs,
                     InventoryFlag = offerCreate.InventoryFlag,
                     Name = offerCreate.Name,
-                    RegureasCOI = offerCreate.RegureasCOI,
-                    Serial = offerCreate.Serial,
+                    Serial = srNum,
                     StartDate = System.DateTime.Now,
                     Surname = offerCreate.Surname,
                     Type = offerCreate.Type,
@@ -39,6 +41,9 @@ namespace Business.DataAccess
                     VideoLink = offerCreate.VideoLink,
                     WhatToMove = offerCreate.WhatToMove, 
                     WhoIsPresentAtPickup = offerCreate.WhoIsPresentAtPickup,
+                    PickUpDateFlex = offerCreate.PickUpDateFlex,
+                    WhenToAcceptdelivery = offerCreate.WhenToAcceptdelivery,
+                    WhenToMove = offerCreate.WhenToMove
                 };
 
                 if (offerCreate.InforamtionFrom != null)
@@ -56,9 +61,9 @@ namespace Business.DataAccess
                 db.Offers.InsertOnSubmit(offer);
                 db.SubmitChanges();
 
-                Random rnd = new Random(offer.Id);
+                Random rnd2 = new Random(offer.Id);
 
-                offer.Serial = offer.Serial + (rnd.Next() % 10000).ToString();
+                offer.Serial = offer.Serial + (rnd2.Next() % 10000).ToString();
 
                 db.SubmitChanges();
 
@@ -148,7 +153,6 @@ namespace Business.DataAccess
                 query.InformationToId = updateOffer.InforamtionTo.Id;
                 query.InventoryFlag = updateOffer.InventoryFlag;
                 query.Name = updateOffer.Name;
-                query.RegureasCOI = updateOffer.RegureasCOI;
                 query.Serial = updateOffer.Serial;
                 query.StartDate = updateOffer.StartDate;
                 query.Surname = updateOffer.Surname;
@@ -158,6 +162,9 @@ namespace Business.DataAccess
                 query.WhatToMove = updateOffer.WhatToMove;
                 query.WhoIsPresentAtPickup = updateOffer.WhoIsPresentAtPickup;
                 query.Id = updateOffer.Id;
+                query.WhenToAcceptdelivery = updateOffer.WhenToAcceptdelivery;
+                query.PickUpDateFlex = updateOffer.PickUpDateFlex;
+                query.WhenToMove = updateOffer.WhenToMove;
 
                 db.SubmitChanges();
             }
@@ -195,14 +202,16 @@ namespace Business.DataAccess
                     HowDidYouFindUs = query.HowDidYouFindUs,
                     InventoryFlag = query.InventoryFlag,
                     Name = query.Name,
-                    RegureasCOI = query.RegureasCOI,
                     Serial = query.Serial,
                     StartDate = query.StartDate,
                     Surname = query.Surname,
                     Type = query.Type,
                     VideoFlag = query.VideoFlag,
                     VideoLink = query.VideoLink,
-                    Id = query.Id
+                    Id = query.Id,
+                    WhenToAcceptdelivery = query.WhenToAcceptdelivery,
+                    PickUpDateFlex = query.PickUpDateFlex,
+                    WhenToMove = query.WhenToMove
                 };
 
                 if (query.InformationFromId != null)
@@ -268,14 +277,16 @@ namespace Business.DataAccess
                         HowDidYouFindUs = offer.HowDidYouFindUs,
                         InventoryFlag = offer.InventoryFlag,
                         Name = offer.Name,
-                        RegureasCOI = offer.RegureasCOI,
                         Serial = offer.Serial,
                         StartDate = offer.StartDate,
                         Surname = offer.Surname,
                         Type = offer.Type,
                         VideoFlag = offer.VideoFlag,
                         VideoLink = offer.VideoLink,
-                        Id = offer.Id
+                        Id = offer.Id,
+                        PickUpDateFlex = offer.PickUpDateFlex,
+                        WhenToAcceptdelivery = offer.WhenToAcceptdelivery,
+                        WhenToMove = offer.WhenToMove
                     };
 
                     if (offer.InformationFromId != null)
@@ -345,14 +356,16 @@ namespace Business.DataAccess
                         HowDidYouFindUs = offer.HowDidYouFindUs,
                         InventoryFlag = offer.InventoryFlag,
                         Name = offer.Name,
-                        RegureasCOI = offer.RegureasCOI,
                         Serial = offer.Serial,
                         StartDate = offer.StartDate,
                         Surname = offer.Surname,
                         Type = offer.Type,
                         VideoFlag = offer.VideoFlag,
                         VideoLink = offer.VideoLink,
-                        Id = offer.Id
+                        Id = offer.Id,
+                        WhenToAcceptdelivery = offer.WhenToAcceptdelivery,
+                        PickUpDateFlex = offer.PickUpDateFlex,
+                        WhenToMove = offer.WhenToMove
                     };
 
                     if (offer.InformationFromId != null)
@@ -422,14 +435,16 @@ namespace Business.DataAccess
                         HowDidYouFindUs = offer.HowDidYouFindUs,
                         InventoryFlag = offer.InventoryFlag,
                         Name = offer.Name,
-                        RegureasCOI = offer.RegureasCOI,
                         Serial = offer.Serial,
                         StartDate = offer.StartDate,
                         Surname = offer.Surname,
                         Type = offer.Type,
                         VideoFlag = offer.VideoFlag,
                         VideoLink = offer.VideoLink,
-                        Id = offer.Id
+                        Id = offer.Id,
+                        WhenToAcceptdelivery = offer.WhenToAcceptdelivery,
+                        PickUpDateFlex = offer.PickUpDateFlex,
+                        WhenToMove = offer.WhenToMove
                     };
 
                     if (offer.InformationFromId != null)
@@ -499,14 +514,16 @@ namespace Business.DataAccess
                         HowDidYouFindUs = offer.HowDidYouFindUs,
                         InventoryFlag = offer.InventoryFlag,
                         Name = offer.Name,
-                        RegureasCOI = offer.RegureasCOI,
                         Serial = offer.Serial,
                         StartDate = offer.StartDate,
                         Surname = offer.Surname,
                         Type = offer.Type,
                         VideoFlag = offer.VideoFlag,
                         VideoLink = offer.VideoLink,
-                        Id = offer.Id
+                        Id = offer.Id,
+                        WhenToAcceptdelivery = offer.WhenToAcceptdelivery,
+                        PickUpDateFlex = offer.PickUpDateFlex,
+                        WhenToMove = offer.WhenToMove
                     };
 
                     if (offer.InformationFromId != null)

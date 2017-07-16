@@ -25,7 +25,7 @@ namespace ZipMoving.Models
             }
             else
             {
-                return new ValidationResult("This field is required");
+                return new ValidationResult("Field can't be empty");
             }
         }
     }

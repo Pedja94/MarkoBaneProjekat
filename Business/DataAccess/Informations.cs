@@ -19,15 +19,15 @@ namespace Business.DataAccess
                 {
                     Address = informationCreate.Address,
                     FullSelfPack = informationCreate.FullSelfPack,
-                    IntervalStart = informationCreate.IntervalStart,
-                    IntervalEnd = informationCreate.IntervalEnd,
                     TypeOfAccess = informationCreate.TypeOfAccess,
                     TypeOfBuilding = informationCreate.TypeOfBuilding,
                     UOElevatorDesc = informationCreate.UOElevatorDesc,
                     UOElevatorFlag = informationCreate.UOElevatorFlag,
                     UOStairsDesc = informationCreate.UOStairsDesc,
                     UOStairsFlag = informationCreate.UOStairsFlag,
-                    ZipCode = informationCreate.ZipCode
+                    ZipCode = informationCreate.ZipCode,
+                    SizeOfBuilding = informationCreate.SizeOfBuilding,
+                    RegureasCOI = informationCreate.RegureasCOI
                 };
 
                 db.Informations.InsertOnSubmit(information);
@@ -60,8 +60,6 @@ namespace Business.DataAccess
                 {
                     Address = query.Address,
                     FullSelfPack = query.FullSelfPack,
-                    IntervalStart = query.IntervalStart,
-                    IntervalEnd = query.IntervalEnd,
                     TypeOfAccess = query.TypeOfAccess,
                     TypeOfBuilding = query.TypeOfBuilding,
                     UOElevatorDesc = query.UOElevatorDesc,
@@ -69,7 +67,9 @@ namespace Business.DataAccess
                     UOStairsDesc = query.UOStairsDesc,
                     UOStairsFlag = query.UOStairsFlag,
                     ZipCode = query.ZipCode,
-                    Id = query.Id
+                    Id = query.Id,
+                    SizeOfBuilding = query.SizeOfBuilding,
+                    RegureasCOI = query.RegureasCOI
                 };
             }
             catch (Exception ex)
@@ -93,8 +93,6 @@ namespace Business.DataAccess
 
                 query.Address = updateInformation.Address;
                 query.FullSelfPack = updateInformation.FullSelfPack;
-                query.IntervalStart = updateInformation.IntervalStart;
-                query.IntervalEnd = updateInformation.IntervalEnd;
                 query.TypeOfAccess = updateInformation.TypeOfAccess;
                 query.TypeOfBuilding = updateInformation.TypeOfBuilding;
                 query.UOElevatorDesc = updateInformation.UOElevatorDesc;
@@ -102,6 +100,8 @@ namespace Business.DataAccess
                 query.UOStairsDesc = updateInformation.UOStairsDesc;
                 query.UOStairsFlag = updateInformation.UOStairsFlag;
                 query.ZipCode = updateInformation.ZipCode;
+                query.RegureasCOI = updateInformation.RegureasCOI;
+                query.SizeOfBuilding = updateInformation.SizeOfBuilding;
 
                 db.SubmitChanges();
             }

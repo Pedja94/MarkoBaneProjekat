@@ -149,6 +149,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\bookInHomeEstimateModel.cs" />
+    <Compile Include="Models\CustomDataValidation.cs" />
     <Compile Include="Models\questionaire2Model.cs" />
     <Compile Include="Models\questionaireModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -504,6 +506,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bookInHomeEstimate.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

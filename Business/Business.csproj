@@ -45,11 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataAccess\AccessoriesTables.cs" />
     <Compile Include="DataAccess\Admins.cs" />
     <Compile Include="DataAccess\Calendars.cs" />
     <Compile Include="DataAccess\Informations.cs" />
     <Compile Include="DataAccess\Items.cs" />
+    <Compile Include="DataAccess\MovingPriceses.cs" />
     <Compile Include="DataAccess\Offers.cs" />
+    <Compile Include="DataAccess\PricePerMiles.cs" />
+    <Compile Include="DataAccess\Radiuses.cs" />
     <Compile Include="DataAccess\Rooms.cs" />
     <Compile Include="DataAccess\ZipCodes.cs" />
     <Compile Include="Database.designer.cs">
@@ -57,11 +61,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.dbml</DependentUpon>
     </Compile>
+    <Compile Include="DTO\AccessoriesTableDTO.cs" />
     <Compile Include="DTO\AdminDTO.cs" />
     <Compile Include="DTO\CalendarDTO.cs" />
     <Compile Include="DTO\InformationDTO.cs" />
     <Compile Include="DTO\ItemDTO.cs" />
+    <Compile Include="DTO\MovingPricesDTO.cs" />
     <Compile Include="DTO\OfferDTO.cs" />
+    <Compile Include="DTO\PricePerMileDTO.cs" />
+    <Compile Include="DTO\RadiusDTO.cs" />
     <Compile Include="DTO\RoomDTO.cs" />
     <Compile Include="DTO\ZipCodeDTO.cs" />
     <Compile Include="Program.cs" />

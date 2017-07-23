@@ -17,7 +17,6 @@ namespace Business.DataAccess
 
                 Room room = new Room()
                 {
-                    Description = roomCreate.Description,
                     IconLink = roomCreate.IconLink,
                     Name = roomCreate.Name,
                 };
@@ -50,7 +49,6 @@ namespace Business.DataAccess
 
                 roomRead = new RoomDTO()
                 {
-                    Description = query.Description,
                     IconLink = query.IconLink,
                     Name = query.Name,
                     Id = query.Id
@@ -80,7 +78,6 @@ namespace Business.DataAccess
                 {
                     RoomDTO roomRead = new RoomDTO()
                     {
-                        Description = room.Description,
                         IconLink = room.IconLink,
                         Name = room.Name,
                         Id = room.Id
@@ -162,7 +159,6 @@ namespace Business.DataAccess
                      where room.Id == updateRoom.Id
                      select room).Single();
 
-                query.Description = updateRoom.Description;
                 query.IconLink = updateRoom.IconLink;
                 query.Name = updateRoom.Name;
 

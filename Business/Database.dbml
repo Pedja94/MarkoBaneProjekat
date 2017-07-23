@@ -1,5 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZipMoving" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;D:\Pedja\Projekti\Zip Moving\ZipMoving\Database\ZipMoving.mdf&quot;;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.AccessoriesTable" Member="AccessoriesTables">
+    <Type Name="AccessoriesTable">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ZipCode" Member="ZipCodes">
+    <Type Name="ZipCode">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="StateNum" Type="System.Decimal" DbType="Decimal(3,0) NOT NULL" CanBeNull="false" />
+      <Column Name="RadiusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Radius_ZipCode" Member="Radius" ThisKey="RadiusId" OtherKey="Id" Type="Radius" IsForeignKey="true" DeleteRule="SET NULL" />
+    </Type>
+  </Table>
   <Table Name="dbo.Admin" Member="Admins">
     <Type Name="Admin">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -8,14 +25,6 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Column Name="Surname" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
       <Association Name="Admin_Offer" Member="Offers" ThisKey="Id" OtherKey="AdminId" Type="Offer" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ZipCode" Member="ZipCodes">
-    <Type Name="ZipCode">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ZipCode" Member="ZipCode1" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Town" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="State" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.Calendar" Member="Calendars">
@@ -27,20 +36,30 @@
       <Column Name="LateAfternoon" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
+  <Table Name="dbo.FromTo" Member="FromTos">
+    <Type Name="FromTo">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RadiusFromId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RadiusToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FromTo_MovingPrice" Member="MovingPrices" ThisKey="Id" OtherKey="FromToId" Type="MovingPrice" />
+      <Association Name="Radius_FromTo" Member="Radius" ThisKey="RadiusFromId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
+      <Association Name="Radius_FromTo1" Member="Radius1" ThisKey="RadiusToId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Information" Member="Informations">
     <Type Name="Information">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Address" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="ZipCode" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="TypeOfBuilding" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="TypeOfBuilding" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="UOElevatorFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="UOElevatorDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="UOStairsFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="UOStairsDesc" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="TypeOfAccess" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="FullSelfPack" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="SizeOfBuilding" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="RegureasCOI" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SizeOfBuilding" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="RegureasCOI" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Association Name="Information_Offer" Member="Offers" ThisKey="Id" OtherKey="InformationFromId" Type="Offer" />
       <Association Name="Information_Offer1" Member="Offers1" ThisKey="Id" OtherKey="InformationToId" Type="Offer" />
     </Type>
@@ -59,28 +78,90 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="OfferId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="RoomId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Room_InventoryRoom" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
       <Association Name="Offer_InventoryRoom" Member="Offer" ThisKey="OfferId" OtherKey="Id" Type="Offer" IsForeignKey="true" />
+      <Association Name="Room_InventoryRoom" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Item" Member="Items">
     <Type Name="Item">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Weight" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
-      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
       <Column Name="Dimension" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Packing" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="AdditionalFee" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
       <Association Name="Item_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="ItemId" Type="InventoryItem" />
       <Association Name="Item_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="ItemId" Type="RoomItem" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MovingPrices" Member="MovingPrices">
+    <Type Name="MovingPrice">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StateNums" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="FromToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="MovingPrice_PricePerMile" Member="PricePerMiles" ThisKey="Id" OtherKey="MovingPricesId" Type="PricePerMile" />
+      <Association Name="FromTo_MovingPrice" Member="FromTo" ThisKey="FromToId" OtherKey="Id" Type="FromTo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Offer" Member="Offers">
+    <Type Name="Offer">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Serial" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="Type" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="EstimateFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="EstimateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="EstimateTime" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="InformationFromId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="InformationToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AdminId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="WhatToMove" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="WhoIsPresentAtPickup" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="AdditionStop" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="AdditionalService" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="HowDidYouFindUs" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="VideoFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="VideoLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="InventoryFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PickUpDateFlex" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="WhenToAcceptdelivery" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="WhenToMove" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Association Name="Offer_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="OfferId" Type="InventoryItem" />
+      <Association Name="Offer_InventoryRoom" Member="InventoryRooms" ThisKey="Id" OtherKey="OfferId" Type="InventoryRoom" />
+      <Association Name="Admin_Offer" Member="Admin" ThisKey="AdminId" OtherKey="Id" Type="Admin" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Association Name="Information_Offer" Member="Information" ThisKey="InformationFromId" OtherKey="Id" Type="Information" IsForeignKey="true" />
+      <Association Name="Information_Offer1" Member="Information1" ThisKey="InformationToId" OtherKey="Id" Type="Information" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PricePerMile" Member="PricePerMiles">
+    <Type Name="PricePerMile">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MilesFrom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MilesTo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
+      <Column Name="MovingPricesId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="MovingPrice_PricePerMile" Member="MovingPrice" ThisKey="MovingPricesId" OtherKey="Id" Type="MovingPrice" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Radius" Member="Radius">
+    <Type Name="Radius">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="StateNums" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Radius_ZipCode" Member="ZipCodes" ThisKey="Id" OtherKey="RadiusId" Type="ZipCode" />
+      <Association Name="Radius_FromTo" Member="FromTos" ThisKey="Id" OtherKey="RadiusFromId" Type="FromTo" />
+      <Association Name="Radius_FromTo1" Member="FromTos1" ThisKey="Id" OtherKey="RadiusToId" Type="FromTo" />
     </Type>
   </Table>
   <Table Name="dbo.Room" Member="Rooms">
     <Type Name="Room">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="IconLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Association Name="Room_InventoryRoom" Member="InventoryRooms" ThisKey="Id" OtherKey="RoomId" Type="InventoryRoom" />
       <Association Name="Room_RoomItem" Member="RoomItems" ThisKey="Id" OtherKey="RoomId" Type="RoomItem" />
@@ -93,40 +174,6 @@
       <Column Name="ItemId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Item_RoomItem" Member="Item" ThisKey="ItemId" OtherKey="Id" Type="Item" IsForeignKey="true" />
       <Association Name="Room_RoomItem" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Offer" Member="Offers">
-    <Type Name="Offer">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Serial" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Surname" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="Type" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="EstimateFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="EstimateDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="EstimateTime" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
-      <Column Name="InformationFromId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="InformationToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="AdminId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="WhatToMove" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WhoIsPresentAtPickup" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="AdditionStop" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="AdditionalService" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
-      <Column Name="HowDidYouFindUs" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="VideoFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="VideoLink" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Column Name="InventoryFlag" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="PickUpDateFlex" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WhenToAcceptdelivery" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="WhenToMove" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
-      <Association Name="Offer_InventoryItem" Member="InventoryItems" ThisKey="Id" OtherKey="OfferId" Type="InventoryItem" />
-      <Association Name="Offer_InventoryRoom" Member="InventoryRooms" ThisKey="Id" OtherKey="OfferId" Type="InventoryRoom" />
-      <Association Name="Admin_Offer" Member="Admin" ThisKey="AdminId" OtherKey="Id" Type="Admin" IsForeignKey="true" DeleteRule="SET NULL" />
-      <Association Name="Information_Offer" Member="Information" ThisKey="InformationFromId" OtherKey="Id" Type="Information" IsForeignKey="true" />
-      <Association Name="Information_Offer1" Member="Information1" ThisKey="InformationToId" OtherKey="Id" Type="Information" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

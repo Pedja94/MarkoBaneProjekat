@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Business.DTO
 {
-    public class ZipCodeDTO
+    public class AccessoriesTableDTO
     {
         public int Id { get; set; }
-        public string Code { get; set; }
-        public decimal StateNum { get; set; }
-        public RadiusDTO Radius { get; set; }
+        public string Name { get; set; }
+        public decimal Cost { get; set; }
+        public string Description { get; set; }
     }
 }

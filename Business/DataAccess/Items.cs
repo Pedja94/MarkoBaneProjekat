@@ -17,12 +17,12 @@ namespace Business.DataAccess
 
                 Item item = new Item()
                 {
-                    Cost = itemCreate.Cost,
-                    Description = itemCreate.Description,
                     IconLink = itemCreate.IconLink,
                     Name = itemCreate.Name,
                     Weight = itemCreate.Weight,
-                    Dimension = itemCreate.Dimension
+                    Dimension = itemCreate.Dimension,
+                    AdditionalFee = itemCreate.AdditionalFee,
+                    Packing = itemCreate.Packing
                 };
 
                 db.Items.InsertOnSubmit(item);
@@ -53,13 +53,13 @@ namespace Business.DataAccess
 
                 itemRead = new ItemDTO()
                 {
-                    Cost = query.Cost,
-                    Description = query.Description,
                     IconLink = query.IconLink,
                     Name = query.Name,
                     Weight = query.Weight,
                     Id = query.Id,
-                    Dimension = query.Dimension
+                    Dimension = query.Dimension,
+                    AdditionalFee = query.AdditionalFee,
+                    Packing = query.Packing,
                 };
             }
             catch (Exception ex)
@@ -86,13 +86,13 @@ namespace Business.DataAccess
                 {
                     ItemDTO itemRead = new ItemDTO()
                     {
-                        Cost = item.Cost,
-                        Description = item.Description,
                         IconLink = item.IconLink,
                         Name = item.Name,
                         Weight = item.Weight,
                         Id = item.Id,
-                        Dimension = item.Dimension
+                        Dimension = item.Dimension,
+                        AdditionalFee = item.AdditionalFee,
+                        Packing = item.Packing
                     };
 
                     items.Add(itemRead);
@@ -171,12 +171,12 @@ namespace Business.DataAccess
                      where item.Id == updateItem.Id
                      select item).Single();
 
-                query.Cost = updateItem.Cost;
-                query.Description = updateItem.Description;
                 query.IconLink = updateItem.IconLink;
                 query.Name = updateItem.Name;
                 query.Weight = updateItem.Weight;
                 query.Dimension = updateItem.Dimension;
+                query.Packing = updateItem.Packing;
+                query.AdditionalFee = updateItem.AdditionalFee;
 
                 db.SubmitChanges();
             }

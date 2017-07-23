@@ -7,25 +7,25 @@ using Business.DTO;
 
 namespace Business.DataAccess
 {
-    public static class ZipCodes
+    public class ZipCodes
     {
-        public static int Create(ZipCodeDTO codeCreate)
+        public static int Create(ZipCodeDTO ZipCodeCreate)
         {
             try
             {
                 DatabaseDataContext db = new DatabaseDataContext();
 
-                ZipCode code = new ZipCode()
+                ZipCode ZipCode = new ZipCode()
                 {
-                    State = codeCreate.State,
-                    Town = codeCreate.Town,
-                    ZipCode1 = codeCreate.ZipCode
+                    Code = ZipCodeCreate.Code,
+                    StateNum = ZipCodeCreate.StateNum,
+                    RadiusId = ZipCodeCreate.Radius.Id
                 };
 
-                db.ZipCodes.InsertOnSubmit(code);
+                db.ZipCodes.InsertOnSubmit(ZipCode);
                 db.SubmitChanges();
 
-                return code.Id;
+                return ZipCode.Id;
             }
             catch (Exception ex)
             {
@@ -35,20 +35,179 @@ namespace Business.DataAccess
             return -1;
         }
 
-        public static void Update(ZipCodeDTO updateCode)
+        public static ZipCodeDTO Read(int ZipCodeId)
+        {
+            ZipCodeDTO ZipCodeRead = null;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from ZipCode in db.ZipCodes
+                     where ZipCode.Id == ZipCodeId
+                     select ZipCode).Single();
+
+                ZipCodeRead = new ZipCodeDTO()
+                {
+                    Code = query.Code,
+                    StateNum = query.StateNum,
+                    Id = query.Id
+                };
+
+                ZipCodeRead.Radius = Radiuses.Read((int)query.RadiusId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return ZipCodeRead;
+        }
+
+        public static ZipCodeDTO Find(string Code)
+        {
+            ZipCodeDTO ZipCodeRead = null;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from ZipCode in db.ZipCodes
+                     where ZipCode.Code == Code
+                     select ZipCode).Single();
+
+                ZipCodeRead = new ZipCodeDTO()
+                {
+                    Code = query.Code,
+                    StateNum = query.StateNum,
+                    Id = query.Id
+                };
+
+                ZipCodeRead.Radius = Radiuses.Read((int)query.RadiusId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return ZipCodeRead;
+        }
+
+        public static List<ZipCodeDTO> ReadAll()
+        {
+            List<ZipCodeDTO> ZipCodes = new List<ZipCodeDTO>(); ;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from ZipCode in db.ZipCodes
+                     select ZipCode);
+
+                foreach (ZipCode ZipCode in query)
+                {
+                    ZipCodeDTO ZipCodeRead = new ZipCodeDTO()
+                    {
+                        Code = ZipCode.Code,
+                        StateNum = ZipCode.StateNum,
+                        Id = ZipCode.Id
+                    };
+
+                    ZipCodes.Add(ZipCodeRead);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return ZipCodes;
+        }
+
+        public static List<ZipCodeDTO> ReadAll(int RadiusId)
+        {
+            List<ZipCodeDTO> ZipCodes = new List<ZipCodeDTO>(); ;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from ZipCode in db.ZipCodes
+                     where ZipCode.RadiusId == RadiusId
+                     select ZipCode);
+
+                foreach (ZipCode ZipCode in query)
+                {
+                    ZipCodeDTO ZipCodeRead = new ZipCodeDTO()
+                    {
+                        Code = ZipCode.Code,
+                        StateNum = ZipCode.StateNum,
+                        Id = ZipCode.Id
+                    };
+
+                    ZipCodes.Add(ZipCodeRead);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return ZipCodes;
+        }
+
+        public static List<ZipCodeDTO> ReadAll(int RadiusId, int stateNum)
+        {
+            List<ZipCodeDTO> ZipCodes = new List<ZipCodeDTO>(); ;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from ZipCode in db.ZipCodes
+                     where (ZipCode.RadiusId == RadiusId 
+                        && ZipCode.StateNum == stateNum) 
+                     select ZipCode);
+
+                foreach (ZipCode ZipCode in query)
+                {
+                    ZipCodeDTO ZipCodeRead = new ZipCodeDTO()
+                    {
+                        Code = ZipCode.Code,
+                        StateNum = ZipCode.StateNum,
+                        Id = ZipCode.Id
+                    };
+
+                    ZipCodes.Add(ZipCodeRead);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return ZipCodes;
+        }
+
+        public static void Update(ZipCodeDTO updateZipCode)
         {
             try
             {
                 DatabaseDataContext db = new DatabaseDataContext();
 
                 var query =
-                    (from code in db.ZipCodes
-                     where code.Id == updateCode.Id
-                     select code).Single();
+                    (from ZipCode in db.ZipCodes
+                     where ZipCode.Id == updateZipCode.Id
+                     select ZipCode).Single();
 
-                query.State = updateCode.State;
-                query.Town = updateCode.Town;
-                query.ZipCode1 = updateCode.ZipCode;
+                query.Code = updateZipCode.Code;
+                query.StateNum = updateZipCode.StateNum;
+                query.RadiusId = updateZipCode.Radius.Id;
 
                 db.SubmitChanges();
             }
@@ -58,48 +217,16 @@ namespace Business.DataAccess
             }
         }
 
-        public static List<ZipCodeDTO> ReadAll()
-        {
-            List<ZipCodeDTO> codes = new List<ZipCodeDTO>(); ;
-
-            try
-            {
-                DatabaseDataContext db = new DatabaseDataContext();
-
-                var query =
-                    (from code in db.ZipCodes
-                     select code);
-
-                foreach (ZipCode code in query)
-                {
-                    ZipCodeDTO codeRead = new ZipCodeDTO()
-                    {
-                        State = code.State,
-                        Town = code.Town,
-                        ZipCode = code.ZipCode1
-                    };
-
-                    codes.Add(codeRead);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            return codes;
-        }
-
-        public static void Delete(int zipCodeId)
+        public static void Delete(int ZipCodeId)
         {
             try
             {
                 DatabaseDataContext db = new DatabaseDataContext();
 
                 var query =
-                    (from code in db.ZipCodes
-                     where code.Id == zipCodeId
-                     select code).Single();
+                    (from ZipCode in db.ZipCodes
+                     where ZipCode.Id == ZipCodeId
+                     select ZipCode).Single();
 
                 db.ZipCodes.DeleteOnSubmit(query);
                 db.SubmitChanges();
@@ -109,6 +236,5 @@ namespace Business.DataAccess
                 Console.WriteLine(ex);
             }
         }
-
     }
 }

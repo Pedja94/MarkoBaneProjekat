@@ -1,0 +1,21 @@
+Sta treba da se doradi na sajtu:
+-questionaire2(Inventory)
+	1. da se dovrsi kontroler
+	2. da se napravi logika za odabir prostorija i stvari
+	3. da se napravi logika za racunanje cene
+	4. da se poveze sa bazom
+-da se odradi upload za video
+-da se isprave validacije za questionare 1 i 2
+-logika za zip kodove (da li je moguce da se seli iz mesta u mesto i da li je mesto u okviru radiusa)
+-da se popuni baza podacima(cene, zip kodovi, stvari)
+-za bookInHomeEstimate raspored na stanici
+-da se dodaju polja za email i adresu u questionaire 1 i 2
+-pocenta stranica slike i tekst
+
+Administratorski panel:
+-login
+-kontrolni panel admina
+-panel za zip kodove i cene
+-panel za prostorije i stvari
+-panel za offere
+-panel za calendar(kalendar iz bookInHomeEstimate)

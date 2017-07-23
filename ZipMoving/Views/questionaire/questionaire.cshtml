@@ -765,13 +765,14 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
-                        <div class="form-group radio">
+                        @*<div class="form-group radio">
                             <label class="onHoverOurs">
                                 @Html.RadioButtonFor(m => m.WhenToMove, "I'm Not Sure") I'm Not Sure
-                                @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>
                             </label>
-                        </div>
-                        @Html.ValidationMessageFor(model => model.WhenToMove, "", new { @class = "text-danger" })
+                        </div>*@
+                        <p>(If you aren't sure when do you want to move, please leave this text field empty)</p>
+                        @*@Html.ValidationMessageFor(model => model.WhenToMove, "", new { @class = "text-danger" })*@
                     </div>
                     
                 </div>
@@ -822,26 +823,31 @@
                     </div>
 
                     <div class="col-md-12 text-center" style="font-size:medium;">
-                        <div class="form-group radio">
+                        @*<div class="form-group radio">
                             <label class="onHoverOurs">
                                 @Html.RadioButtonFor(m => m.AcceptDelivery, "Next day after the pickup is completed") Next day after the pickup is completed
-                                @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Next day after the pickup is completed </span>*@
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Next day after the pickup is completed </span>
                             </label>
                         </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <div class="form-group radio">
                             <label class="onHoverOurs">
                                 @Html.RadioButtonFor(m => m.AcceptDelivery, "2 days after the pickup is completed") 2 days after the pickup is completed
-                                @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> 2 days after the pickup is completed </span>*@
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> 2 days after the pickup is completed </span>
                             </label>
-                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*@
 
 
                         <div>
-                            Something else - please specify the number of days 
+                            @*Something else - please specify the number of days 
                             @Html.TextBoxFor(m => m.AcceptDelivery, new { @style = "width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;", })
-                            @*<input type="text" style="width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;">*@ 
-                            after the pickup is completed:<br><br>
+                            <input type="text" style="width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;">
+                            after the pickup is completed:<br><br>*@
+
+                            Please specify the number of days after the pickup is completed:
+                            @Html.TextBoxFor(m => m.AcceptDelivery, new { @style = "width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;", })
+                            @*<input type="text" style="width: 35px;color:black; text-align:center; border-style:none; border-radius:10px;">*@
+                            <br><br>
                         </div>
                         @Html.ValidationMessageFor(model => model.AcceptDelivery, "", new { @class = "text-danger" })
                     </div>
@@ -968,20 +974,23 @@
                             <div class="col-md-8">
                                 @Html.TextAreaFor(m => m.SomethingElse, new { @class = "form-control", @rows = 5, @id = "comment", @style = "resize:none", })
                                 @*<textarea class="form-control" rows="5" id="comment" style="resize:none;"></textarea>*@
-                            </div>
+                            </div>                           
+                            
                         </div>
-                        <div class="col-md-2"></div>
-                    </div><br><br>
+                        <div class="col-md-12 text-center">
+                            <p>(If you aren't sure when do you want to move, please leave this text field empty)</p>
+                        </div>
+                    </div>
 
-                    <div class="col-md-12 text-center">
+                    @*<div class="col-md-12 text-center">
                         <div class="form-group radio">
                             <label class="onHoverOurs">
                                 @Html.RadioButtonFor(m => m.SomethingElse, "Thank you, nothing") Thank you, nothing
-                                @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Thank you, nothing </span>*@
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Thank you, nothing </span>
                             </label>
                         </div>
                         @Html.ValidationMessageFor(model => model.SomethingElse, "", new { @class = "text-danger" })
-                    </div>
+                    </div>*@
                 </div>
                 <!-- 10th row end -->
                 <br><br><br>

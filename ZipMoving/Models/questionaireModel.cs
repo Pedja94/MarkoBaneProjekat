@@ -74,7 +74,7 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Select one of the types")]
         public string ParkingDelivery { get; set; } //1 - Private Driveway, 2 - Street Parking in Front, 3 - Street Parking Further Away, 4 - I'm Not Sure
 
-        [Required(ErrorMessage = "Please tell us when do you want to move or select that you aren't sure")]
+        //[Required(ErrorMessage = "Please tell us when do you want to move or select that you aren't sure")]
         public string WhenToMove { get; set; } //1 - Date, 2 - I'm Not Sure
 
         [Required(ErrorMessage = "Select one of the types")]
@@ -85,7 +85,7 @@ namespace ZipMoving.Models
 
         public List<AdditionalService> Additional { get; set; }
 
-        [Required(ErrorMessage = "Write something or select that you have nothing to specify")]
+        //[Required(ErrorMessage = "Write something or select that you have nothing to specify")]
         public string SomethingElse { get; set; } //1 - text, 2 - nothing
 
 
@@ -126,12 +126,18 @@ namespace ZipMoving.Models
 
         public bool ToEmail(int id)
         {
-            OfferDTO offer = Offers.Read(id);
+            //OfferDTO offer = Offers.Read(id);
 
             System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
-               new System.Net.Mail.MailAddress("zipmovingsender@outlook.com", "Questionaire with video Serial:" + offer.Serial),
+               new System.Net.Mail.MailAddress("zipmovingsender@outlook.com", "Questionaire with video Serial:"/* + offer.Serial*/),
                new System.Net.Mail.MailAddress("zipmovingreceiver@outlook.com"));
-            m.Subject = "Questionaire with video Serial:" + offer.Serial;
+            m.Subject = "Questionaire with video Serial:"/* + offer.Serial*/;
+
+            if (WhenToMove == null || WhenToMove == "")
+                WhenToMove = "I'm Not Sure";
+
+            if (SomethingElse == null || SomethingElse == "")
+                SomethingElse = "Thank you, nothing";
 
             string AdditionalService = "";
             for (int i = 0; i < 10; i++)

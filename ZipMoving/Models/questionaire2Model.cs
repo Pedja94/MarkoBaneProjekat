@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Business.DataAccess;
+using Business.DTO;
 
 namespace ZipMoving.Models
 {
@@ -86,6 +88,27 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Write something or select that you have nothing to specify")]
         public string SomethingElse { get; set; } //1 - text, 2 - nothing
 
+        //Inventory
+        public string RoomToAdd { get; set; } //id sobe, ne treba
+        public List<RoomDTO> RoomsToTransfer { get; set; }
+
+        public List<SelectListItem> AllRoomsNames()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            List<RoomDTO> rooms = Rooms.ReadAll();
+
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                listItems.Add(new SelectListItem
+                {
+                    Text = rooms[i].Name,
+                    Value = rooms[i].Id.ToString()
+                });
+            }
+
+            return listItems;
+        }
+
         public List<SelectListItem> GetAllSizes()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -106,6 +129,7 @@ namespace ZipMoving.Models
 
         public questionaire2Model()
         {
+            RoomsToTransfer = new List<RoomDTO>();
             Additional = new List<AdditionalService>();
 
             Additional.Add(new AdditionalService { isChecked = false, text = "Full Parking Service" });
@@ -118,6 +142,148 @@ namespace ZipMoving.Models
             Additional.Add(new AdditionalService { isChecked = false, text = "Jacuzzi" });
             Additional.Add(new AdditionalService { isChecked = false, text = "Safe (More Than 300lbs)" });
             Additional.Add(new AdditionalService { isChecked = false, text = "Aquarium" });
+        }
+
+        public void AddRoom(RoomDTO room)
+        {
+            RoomsToTransfer.Add(room);
+        }
+
+        public bool ToEmail(int id)
+        {
+            OfferDTO offer = Offers.Read(id);
+
+            System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
+               new System.Net.Mail.MailAddress("zipmovingsender@outlook.com", "Questionaire with Inventory:" + offer.Serial),
+               new System.Net.Mail.MailAddress("zipmovingreceiver@outlook.com"));
+            m.Subject = "Questionaire with Inventory:" + offer.Serial;
+
+            if (WhenToMove == null || WhenToMove == "")
+                WhenToMove = "I'm Not Sure";
+
+            if (SomethingElse == null || SomethingElse == "")
+                SomethingElse = "Thank you, nothing";
+
+            string AdditionalService = "";
+            for (int i = 0; i < 10; i++)
+            {
+                if (Additional[i].isChecked == true)
+                    AdditionalService += Additional[i].text + ", ";
+            }
+
+            if (AdditionalService != "")
+                AdditionalService = AdditionalService.Remove(AdditionalService.Length - 2, 2);
+
+            string format = "<B>Full name:</B> {0}</BR>" +
+                            "<B>Type of move:</B> {1}</BR></BR>" +
+                            "<B>--------------------PICKUP INFORMATION--------------------</B></BR>" +
+                            "<B>To move:</B> {2}</BR>" +
+                            "<B>Present on the pickup location:</B> {3}</BR>" +
+                            "<B>ZIP of the pickup location:</B> {4}</BR>" +
+                            "<B>Additional stop off:</B> {5}</BR>" +
+                            "<B>Moving from:</B> {6}</BR>" +
+                            "<B>Size of office garage:</B> {7}</BR>" +
+                            "<B>COI regulation:</B> {8}</BR>" +
+                            "<B>Use of the elevator:</B> {9}</BR>" +
+                            "<B>Use of stairs:</B> {10}</BR>" +
+                            "<B>Parking on the pickup:</B> {11}</BR></BR>" +
+                            "<B>--------------------DELIVERY INFORMATION--------------------</B></BR>" +
+                            "<B>ZIP of the delivery location:</B> {12}</BR>" +
+                            "<B>Moving to:</B> {13}</BR>" +
+                            "<B>COI regulation:</B> {14}</BR>" +
+                            "<B>Use of the elevator:</B> {15}</BR>" +
+                            "<B>Use of stairs:</B> {16}</BR>" +
+                            "<B>Parking on the delivery:</B> {17}</BR>" +
+                            "<B>When to move:</B> {18}</BR>" +
+                            "<B>Pickup date flexible:</B> {19}</BR>" +
+                            "<B>When client can accept the delivery:</B> {20}</BR>" +
+                            "<B>Additional service:</B> {21}</BR>" +
+                            "<B>Something else:</B> {22}</BR>";
+
+            m.Body = string.Format(format, FullName, TypeOfMove, ToMove, PresentAtPickup,
+                                   ZIPPickup, AdditionalStopOffAtPickup, MovingFrom, SizeOfOfficePickup,
+                                   COIPickup, ElevatorPickup, StairsPickup, ParkingPickup,
+                                   ZIPDelivery, MovingTo, COIDelivery, ElevatorDelivery, StairsDelivery,
+                                   ParkingDelivery, WhenToMove, PickupDateFlexibile, AcceptDelivery,
+                                   AdditionalService, SomethingElse);
+
+            m.IsBodyHtml = true;
+            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp-mail.outlook.com");
+            smtp.Credentials = new System.Net.NetworkCredential("zipmovingsender@outlook.com", "sifra123");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.Send(m);
+
+            return true;
+        }
+
+        public int ToDatabase()
+        {
+            InformationDTO infFrom = new InformationDTO()
+            {
+                ZipCode = ZIPPickup,
+                TypeOfBuilding = MovingFrom,
+                SizeOfBuilding = SizeOfOfficePickup,
+                RegureasCOI = COIPickup,
+                UOElevatorFlag = true,
+                UOElevatorDesc = ElevatorPickup,
+                UOStairsFlag = true,
+                UOStairsDesc = StairsPickup,
+                TypeOfAccess = ParkingPickup,
+                Address = "",
+                FullSelfPack = true,
+            };
+
+            InformationDTO infTo = new InformationDTO()
+            {
+                ZipCode = ZIPDelivery,
+                TypeOfBuilding = MovingTo,
+                RegureasCOI = COIDelivery,
+                UOElevatorFlag = true,
+                UOElevatorDesc = ElevatorDelivery,
+                UOStairsFlag = true,
+                UOStairsDesc = StairsDelivery,
+                TypeOfAccess = ParkingDelivery,
+                Address = "",
+                FullSelfPack = true,
+            };
+
+            string[] name = FullName.Split(' ');
+            string AdditionalService = "";
+            for (int i = 0; i < 10; i++)
+            {
+                if (Additional[i].isChecked == true)
+                    AdditionalService += Additional[i].text + ", ";
+            }
+            AdditionalService += SomethingElse;
+
+            OfferDTO offer = new OfferDTO()
+            {
+                Name = name[0],
+                Surname = name[1],
+                Type = TypeOfMove,
+                WhatToMove = ToMove,
+                WhoIsPresentAtPickup = PresentAtPickup,
+                AdditionStop = AdditionalStopOffAtPickup,
+                WhenToMove = WhenToMove,
+                PickUpDateFlex = PickupDateFlexibile,
+                WhenToAcceptdelivery = AcceptDelivery,
+                AdditionalService = AdditionalService,
+                Email = "",
+                EstimateFlag = false,
+                InforamtionFrom = infFrom,
+                InforamtionTo = infTo,
+                InventoryFlag = false,
+                Serial = "",
+                EndDate = null,
+                StartDate = DateTime.Now,
+                VideoFlag = true,
+                VideoLink = "", //treba da se ubaci
+            };
+
+            int val = Offers.Create(offer);
+
+            return val;
         }
     }
 }

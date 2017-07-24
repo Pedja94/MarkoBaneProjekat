@@ -78,7 +78,7 @@ namespace Business
     #endregion
 		
 		public DatabaseDataContext() : 
-				base(global::Business.Properties.Settings.Default.ZipMovingConnectionString, mappingSource)
+				base(global::Business.Properties.Settings.Default.ZipMovingConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}

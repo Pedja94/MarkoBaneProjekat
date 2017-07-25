@@ -40,5 +40,11 @@ namespace ZipMoving.Controllers
             List<ItemDTO> items = Business.DataAccess.Items.ReadAllInRoom(Int32.Parse(room));
             return Json(new { items = items, name = name }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ItemsInRoom(string room)
+        {
+            List<ItemDTO> items = Business.DataAccess.Items.ReadAllInRoom(Int32.Parse(room));
+            return Json(new { items = items }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

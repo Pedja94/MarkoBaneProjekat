@@ -1064,88 +1064,28 @@
 
 
                                             <!-- ROW OF 6 ICONS -->
-                                            <div class="row" style="margin-left:10px; margin-right:10px;">
+                                            <div class="row" style="margin-left:10px; margin-right:10px;" id="targetItems">
 
-                                                <!-- ICON START -->
-                                                <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
-                                                    <div class="col-md-12">
-                                                        <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-bed"> x10</span></span>
-                                                    </div>
-                                                    <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                @*@foreach (var item in Model.ItemsInRoom("3"))
+                                                {
+                                                    <!-- ICON START -->
+                                                    <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
+                                                        <div class="col-md-12">
+                                                            <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-bed" id="ikonica"> x0</span></span>
+                                                            <span class="" style="font-size:x-large;" id="ikonica"><img src="@Request.Url.GetLeftPart(UriPartial.Authority)@item.IconLink.Replace("~", "")"  /> x0</span>
                                                         </div>
+                                                        <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
+                                                            <div class="col-xs-6">
+                                                                <span onclick="plus()" class="glyphiconPlus glyphicon glyphicon-plus"></span>
+                                                            </div>
 
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                            <div class="col-xs-6">
+                                                                <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- ICON END -->
-                                                <!-- ICON START -->
-                                                <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
-                                                    <div class="col-md-12">
-                                                        <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-trash"> x1</span></span>
-                                                    </div>
-                                                    <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
-                                                        </div>
-
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- ICON END -->
-                                                <!-- ICON START -->
-                                                <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
-                                                    <div class="col-md-12">
-                                                        <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-hdd"> x23</span></span>
-                                                    </div>
-                                                    <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
-                                                        </div>
-
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- ICON END -->
-                                                <!-- ICON START -->
-                                                <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
-                                                    <div class="col-md-12">
-                                                        <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-bell"> x5</span></span>
-                                                    </div>
-                                                    <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
-                                                        </div>
-
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- ICON END -->
-                                                <!-- ICON START -->
-                                                <div class="col-md-2 " style="margin-top:10px; margin-bottom:10px;">
-                                                    <div class="col-md-12">
-                                                        <span class="" style="font-size:x-large;"><span class="glyphicon glyphicon-phone"> x2</span></span>
-                                                    </div>
-                                                    <div class="col-md-12 badge" style="display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;">
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconPlus glyphicon glyphicon-plus"></span>
-                                                        </div>
-
-                                                        <div class="col-xs-6">
-                                                            <span class="glyphiconMinus glyphicon glyphicon-minus"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- ICON END -->
+                                                    <!-- ICON END -->
+                                                }*@               
                                             </div>
                                             <!-- END OF ROW OF 6 ICONS -->
                                         </div>
@@ -1241,12 +1181,17 @@
         <!--AddRoom script-->
         <script>
             var localhost = '@Request.Url.GetLeftPart(UriPartial.Authority)';
-            
+
             var urs = urs || {};
             urs.Urls = urs.Urls || {};
             urs.Urls.baseUrl = '@Url.Content("~")';
             urs.Urls.editUserUrl = '@Url.Action("AddRoom", "questionaire2")';
-            
+
+            var urlItems = urlItems || {};
+            urlItems.Urls = urlItems.Urls || {};
+            urlItems.Urls.baseUrl = '@Url.Content("~")';
+            urlItems.Urls.editUserUrl = '@Url.Action("ItemsInRoom", "questionaire2")';
+
         </script>
 
         <script src="~/Scripts/AddRoom.js"></script>

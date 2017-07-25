@@ -1,6 +1,7 @@
 ﻿function AddRoom()
 {
     var room = document.getElementById('RoomToAdd').value;
+
     $.ajax({
         url: urs.Urls.editUserUrl,
         data: { room: room},
@@ -66,116 +67,12 @@
                 });
                 span1.append(span2);
                 var img = $('<img></img>', {
-                    //src: localhost + item.IconLink.replace('~', ''),
-                    src: localhost + "/Content/icons/png/005-piano-1.png",
+                    src: localhost + item.IconLink.replace('~', ''),
                     style: 'width:24px; height:24px',
                     alt: 'Avatar'
                 });
                 span2.append(img);
             });
-
-
-            ////1.
-            //var td = $('<td></td>', {
-            //});
-            //tr.append(td);
-            //var span1 = $('<span></span>', {
-            //    class: 'badge',
-            //    style: 'border-radius:5px;font-size:medium;'
-            //});
-            //td.append(span1);
-            //var span2 = $('<span></span>', {
-            //    text: "x10"
-            //});
-            //span1.append(span2);
-            //var img = $('<img></img>', {
-            //    src: localhost + "/Content/icons/png/001-stool-2.png",
-            //    style: 'width:24px; height:24px',
-            //    alt: 'Avatar'
-            //});
-            //span2.append(img);
-
-            ////2.
-            //var td = $('<td></td>', {
-            //});
-            //tr.append(td);
-            //var span1 = $('<span></span>', {
-            //    class: 'badge',
-            //    style: 'border-radius:5px;font-size:medium;'
-            //});
-            //td.append(span1);
-            //var span2 = $('<span></span>', {
-            //    text: "x1"
-            //});
-            //span1.append(span2);
-            //var img = $('<img></img>', {
-            //    src: localhost + "/Content/icons/png/002-armchair.png",
-            //    style: 'width:24px; height:24px',
-            //    alt: 'Avatar'
-            //});
-            //span2.append(img);
-
-            ////3.
-            //var td = $('<td></td>', {
-            //});
-            //tr.append(td);
-            //var span1 = $('<span></span>', {
-            //    class: 'badge',
-            //    style: 'border-radius:5px;font-size:medium;'
-            //});
-            //td.append(span1);
-            //var span2 = $('<span></span>', {
-            //    text: "x23"
-            //});
-            //span1.append(span2);
-            //var img = $('<img></img>', {
-            //    src: localhost + "/Content/icons/png/003-stool-1.png",
-            //    style: 'width:24px; height:24px',
-            //    alt: 'Avatar'
-            //});
-            //span2.append(img);
-
-            ////4.
-            //var td = $('<td></td>', {
-            //});
-            //tr.append(td);
-            //var span1 = $('<span></span>', {
-            //    class: 'badge',
-            //    style: 'border-radius:5px;font-size:medium;'
-            //});
-            //td.append(span1);
-            //var span2 = $('<span></span>', {
-            //    text: "x5"
-            //});
-            //span1.append(span2);
-            //var img = $('<img></img>', {
-            //    src: localhost + "/Content/icons/png/004-grand-piano.png",
-            //    style: 'width:24px; height:24px',
-            //    alt: 'Avatar'
-            //});
-            //span2.append(img);
-
-            ////5.
-            //var td = $('<td></td>', {
-            //});
-            //tr.append(td);
-            //var span1 = $('<span></span>', {
-            //    class: 'badge',
-            //    style: 'border-radius:5px;font-size:medium;'
-            //});
-            //td.append(span1);
-            //var span2 = $('<span></span>', {
-            //    text: "x2"
-            //});
-            //span1.append(span2);
-            //var img = $('<img></img>', {
-            //    src: localhost + "/Content/icons/png/005-piano-1.png",
-            //    style: 'width:24px; height:24px',
-            //    alt: 'Avatar'
-            //});
-            //span2.append(img);
-
-            //do ovde
        
             var td = $('<td></td>', {
             });
@@ -193,6 +90,78 @@
             span2.attr("title", "Edit Existing Room");
             span1.append(span2);
 
+            span1.click(function () {
+                $("#targetItems").innerHTML = '';
+                $.ajax({
+                    url: urlItems.Urls.editUserUrl,
+                    data: { room: room },
+                    datatype: 'json',
+                    success: function (data) {
+
+                        
+                        
+                        $.each(data.items, function (index, item) {
+                            var div = $('<div></div>', {
+                                class: 'col-md-2',
+                                style: 'margin-top:10px; margin-bottom:10px;'
+                            });
+
+                            var div1 = $('<div></div>', {
+                                class: 'col-md-12',
+                                style: 'margin-top:10px; margin-bottom:10px;'
+                            });
+                            div.append(div1);
+
+                            var div2 = $('<div></div>', {
+                                class: 'col-md-12 badge',
+                                style: 'display:inline-block; margin-top:4px; margin-bottom:4px;background-color:#e8e8e8;'
+                            });
+                            div.append(div2);
+
+                            var span = $('<span></span>', {
+                                class: '',
+                                style: 'font-size:x-large;',
+                                text: 'x0'
+                            });
+                            div1.append(span);
+
+                            var img = $('<img></img>', {
+                                src: localhost + item.IconLink.replace('~', ''),
+                                style: 'width:25px; height:25px',
+                                alt: 'Avatar'
+                            });
+                            span.append(img);
+
+                            var div3 = $('<div></div>', {
+                                class: 'col-xs-6'
+                            });
+                            div2.append(div3);
+
+                            var span1 = $('<span></span>', {
+                                class: 'glyphiconPlus glyphicon glyphicon-plus'
+                            });
+                            div3.append(span1);
+
+                            var div4 = $('<div></div>', {
+                                class: 'col-xs-6'
+                            });
+                            div2.append(div4);
+
+                            var span2 = $('<span></span>', {
+                                class: 'glyphiconMinus glyphicon glyphicon-minus'
+                            });
+                            div4.append(span2);
+
+                            $("#targetItems").append(div);
+                        });         
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+            
+
 
             $("#sobe").append(div);
         },
@@ -201,4 +170,13 @@
         }
     });
     
+}
+
+function plus()
+{
+    var ikonica = document.getElementById('ikonica');
+    var vrednost = ikonica.innerText;
+    vrednost = vrednost.replace('x', '');
+    vrednost++;
+    ikonica.innerText = " x" + vrednost;
 }

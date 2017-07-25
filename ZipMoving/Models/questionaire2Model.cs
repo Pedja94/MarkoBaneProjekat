@@ -109,6 +109,11 @@ namespace ZipMoving.Models
             return listItems;
         }
 
+        public List<ItemDTO> ItemsInRoom(string RoomId)
+        {
+            return Items.ReadAllInRoom(Int32.Parse(RoomId));
+        }
+
         public List<SelectListItem> GetAllSizes()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();

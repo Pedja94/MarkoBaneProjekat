@@ -1,12 +1,23 @@
-﻿function AddRoom()
-{
+﻿var AddedRooms = [];
+var NumberOfRooms = 0;
+var NumberOfItemsMatrix = [];
+for (var i = 0; i < 9; i++)
+    NumberOfItemsMatrix[i] = [];
+
+function AddRoom()
+{  
     var room = document.getElementById('RoomToAdd').value;
 
     $.ajax({
-        url: urs.Urls.editUserUrl,
-        data: { room: room},
+        url: url.Urls.editUserUrl,
+        data: { room : room},
         datatype: 'json',
         success: function (data) {
+            AddedRooms.push(room); //dodajemo id sobe u niz
+            NumberOfRooms++;
+            for (var i = 0; i < data.items.length; i++)
+                NumberOfItemsMatrix[parseInt(room) - 1].push(0); //postavljamo sve iteme u sobi na x0
+
             var div = $('<div></div>', {
                 class: 'col-md-12',
                 style: 'margin-top:20px'
@@ -31,7 +42,7 @@
             var th = $('<th></th>', {
                 class: 'col-md-2',
                 style: 'background-color:#F05F40;color:white; text-align:center; font-weight:700;border-bottom:none;',
-                text: data.name
+                text: data.SelectedRoom.Name
             });
             tr.append(th);
 
@@ -63,7 +74,8 @@
                 });
                 td.append(span1);
                 var span2 = $('<span></span>', {
-                    text: "x0"
+                    text: "x" + NumberOfItemsMatrix[parseInt(room) - 1][index],
+                    id: "SpanEdit" + item.Id
                 });
                 span1.append(span2);
                 var img = $('<img></img>', {
@@ -78,6 +90,7 @@
             });
             tr.append(td);
             var span1 = $('<span></span>', {
+                id: "room" + room
             });
             span1.attr("data-toggle", "modal");
             span1.attr("data-target", "#editModal");
@@ -90,16 +103,104 @@
             span2.attr("title", "Edit Existing Room");
             span1.append(span2);
 
-            span1.click(function () {
-                $("#targetItems").innerHTML = '';
+            span1.click(function () {              
                 $.ajax({
-                    url: urlItems.Urls.editUserUrl,
-                    data: { room: room },
+                    url: url.Urls.editUserUrl,
+                    data: { room : this.id.replace("room", "") },
                     datatype: 'json',
                     success: function (data) {
 
+                        $("#editModal").empty();
+
+                        var ModalDialogDiv = $('<div></div>', {
+                            class: 'modal-dialog',
+                            style: 'width:70%;'
+                        });
+                        $("#editModal").append(ModalDialogDiv);
+
+                        var ModalContentDiv = $('<div></div>', {
+                            class: 'modal-content',
+                        });
+                        ModalDialogDiv.append(ModalContentDiv);
+
+                        var ModalHeaderDiv = $('<div></div>', {
+                            class: 'modal-header',
+                            style: 'background-color:white; color:#F05F40;'
+                        });
+                        ModalContentDiv.append(ModalHeaderDiv);
+
+                        var ModalTitle = $('<h4></h4>', {
+                            class: 'modal-title',
+                            style: 'font-weight:700;',
+                            text: data.SelectedRoom.Name + " Edit"
+                        });
+                        ModalHeaderDiv.append(ModalTitle);
+
+                        var ModalBodyDiv = $('<div></div>', {
+                            class: 'modal-body text-center',
+                            style: 'border-bottom:none;'
+                        });
+                        ModalContentDiv.append(ModalBodyDiv);
+
+                        var ItemsDiv = $('<div></div>', {
+                            class: 'row',
+                            style: 'margin-left:10px; margin-right:10px;',
+                            id: "targetItems"
+                        });
+                        ModalBodyDiv.append(ItemsDiv);
+
+                        var ModalFooterDiv = $('<div></div>', {
+                            class: 'modal-footer',
+                            style: 'text-align:center; border-top:none;'
+                        });
+                        ModalContentDiv.append(ModalFooterDiv);
+
+                        var paragraf = $('<p></p>', {
+                            style: 'font-size:small;color:#F05f40;',
+                            text: "Editing Your Room: After you have finished adding and substracting your items, click on \"Save & Close\" to go back to Your Online Inventory. "
+                        });
+                        ModalFooterDiv.append(paragraf);
+
+                        var SaveClose = $('<button></button>', {
+                            type: 'button',
+                            class: 'btn btn-default',
+                            style: 'color:#F05f40;',
+                            text: "Save & Close",
+                            id: "save" + data.SelectedRoom.Id
+                        });
+                        SaveClose.attr("data-dismiss", "modal");
+                        ModalFooterDiv.append(SaveClose);
+
+                        var Ok = $('<span></span>', {
+                            class: 'glyphicon glyphicon-ok'
+                        });
+                        SaveClose.append(Ok);
+
+                        SaveClose.click(function () {
+                            $.ajax({
+                                url: url.Urls.editUserUrl,
+                                data: { room : this.id.replace("save", "") },
+                                datatype: 'json',
+                                success: function (data) {
+
+                                    $.each(data.items, function (index, item) {
+                                        NumberOfItemsMatrix[parseInt(data.SelectedRoom.Id) - 1][index] = parseInt(($("#item" + item.Id).text()).replace("x", ""));
+                                        //promena u osnovnom editu nije moguca jer smo trenutno u modalu
+                                        $("#SpanEdit" + item.Id).text(($("#item" + item.Id)).text());
+                                        $("#SpanEdit").submit();
+                                    });
+
+                                },
+                                error: function () {
+                                    alert("error");
+                                }
+                            });
+                        });
+
+
                         
-                        
+                        //$("#targetItems").empty();
+
                         $.each(data.items, function (index, item) {
                             var div = $('<div></div>', {
                                 class: 'col-md-2',
@@ -121,7 +222,8 @@
                             var span = $('<span></span>', {
                                 class: '',
                                 style: 'font-size:x-large;',
-                                text: 'x0'
+                                text: "x" + NumberOfItemsMatrix[data.SelectedRoom.Id - 1][index],
+                                id: "item" + item.Id
                             });
                             div1.append(span);
 
@@ -142,6 +244,33 @@
                             });
                             div3.append(span1);
 
+                            //start
+                            span1.click(function () {
+                                $.ajax({
+                                    data: { },
+                                    success: function (data) {
+
+                                        var ikonica = document.getElementById("item" + item.Id);
+                                        var vrednost = ikonica.innerText;
+                                        vrednost = vrednost.replace('x', '');
+                                        vrednost++;
+                                        ikonica.innerText = " x" + vrednost;
+
+                                        //var img2 = $('<img></img>', {
+                                        //    src: localhost + item.IconLink.replace('~', ''),
+                                        //    style: 'width:25px; height:25px',
+                                        //    alt: 'Avatar'
+                                        //});
+                                        //ikonica.append(img2);
+                                        
+                                    },
+                                    error: function () {
+                                        alert("error");
+                                    }
+                                });
+                            });
+                            //end
+
                             var div4 = $('<div></div>', {
                                 class: 'col-xs-6'
                             });
@@ -151,6 +280,28 @@
                                 class: 'glyphiconMinus glyphicon glyphicon-minus'
                             });
                             div4.append(span2);
+
+                            //start
+                            span2.click(function () {
+                                $.ajax({
+                                    data: { },
+                                    success: function (data) {
+
+                                        var ikonica = document.getElementById(item.Id);
+                                        var vrednost = ikonica.innerText;
+                                        vrednost = vrednost.replace('x', '');
+                                        vrednost--;
+                                        if (vrednost < 0)
+                                            vrednost = 0;
+                                        ikonica.innerText = " x" + vrednost;
+
+                                    },
+                                    error: function () {
+                                        alert("error");
+                                    }
+                                });
+                            });
+                            //end
 
                             $("#targetItems").append(div);
                         });         
@@ -172,11 +323,19 @@
     
 }
 
-function plus()
+function Submit()
 {
-    var ikonica = document.getElementById('ikonica');
-    var vrednost = ikonica.innerText;
-    vrednost = vrednost.replace('x', '');
-    vrednost++;
-    ikonica.innerText = " x" + vrednost;
+    $.ajax({
+        url: collect.Urls.editUserUrl,
+        data: { niz: NumberOfItemsMatrix },
+        datatype: 'json',
+        traditional: true,
+        success: function (data) {
+            var kec = data.success;
+        },
+        error: function () {
+            alert("error");
+        }
+    });
+
 }

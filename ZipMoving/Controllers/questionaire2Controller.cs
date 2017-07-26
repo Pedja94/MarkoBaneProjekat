@@ -33,18 +33,19 @@ namespace ZipMoving.Controllers
             return View("~/Views/questionaire2/questionaire2.cshtml", model);
             
         }
-
-        public ActionResult AddRoom(string room)
+        
+        public ActionResult AddEditRoomJson(string room)
         {
-            string name = Rooms.Read(Int32.Parse(room)).Name;
+            RoomDTO SelectedRoom = Rooms.Read(Int32.Parse(room));
             List<ItemDTO> items = Business.DataAccess.Items.ReadAllInRoom(Int32.Parse(room));
-            return Json(new { items = items, name = name }, JsonRequestBehavior.AllowGet);
+            return Json(new { items = items, SelectedRoom = SelectedRoom }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ItemsInRoom(string room)
+        //javascript matrica se prosledjuje kao niz stringova
+        public ActionResult CollectInventory(string[] niz, questionaire2Model model)
         {
-            List<ItemDTO> items = Business.DataAccess.Items.ReadAllInRoom(Int32.Parse(room));
-            return Json(new { items = items }, JsonRequestBehavior.AllowGet);
+            Session["InventoryOffer"] = model.CreateInventoryOffer(niz);
+            return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -89,8 +89,7 @@ namespace ZipMoving.Models
         public string SomethingElse { get; set; } //1 - text, 2 - nothing
 
         //Inventory
-        public string RoomToAdd { get; set; } //id sobe, ne treba
-        public List<RoomDTO> RoomsToTransfer { get; set; }
+        public string InventoryOffer { get; set; }
 
         public List<SelectListItem> AllRoomsNames()
         {
@@ -134,7 +133,7 @@ namespace ZipMoving.Models
 
         public questionaire2Model()
         {
-            RoomsToTransfer = new List<RoomDTO>();
+            //RoomsToTransfer = new List<RoomDTO>();
             Additional = new List<AdditionalService>();
 
             Additional.Add(new AdditionalService { isChecked = false, text = "Full Parking Service" });
@@ -149,9 +148,39 @@ namespace ZipMoving.Models
             Additional.Add(new AdditionalService { isChecked = false, text = "Aquarium" });
         }
 
-        public void AddRoom(RoomDTO room)
+        public string CreateInventoryOffer(string[] niz)
         {
-            RoomsToTransfer.Add(room);
+            InventoryOffer = "";
+            for (int i = 0; i < niz.Length; i++)
+            {
+                if (niz[i] != "")
+                {
+                    InventoryOffer += "<BR>";
+                    RoomDTO soba = Rooms.Read(i + 1);
+                    InventoryOffer += "<B>" + soba.Name + ": </B>";
+
+                    List<ItemDTO> items = Items.ReadAllInRoom(i + 1);
+                    string[] ItemsNames = new string[items.Count];
+                    int j = 0;
+                    foreach (ItemDTO item in items)
+                    {
+                        ItemsNames[j++] = item.Name;
+                    }
+
+                    char[] zarez = { ',' };
+                    string[] splited = niz[i].Split(zarez);
+
+                    for (j = 0; j < ItemsNames.Length; j++)
+                    {
+                        if (Int32.Parse(splited[j]) != 0)
+                            InventoryOffer += ItemsNames[j] + " <B>x" + splited[j] + "</B>; ";
+                    }
+                    InventoryOffer += "</BR>";
+
+                }
+                
+            }
+            return InventoryOffer;
         }
 
         public bool ToEmail(int id)
@@ -203,14 +232,16 @@ namespace ZipMoving.Models
                             "<B>Pickup date flexible:</B> {19}</BR>" +
                             "<B>When client can accept the delivery:</B> {20}</BR>" +
                             "<B>Additional service:</B> {21}</BR>" +
-                            "<B>Something else:</B> {22}</BR>";
+                            "<B>Something else:</B> {22}</BR>" +
+                            "<B>--------------------INVENTORY--------------------</B></BR>" +
+                            "{23}</BR>";
 
             m.Body = string.Format(format, FullName, TypeOfMove, ToMove, PresentAtPickup,
                                    ZIPPickup, AdditionalStopOffAtPickup, MovingFrom, SizeOfOfficePickup,
                                    COIPickup, ElevatorPickup, StairsPickup, ParkingPickup,
                                    ZIPDelivery, MovingTo, COIDelivery, ElevatorDelivery, StairsDelivery,
                                    ParkingDelivery, WhenToMove, PickupDateFlexibile, AcceptDelivery,
-                                   AdditionalService, SomethingElse);
+                                   AdditionalService, SomethingElse, HttpContext.Current.Session["InventoryOffer"].ToString());
 
             m.IsBodyHtml = true;
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp-mail.outlook.com");

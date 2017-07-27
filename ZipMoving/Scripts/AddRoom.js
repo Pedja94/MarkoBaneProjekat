@@ -1,6 +1,4 @@
-﻿var AddedRooms = [];
-var NumberOfRooms = 0;
-var NumberOfItemsMatrix = [];
+﻿var NumberOfItemsMatrix = [];
 for (var i = 0; i < 9; i++)
     NumberOfItemsMatrix[i] = [];
 
@@ -13,8 +11,6 @@ function AddRoom()
         data: { room : room},
         datatype: 'json',
         success: function (data) {
-            AddedRooms.push(room); //dodajemo id sobe u niz
-            NumberOfRooms++;
             for (var i = 0; i < data.items.length; i++)
                 NumberOfItemsMatrix[parseInt(room) - 1].push(0); //postavljamo sve iteme u sobi na x0
 
@@ -187,10 +183,23 @@ function AddRoom()
                                     $.each(data.items, function (index, item) {
                                         NumberOfItemsMatrix[parseInt(data.SelectedRoom.Id) - 1][index] = parseInt(($("#item" + item.Id).text()).replace("x", ""));
                                         //promena u osnovnom editu nije moguca jer smo trenutno u modalu
-                                        //$("#SpanEdit" + item.Id).text(($("#item" + item.Id)).text());
-                                        //$("#SpanEdit").submit();
                                         $("#SpanEdit" + item.Id).html($("#SpanEdit" + item.Id).html().replace($("#SpanEdit" + item.Id).text(), $("#item" + item.Id).text()));
                                     });
+
+
+                                    $.ajax({
+                                        url: collect.Urls.editUserUrl,
+                                        data: { soba: parseInt(data.SelectedRoom.Id), niz: NumberOfItemsMatrix[parseInt(data.SelectedRoom.Id) - 1] },
+                                        datatype: 'json',
+                                        traditional: true,
+                                        success: function (data) {
+                                            var kec = data.success;
+                                        },
+                                        error: function () {
+                                            alert("error");
+                                        }
+                                    });
+
 
                                 },
                                 error: function () {
@@ -327,21 +336,4 @@ function AddRoom()
         }
     });
     
-}
-
-function Submit()
-{
-    $.ajax({
-        url: collect.Urls.editUserUrl,
-        data: { niz: NumberOfItemsMatrix },
-        datatype: 'json',
-        traditional: true,
-        success: function (data) {
-            var kec = data.success;
-        },
-        error: function () {
-            alert("error");
-        }
-    });
-
 }

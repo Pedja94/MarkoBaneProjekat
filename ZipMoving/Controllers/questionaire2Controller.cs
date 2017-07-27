@@ -41,10 +41,9 @@ namespace ZipMoving.Controllers
             return Json(new { items = items, SelectedRoom = SelectedRoom }, JsonRequestBehavior.AllowGet);
         }
 
-        //javascript matrica se prosledjuje kao niz stringova
-        public ActionResult CollectInventory(string[] niz, questionaire2Model model)
+        public ActionResult CollectInventory(int soba, int[] niz, questionaire2Model model)
         {
-            Session["InventoryOffer"] = model.CreateInventoryOffer(niz);
+            Session["InventoryOffer"] = model.CreateInventoryOffer(soba, niz);
             return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
         }
     }

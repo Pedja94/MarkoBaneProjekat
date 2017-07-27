@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Business.DataAccess;
 using Business.DTO;
+using System.Collections;
 
 namespace ZipMoving.Models
 {
@@ -54,7 +55,6 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Select one of the types")]
         public string ParkingPickup { get; set; } //1 - Private Driveway, 2 - Street Parking in Front, 3 - Street Parking Further Away
 
-
         //Delivery Information
         [Required(ErrorMessage = "Field can't be empty")]
         public string ZIPDelivery { get; set; }
@@ -89,7 +89,7 @@ namespace ZipMoving.Models
         public string SomethingElse { get; set; } //1 - text, 2 - nothing
 
         //Inventory
-        public string InventoryOffer { get; set; }
+        public Hashtable InventoryHashTable { get; set; }
 
         public List<SelectListItem> AllRoomsNames()
         {
@@ -133,7 +133,7 @@ namespace ZipMoving.Models
 
         public questionaire2Model()
         {
-            //RoomsToTransfer = new List<RoomDTO>();
+            InventoryHashTable = new Hashtable();
             Additional = new List<AdditionalService>();
 
             Additional.Add(new AdditionalService { isChecked = false, text = "Full Parking Service" });
@@ -148,39 +148,54 @@ namespace ZipMoving.Models
             Additional.Add(new AdditionalService { isChecked = false, text = "Aquarium" });
         }
 
-        public string CreateInventoryOffer(string[] niz)
+        public Hashtable CreateInventoryOffer(int soba, int[] niz)
         {
-            InventoryOffer = "";
-            for (int i = 0; i < niz.Length; i++)
+            //ako je vec napravljena hash tabela, vratiti je iz sesije
+            if (HttpContext.Current.Session["InventoryOffer"] != null)
+                InventoryHashTable = (Hashtable)HttpContext.Current.Session["InventoryOffer"];
+
+            if (!InventoryHashTable.ContainsKey(soba))
             {
-                if (niz[i] != "")
-                {
-                    InventoryOffer += "<BR>";
-                    RoomDTO soba = Rooms.Read(i + 1);
-                    InventoryOffer += "<B>" + soba.Name + ": </B>";
-
-                    List<ItemDTO> items = Items.ReadAllInRoom(i + 1);
-                    string[] ItemsNames = new string[items.Count];
-                    int j = 0;
-                    foreach (ItemDTO item in items)
-                    {
-                        ItemsNames[j++] = item.Name;
-                    }
-
-                    char[] zarez = { ',' };
-                    string[] splited = niz[i].Split(zarez);
-
-                    for (j = 0; j < ItemsNames.Length; j++)
-                    {
-                        if (Int32.Parse(splited[j]) != 0)
-                            InventoryOffer += ItemsNames[j] + " <B>x" + splited[j] + "</B>; ";
-                    }
-                    InventoryOffer += "</BR>";
-
-                }
-                
+                InventoryHashTable.Add(soba, niz);
             }
+            else
+            {
+                InventoryHashTable.Remove(soba);
+                InventoryHashTable.Add(soba, niz);
+            }
+
+            return InventoryHashTable;
+        }
+
+        public string InventoryOfferString()
+        {
+            Hashtable tabela = (Hashtable)HttpContext.Current.Session["InventoryOffer"];
+            string InventoryOffer = "";
+
+            foreach (DictionaryEntry pair in tabela)
+            {
+                InventoryOffer += "<BR>";
+                RoomDTO soba = Rooms.Read((int)pair.Key);
+                InventoryOffer += "<B>" + soba.Name + ": </B>";
+
+                List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
+                string[] ItemsNames = new string[items.Count];
+                int j = 0;
+                foreach (ItemDTO item in items)
+                {
+                    ItemsNames[j++] = item.Name;
+                }
+
+                for (j = 0; j < ItemsNames.Length; j++)
+                {
+                    if (((int[])pair.Value)[j] != 0)
+                        InventoryOffer += ItemsNames[j] + " <B>x" + ((int[])pair.Value)[j] + "</B>; ";
+                }
+                InventoryOffer += "</BR>";
+            }
+
             return InventoryOffer;
+
         }
 
         public bool ToEmail(int id)
@@ -241,7 +256,7 @@ namespace ZipMoving.Models
                                    COIPickup, ElevatorPickup, StairsPickup, ParkingPickup,
                                    ZIPDelivery, MovingTo, COIDelivery, ElevatorDelivery, StairsDelivery,
                                    ParkingDelivery, WhenToMove, PickupDateFlexibile, AcceptDelivery,
-                                   AdditionalService, SomethingElse, HttpContext.Current.Session["InventoryOffer"].ToString());
+                                   AdditionalService, SomethingElse, InventoryOfferString());
 
             m.IsBodyHtml = true;
             System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient("smtp-mail.outlook.com");

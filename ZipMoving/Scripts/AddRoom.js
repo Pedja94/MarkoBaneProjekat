@@ -11,12 +11,23 @@ function AddRoom()
         data: { room : room},
         datatype: 'json',
         success: function (data) {
+
+            //cistimo niz, za slucaj da je soba obrisana pa da se ponovo dodaje
+            if (NumberOfItemsMatrix[parseInt(room) - 1] != null)
+            {
+                while (NumberOfItemsMatrix[parseInt(room) - 1].length > 0) {
+                    NumberOfItemsMatrix[parseInt(room) - 1].pop();
+                }
+            }
+            
             for (var i = 0; i < data.items.length; i++)
                 NumberOfItemsMatrix[parseInt(room) - 1].push(0); //postavljamo sve iteme u sobi na x0
 
+            //sacuvan i id sobe koja je dodata zbog brisanja
             var div = $('<div></div>', {
                 class: 'col-md-12',
-                style: 'margin-top:20px'
+                style: 'margin-top:20px',
+                id: "AddedRoom" + data.SelectedRoom.Id
             });
 
             var table = $('<table></table>', {
@@ -99,6 +110,44 @@ function AddRoom()
             span2.attr("data-toggle", "tooltip");
             span2.attr("title", "Edit Existing Room");
             span1.append(span2);
+
+
+            //START brisanje sobe
+
+            var td = $('<td></td>', {
+            });
+            tr.append(td);
+            var span3 = $('<span></span>', {
+                class: 'glyphicon glyphicon-trash',
+                style: 'cursor:pointer;color:#F05F40;',
+                id: "Delete" + data.SelectedRoom.Id
+            });
+            span3.attr("data-toggle", "tooltip");
+            span3.attr("title", "Delete Room");
+            td.append(span3);
+
+            span3.click(function () {
+                var id = this.id.replace("Delete", "");
+                $.ajax({
+                    data: {},
+                    datatype: 'json',
+                    success: function (data) {
+                        document.getElementById("AddedRoom" + id).remove();
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            });
+
+            //END brisanje sobe
+
+
+
+
+
+
+
 
             span1.click(function () {              
                 $.ajax({

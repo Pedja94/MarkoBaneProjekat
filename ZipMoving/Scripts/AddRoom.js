@@ -11,14 +11,6 @@ function AddRoom()
         data: { room : room},
         datatype: 'json',
         success: function (data) {
-
-            //cistimo niz, za slucaj da je soba obrisana pa da se ponovo dodaje
-            if (NumberOfItemsMatrix[parseInt(room) - 1] != null)
-            {
-                while (NumberOfItemsMatrix[parseInt(room) - 1].length > 0) {
-                    NumberOfItemsMatrix[parseInt(room) - 1].pop();
-                }
-            }
             
             for (var i = 0; i < data.items.length; i++)
                 NumberOfItemsMatrix[parseInt(room) - 1].push(0); //postavljamo sve iteme u sobi na x0
@@ -133,6 +125,10 @@ function AddRoom()
                     datatype: 'json',
                     success: function (data) {
                         document.getElementById("AddedRoom" + id).remove();
+
+                        while (NumberOfItemsMatrix[parseInt(id) - 1].length > 0) {
+                            NumberOfItemsMatrix[parseInt(id) - 1].pop();
+                        }
                     },
                     error: function () {
                         alert("error");

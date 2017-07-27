@@ -84,6 +84,7 @@ function AddRoom()
                     alt: 'Avatar'
                 });
                 span2.append(img);
+
             });
        
             var td = $('<td></td>', {
@@ -186,8 +187,9 @@ function AddRoom()
                                     $.each(data.items, function (index, item) {
                                         NumberOfItemsMatrix[parseInt(data.SelectedRoom.Id) - 1][index] = parseInt(($("#item" + item.Id).text()).replace("x", ""));
                                         //promena u osnovnom editu nije moguca jer smo trenutno u modalu
-                                        $("#SpanEdit" + item.Id).text(($("#item" + item.Id)).text());
-                                        $("#SpanEdit").submit();
+                                        //$("#SpanEdit" + item.Id).text(($("#item" + item.Id)).text());
+                                        //$("#SpanEdit").submit();
+                                        $("#SpanEdit" + item.Id).html($("#SpanEdit" + item.Id).html().replace($("#SpanEdit" + item.Id).text(), $("#item" + item.Id).text()));
                                     });
 
                                 },
@@ -254,8 +256,10 @@ function AddRoom()
                                         var vrednost = ikonica.innerText;
                                         vrednost = vrednost.replace('x', '');
                                         vrednost++;
-                                        ikonica.innerText = " x" + vrednost;
+                                        //ikonica.innerText = " x" + vrednost;
 
+                                        //malo bezveze napravljeno, menjano zbog ove slike bitno da radi
+                                        $("#item" + item.Id).html($("#item" + item.Id).html().replace(ikonica.innerText, " x" + vrednost));
                                         //var img2 = $('<img></img>', {
                                         //    src: localhost + item.IconLink.replace('~', ''),
                                         //    style: 'width:25px; height:25px',
@@ -287,13 +291,15 @@ function AddRoom()
                                     data: { },
                                     success: function (data) {
 
-                                        var ikonica = document.getElementById(item.Id);
+                                        var ikonica = document.getElementById("item" + item.Id);
                                         var vrednost = ikonica.innerText;
                                         vrednost = vrednost.replace('x', '');
                                         vrednost--;
                                         if (vrednost < 0)
                                             vrednost = 0;
-                                        ikonica.innerText = " x" + vrednost;
+                                        //ikonica.innerText = " x" + vrednost;
+
+                                        $("#item" + item.Id).html($("#item" + item.Id).html().replace(ikonica.innerText, " x" + vrednost));
 
                                     },
                                     error: function () {

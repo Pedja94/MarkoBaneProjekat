@@ -167,6 +167,14 @@ namespace ZipMoving.Models
             return InventoryHashTable;
         }
 
+        public Hashtable RemoveRoomFromHash(int soba)
+        {
+            InventoryHashTable = (Hashtable)HttpContext.Current.Session["InventoryOffer"];
+            InventoryHashTable.Remove(soba);
+
+            return InventoryHashTable;
+        }
+
         public string InventoryOfferString()
         {
             Hashtable tabela = (Hashtable)HttpContext.Current.Session["InventoryOffer"];

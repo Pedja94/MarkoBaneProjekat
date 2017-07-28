@@ -46,5 +46,13 @@ namespace ZipMoving.Controllers
             Session["InventoryOffer"] = model.CreateInventoryOffer(soba, niz);
             return Json(new { success = 1 }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult RemoveRoomJson(int soba, questionaire2Model model)
+        {
+            RoomDTO SelectedRoom = Rooms.Read(soba);
+            Session["InventoryOffer"] = model.RemoveRoomFromHash(soba);
+            //List<ItemDTO> items = Business.DataAccess.Items.ReadAllInRoom(Int32.Parse(room));
+            return Json(new { SelectedRoom = SelectedRoom }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

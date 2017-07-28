@@ -1105,15 +1105,15 @@
                                                     @*@Html.DropDownListFor(m => m.RoomToAdd, Model.AllRoomsNames(), new { @size = "1", @class = "form-control", @id = "RoomToAdd" })*@
                                                     @*<input type="text" class="form-control" id="text" placeholder="Room Name:">*@
                                                     <select class="form-control" name="rooms" id="RoomToAdd">
-                                                        <option value="1"> Living room </option>
-                                                        <option value="2"> Office </option>
-                                                        <option value="3"> Dining Room </option>
-                                                        <option value="4"> Bedroom </option>
-                                                        <option value="5"> Porch/Outdoor </option>
-                                                        <option value="6"> Appliances </option>
-                                                        <option value="7"> Kitchen </option>
-                                                        <option value="8"> Nursery </option>
-                                                        <option value="9"> Garage </option>                                       
+                                                        <option value="1" id="RoomToAdd1"> Living room </option>
+                                                        <option value="2" id="RoomToAdd2"> Office </option>
+                                                        <option value="3" id="RoomToAdd3"> Dining Room </option>
+                                                        <option value="4" id="RoomToAdd4"> Bedroom </option>
+                                                        <option value="5" id="RoomToAdd5"> Porch/Outdoor </option>
+                                                        <option value="6" id="RoomToAdd6"> Appliances </option>
+                                                        <option value="7" id="RoomToAdd7"> Kitchen </option>
+                                                        <option value="8" id="RoomToAdd8"> Nursery </option>
+                                                        <option value="9" id="RoomToAdd9"> Garage </option>                                       
                                                     </select>
                                                 </div>
                                             </div>
@@ -1179,6 +1179,11 @@
             collect.Urls = collect.Urls || {};
             collect.Urls.baseUrl = '@Url.Content("~")';
             collect.Urls.editUserUrl = '@Url.Action("CollectInventory", "questionaire2")';
+
+            var remove = remove || {};
+            remove.Urls = remove.Urls || {};
+            remove.Urls.baseUrl = '@Url.Content("~")';
+            remove.Urls.editUserUrl = '@Url.Action("RemoveRoomJson", "questionaire2")';
 
         </script>
 

@@ -15,6 +15,9 @@ function AddRoom()
             for (var i = 0; i < data.items.length; i++)
                 NumberOfItemsMatrix[parseInt(room) - 1].push(0); //postavljamo sve iteme u sobi na x0
 
+            //brisanje sobe iz dropdown-a
+            document.getElementById("RoomToAdd" + data.SelectedRoom.Id).remove();
+
             //sacuvan i id sobe koja je dodata zbog brisanja
             var div = $('<div></div>', {
                 class: 'col-md-12',
@@ -121,7 +124,8 @@ function AddRoom()
             span3.click(function () {
                 var id = this.id.replace("Delete", "");
                 $.ajax({
-                    data: {},
+                    url: remove.Urls.editUserUrl,
+                    data: { soba: parseInt(id) },
                     datatype: 'json',
                     success: function (data) {
                         document.getElementById("AddedRoom" + id).remove();
@@ -129,6 +133,15 @@ function AddRoom()
                         while (NumberOfItemsMatrix[parseInt(id) - 1].length > 0) {
                             NumberOfItemsMatrix[parseInt(id) - 1].pop();
                         }
+
+                        //vracanje sobe u dropdown
+                        var option = $('<option></option>', {
+                            value: id,
+                            id: "RoomToAdd" + id,
+                            text: data.SelectedRoom.Name
+                        });
+
+                        $("#RoomToAdd").append(option);
                     },
                     error: function () {
                         alert("error");

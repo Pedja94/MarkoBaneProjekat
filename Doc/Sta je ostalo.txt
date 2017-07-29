@@ -9,7 +9,7 @@ Sta treba da se doradi na sajtu:
 -logika za zip kodove (da li je moguce da se seli iz mesta u mesto i da li je mesto u okviru radiusa)
 -da se popuni baza podacima(cene, zip kodovi, stvari)
 -za bookInHomeEstimate raspored na stanici
--da se dodaju polja za email i adresu u questionaire 1 i 2
+-da se dodaju polja za email i adresu u questionaire 1 i 2 
 -pocenta stranica slike i tekst
 
 Administratorski panel:
@@ -19,3 +19,5 @@ Administratorski panel:
 -panel za prostorije i stvari
 -panel za offere
 -panel za calendar(kalendar iz bookInHomeEstimate)
+
+v1y@UM]K dragan1

@@ -39,12 +39,18 @@ namespace Business
     partial void InsertAdmin(Admin instance);
     partial void UpdateAdmin(Admin instance);
     partial void DeleteAdmin(Admin instance);
+    partial void InsertArea(Area instance);
+    partial void UpdateArea(Area instance);
+    partial void DeleteArea(Area instance);
     partial void InsertCalendar(Calendar instance);
     partial void UpdateCalendar(Calendar instance);
     partial void DeleteCalendar(Calendar instance);
-    partial void InsertFromTo(FromTo instance);
-    partial void UpdateFromTo(FromTo instance);
-    partial void DeleteFromTo(FromTo instance);
+    partial void InsertFromToArea(FromToArea instance);
+    partial void UpdateFromToArea(FromToArea instance);
+    partial void DeleteFromToArea(FromToArea instance);
+    partial void InsertFromToRadius(FromToRadius instance);
+    partial void UpdateFromToRadius(FromToRadius instance);
+    partial void DeleteFromToRadius(FromToRadius instance);
     partial void InsertInformation(Information instance);
     partial void UpdateInformation(Information instance);
     partial void DeleteInformation(Information instance);
@@ -63,9 +69,12 @@ namespace Business
     partial void InsertOffer(Offer instance);
     partial void UpdateOffer(Offer instance);
     partial void DeleteOffer(Offer instance);
-    partial void InsertPricePerMile(PricePerMile instance);
-    partial void UpdatePricePerMile(PricePerMile instance);
-    partial void DeletePricePerMile(PricePerMile instance);
+    partial void InsertPricePerLbsBetween(PricePerLbsBetween instance);
+    partial void UpdatePricePerLbsBetween(PricePerLbsBetween instance);
+    partial void DeletePricePerLbsBetween(PricePerLbsBetween instance);
+    partial void InsertPricePerLbsInside(PricePerLbsInside instance);
+    partial void UpdatePricePerLbsInside(PricePerLbsInside instance);
+    partial void DeletePricePerLbsInside(PricePerLbsInside instance);
     partial void InsertRadius(Radius instance);
     partial void UpdateRadius(Radius instance);
     partial void DeleteRadius(Radius instance);
@@ -78,7 +87,7 @@ namespace Business
     #endregion
 		
 		public DatabaseDataContext() : 
-				base(global::Business.Properties.Settings.Default.ZipMovingConnectionString1, mappingSource)
+				base(global::Business.Properties.Settings.Default.ZipMovingConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -131,6 +140,14 @@ namespace Business
 			}
 		}
 		
+		public System.Data.Linq.Table<Area> Areas
+		{
+			get
+			{
+				return this.GetTable<Area>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Calendar> Calendars
 		{
 			get
@@ -139,11 +156,19 @@ namespace Business
 			}
 		}
 		
-		public System.Data.Linq.Table<FromTo> FromTos
+		public System.Data.Linq.Table<FromToArea> FromToAreas
 		{
 			get
 			{
-				return this.GetTable<FromTo>();
+				return this.GetTable<FromToArea>();
+			}
+		}
+		
+		public System.Data.Linq.Table<FromToRadius> FromToRadius
+		{
+			get
+			{
+				return this.GetTable<FromToRadius>();
 			}
 		}
 		
@@ -195,11 +220,19 @@ namespace Business
 			}
 		}
 		
-		public System.Data.Linq.Table<PricePerMile> PricePerMiles
+		public System.Data.Linq.Table<PricePerLbsBetween> PricePerLbsBetweens
 		{
 			get
 			{
-				return this.GetTable<PricePerMile>();
+				return this.GetTable<PricePerLbsBetween>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PricePerLbsInside> PricePerLbsInsides
+		{
+			get
+			{
+				return this.GetTable<PricePerLbsInside>();
 			}
 		}
 		
@@ -372,11 +405,9 @@ namespace Business
 		
 		private string _Code;
 		
-		private decimal _StateNum;
+		private System.Nullable<int> _AreaId;
 		
-		private System.Nullable<int> _RadiusId;
-		
-		private EntityRef<Radius> _Radius;
+		private EntityRef<Area> _Area;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -386,15 +417,13 @@ namespace Business
     partial void OnIdChanged();
     partial void OnCodeChanging(string value);
     partial void OnCodeChanged();
-    partial void OnStateNumChanging(decimal value);
-    partial void OnStateNumChanged();
-    partial void OnRadiusIdChanging(System.Nullable<int> value);
-    partial void OnRadiusIdChanged();
+    partial void OnAreaIdChanging(System.Nullable<int> value);
+    partial void OnAreaIdChanged();
     #endregion
 		
 		public ZipCode()
 		{
-			this._Radius = default(EntityRef<Radius>);
+			this._Area = default(EntityRef<Area>);
 			OnCreated();
 		}
 		
@@ -438,80 +467,60 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StateNum", DbType="Decimal(3,0) NOT NULL")]
-		public decimal StateNum
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AreaId", DbType="Int")]
+		public System.Nullable<int> AreaId
 		{
 			get
 			{
-				return this._StateNum;
+				return this._AreaId;
 			}
 			set
 			{
-				if ((this._StateNum != value))
+				if ((this._AreaId != value))
 				{
-					this.OnStateNumChanging(value);
-					this.SendPropertyChanging();
-					this._StateNum = value;
-					this.SendPropertyChanged("StateNum");
-					this.OnStateNumChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RadiusId", DbType="Int")]
-		public System.Nullable<int> RadiusId
-		{
-			get
-			{
-				return this._RadiusId;
-			}
-			set
-			{
-				if ((this._RadiusId != value))
-				{
-					if (this._Radius.HasLoadedOrAssignedValue)
+					if (this._Area.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnRadiusIdChanging(value);
+					this.OnAreaIdChanging(value);
 					this.SendPropertyChanging();
-					this._RadiusId = value;
-					this.SendPropertyChanged("RadiusId");
-					this.OnRadiusIdChanged();
+					this._AreaId = value;
+					this.SendPropertyChanged("AreaId");
+					this.OnAreaIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_ZipCode", Storage="_Radius", ThisKey="RadiusId", OtherKey="Id", IsForeignKey=true, DeleteRule="SET NULL")]
-		public Radius Radius
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_ZipCode", Storage="_Area", ThisKey="AreaId", OtherKey="Id", IsForeignKey=true)]
+		public Area Area
 		{
 			get
 			{
-				return this._Radius.Entity;
+				return this._Area.Entity;
 			}
 			set
 			{
-				Radius previousValue = this._Radius.Entity;
+				Area previousValue = this._Area.Entity;
 				if (((previousValue != value) 
-							|| (this._Radius.HasLoadedOrAssignedValue == false)))
+							|| (this._Area.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Radius.Entity = null;
+						this._Area.Entity = null;
 						previousValue.ZipCodes.Remove(this);
 					}
-					this._Radius.Entity = value;
+					this._Area.Entity = value;
 					if ((value != null))
 					{
 						value.ZipCodes.Add(this);
-						this._RadiusId = value.Id;
+						this._AreaId = value.Id;
 					}
 					else
 					{
-						this._RadiusId = default(Nullable<int>);
+						this._AreaId = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("Radius");
+					this.SendPropertyChanged("Area");
 				}
 			}
 		}
@@ -723,6 +732,269 @@ namespace Business
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Area")]
+	public partial class Area : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private decimal _Number;
+		
+		private System.Nullable<int> _RadiusId;
+		
+		private EntitySet<ZipCode> _ZipCodes;
+		
+		private EntitySet<FromToArea> _FromToAreas;
+		
+		private EntitySet<FromToArea> _FromToAreas1;
+		
+		private EntitySet<FromToArea> _FromToAreas2;
+		
+		private EntityRef<Radius> _Radius;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNumberChanging(decimal value);
+    partial void OnNumberChanged();
+    partial void OnRadiusIdChanging(System.Nullable<int> value);
+    partial void OnRadiusIdChanged();
+    #endregion
+		
+		public Area()
+		{
+			this._ZipCodes = new EntitySet<ZipCode>(new Action<ZipCode>(this.attach_ZipCodes), new Action<ZipCode>(this.detach_ZipCodes));
+			this._FromToAreas = new EntitySet<FromToArea>(new Action<FromToArea>(this.attach_FromToAreas), new Action<FromToArea>(this.detach_FromToAreas));
+			this._FromToAreas1 = new EntitySet<FromToArea>(new Action<FromToArea>(this.attach_FromToAreas1), new Action<FromToArea>(this.detach_FromToAreas1));
+			this._FromToAreas2 = new EntitySet<FromToArea>(new Action<FromToArea>(this.attach_FromToAreas2), new Action<FromToArea>(this.detach_FromToAreas2));
+			this._Radius = default(EntityRef<Radius>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Number", DbType="Decimal(3,0) NOT NULL")]
+		public decimal Number
+		{
+			get
+			{
+				return this._Number;
+			}
+			set
+			{
+				if ((this._Number != value))
+				{
+					this.OnNumberChanging(value);
+					this.SendPropertyChanging();
+					this._Number = value;
+					this.SendPropertyChanged("Number");
+					this.OnNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RadiusId", DbType="Int")]
+		public System.Nullable<int> RadiusId
+		{
+			get
+			{
+				return this._RadiusId;
+			}
+			set
+			{
+				if ((this._RadiusId != value))
+				{
+					if (this._Radius.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRadiusIdChanging(value);
+					this.SendPropertyChanging();
+					this._RadiusId = value;
+					this.SendPropertyChanged("RadiusId");
+					this.OnRadiusIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_ZipCode", Storage="_ZipCodes", ThisKey="Id", OtherKey="AreaId")]
+		public EntitySet<ZipCode> ZipCodes
+		{
+			get
+			{
+				return this._ZipCodes;
+			}
+			set
+			{
+				this._ZipCodes.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea", Storage="_FromToAreas", ThisKey="Id", OtherKey="AreaFromId")]
+		public EntitySet<FromToArea> FromToAreas
+		{
+			get
+			{
+				return this._FromToAreas;
+			}
+			set
+			{
+				this._FromToAreas.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea1", Storage="_FromToAreas1", ThisKey="Id", OtherKey="AreaToId")]
+		public EntitySet<FromToArea> FromToAreas1
+		{
+			get
+			{
+				return this._FromToAreas1;
+			}
+			set
+			{
+				this._FromToAreas1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea2", Storage="_FromToAreas2", ThisKey="Id", OtherKey="AreaToId")]
+		public EntitySet<FromToArea> FromToAreas2
+		{
+			get
+			{
+				return this._FromToAreas2;
+			}
+			set
+			{
+				this._FromToAreas2.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_Area", Storage="_Radius", ThisKey="RadiusId", OtherKey="Id", IsForeignKey=true)]
+		public Radius Radius
+		{
+			get
+			{
+				return this._Radius.Entity;
+			}
+			set
+			{
+				Radius previousValue = this._Radius.Entity;
+				if (((previousValue != value) 
+							|| (this._Radius.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Radius.Entity = null;
+						previousValue.Areas.Remove(this);
+					}
+					this._Radius.Entity = value;
+					if ((value != null))
+					{
+						value.Areas.Add(this);
+						this._RadiusId = value.Id;
+					}
+					else
+					{
+						this._RadiusId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Radius");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_ZipCodes(ZipCode entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = this;
+		}
+		
+		private void detach_ZipCodes(ZipCode entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = null;
+		}
+		
+		private void attach_FromToAreas(FromToArea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = this;
+		}
+		
+		private void detach_FromToAreas(FromToArea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = null;
+		}
+		
+		private void attach_FromToAreas1(FromToArea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area1 = this;
+		}
+		
+		private void detach_FromToAreas1(FromToArea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area1 = null;
+		}
+		
+		private void attach_FromToAreas2(FromToArea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area2 = this;
+		}
+		
+		private void detach_FromToAreas2(FromToArea entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area2 = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Calendar")]
 	public partial class Calendar : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -881,8 +1153,265 @@ namespace Business
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FromTo")]
-	public partial class FromTo : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FromToArea")]
+	public partial class FromToArea : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _AreaFromId;
+		
+		private System.Nullable<int> _AreaToId;
+		
+		private EntitySet<PricePerLbsInside> _PricePerLbsInsides;
+		
+		private EntityRef<Area> _Area;
+		
+		private EntityRef<Area> _Area1;
+		
+		private EntityRef<Area> _Area2;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnAreaFromIdChanging(System.Nullable<int> value);
+    partial void OnAreaFromIdChanged();
+    partial void OnAreaToIdChanging(System.Nullable<int> value);
+    partial void OnAreaToIdChanged();
+    #endregion
+		
+		public FromToArea()
+		{
+			this._PricePerLbsInsides = new EntitySet<PricePerLbsInside>(new Action<PricePerLbsInside>(this.attach_PricePerLbsInsides), new Action<PricePerLbsInside>(this.detach_PricePerLbsInsides));
+			this._Area = default(EntityRef<Area>);
+			this._Area1 = default(EntityRef<Area>);
+			this._Area2 = default(EntityRef<Area>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AreaFromId", DbType="Int")]
+		public System.Nullable<int> AreaFromId
+		{
+			get
+			{
+				return this._AreaFromId;
+			}
+			set
+			{
+				if ((this._AreaFromId != value))
+				{
+					if (this._Area.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAreaFromIdChanging(value);
+					this.SendPropertyChanging();
+					this._AreaFromId = value;
+					this.SendPropertyChanged("AreaFromId");
+					this.OnAreaFromIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AreaToId", DbType="Int")]
+		public System.Nullable<int> AreaToId
+		{
+			get
+			{
+				return this._AreaToId;
+			}
+			set
+			{
+				if ((this._AreaToId != value))
+				{
+					if ((this._Area1.HasLoadedOrAssignedValue || this._Area2.HasLoadedOrAssignedValue))
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAreaToIdChanging(value);
+					this.SendPropertyChanging();
+					this._AreaToId = value;
+					this.SendPropertyChanged("AreaToId");
+					this.OnAreaToIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FromToArea_PricePerLbsInside", Storage="_PricePerLbsInsides", ThisKey="Id", OtherKey="FromTo")]
+		public EntitySet<PricePerLbsInside> PricePerLbsInsides
+		{
+			get
+			{
+				return this._PricePerLbsInsides;
+			}
+			set
+			{
+				this._PricePerLbsInsides.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea", Storage="_Area", ThisKey="AreaFromId", OtherKey="Id", IsForeignKey=true)]
+		public Area Area
+		{
+			get
+			{
+				return this._Area.Entity;
+			}
+			set
+			{
+				Area previousValue = this._Area.Entity;
+				if (((previousValue != value) 
+							|| (this._Area.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Area.Entity = null;
+						previousValue.FromToAreas.Remove(this);
+					}
+					this._Area.Entity = value;
+					if ((value != null))
+					{
+						value.FromToAreas.Add(this);
+						this._AreaFromId = value.Id;
+					}
+					else
+					{
+						this._AreaFromId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Area");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea1", Storage="_Area1", ThisKey="AreaToId", OtherKey="Id", IsForeignKey=true)]
+		public Area Area1
+		{
+			get
+			{
+				return this._Area1.Entity;
+			}
+			set
+			{
+				Area previousValue = this._Area1.Entity;
+				if (((previousValue != value) 
+							|| (this._Area1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Area1.Entity = null;
+						previousValue.FromToAreas1.Remove(this);
+					}
+					this._Area1.Entity = value;
+					if ((value != null))
+					{
+						value.FromToAreas1.Add(this);
+						this._AreaToId = value.Id;
+					}
+					else
+					{
+						this._AreaToId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Area1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea2", Storage="_Area2", ThisKey="AreaToId", OtherKey="Id", IsForeignKey=true)]
+		public Area Area2
+		{
+			get
+			{
+				return this._Area2.Entity;
+			}
+			set
+			{
+				Area previousValue = this._Area2.Entity;
+				if (((previousValue != value) 
+							|| (this._Area2.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Area2.Entity = null;
+						previousValue.FromToAreas2.Remove(this);
+					}
+					this._Area2.Entity = value;
+					if ((value != null))
+					{
+						value.FromToAreas2.Add(this);
+						this._AreaToId = value.Id;
+					}
+					else
+					{
+						this._AreaToId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Area2");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_PricePerLbsInsides(PricePerLbsInside entity)
+		{
+			this.SendPropertyChanging();
+			entity.FromToArea = this;
+		}
+		
+		private void detach_PricePerLbsInsides(PricePerLbsInside entity)
+		{
+			this.SendPropertyChanging();
+			entity.FromToArea = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FromToRadius")]
+	public partial class FromToRadius : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -893,7 +1422,7 @@ namespace Business
 		
 		private System.Nullable<int> _RadiusToId;
 		
-		private EntitySet<MovingPrice> _MovingPrices;
+		private EntitySet<PricePerLbsBetween> _PricePerLbsBetweens;
 		
 		private EntityRef<Radius> _Radius;
 		
@@ -911,9 +1440,9 @@ namespace Business
     partial void OnRadiusToIdChanged();
     #endregion
 		
-		public FromTo()
+		public FromToRadius()
 		{
-			this._MovingPrices = new EntitySet<MovingPrice>(new Action<MovingPrice>(this.attach_MovingPrices), new Action<MovingPrice>(this.detach_MovingPrices));
+			this._PricePerLbsBetweens = new EntitySet<PricePerLbsBetween>(new Action<PricePerLbsBetween>(this.attach_PricePerLbsBetweens), new Action<PricePerLbsBetween>(this.detach_PricePerLbsBetweens));
 			this._Radius = default(EntityRef<Radius>);
 			this._Radius1 = default(EntityRef<Radius>);
 			OnCreated();
@@ -987,20 +1516,20 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FromTo_MovingPrice", Storage="_MovingPrices", ThisKey="Id", OtherKey="FromToId")]
-		public EntitySet<MovingPrice> MovingPrices
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FromToRadius_PricePerLbsBetween", Storage="_PricePerLbsBetweens", ThisKey="Id", OtherKey="FromTo")]
+		public EntitySet<PricePerLbsBetween> PricePerLbsBetweens
 		{
 			get
 			{
-				return this._MovingPrices;
+				return this._PricePerLbsBetweens;
 			}
 			set
 			{
-				this._MovingPrices.Assign(value);
+				this._PricePerLbsBetweens.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromTo", Storage="_Radius", ThisKey="RadiusFromId", OtherKey="Id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromToRadius", Storage="_Radius", ThisKey="RadiusFromId", OtherKey="Id", IsForeignKey=true)]
 		public Radius Radius
 		{
 			get
@@ -1017,12 +1546,12 @@ namespace Business
 					if ((previousValue != null))
 					{
 						this._Radius.Entity = null;
-						previousValue.FromTos.Remove(this);
+						previousValue.FromToRadius.Remove(this);
 					}
 					this._Radius.Entity = value;
 					if ((value != null))
 					{
-						value.FromTos.Add(this);
+						value.FromToRadius.Add(this);
 						this._RadiusFromId = value.Id;
 					}
 					else
@@ -1034,7 +1563,7 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromTo1", Storage="_Radius1", ThisKey="RadiusToId", OtherKey="Id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromToRadius1", Storage="_Radius1", ThisKey="RadiusToId", OtherKey="Id", IsForeignKey=true)]
 		public Radius Radius1
 		{
 			get
@@ -1051,12 +1580,12 @@ namespace Business
 					if ((previousValue != null))
 					{
 						this._Radius1.Entity = null;
-						previousValue.FromTos1.Remove(this);
+						previousValue.FromToRadius1.Remove(this);
 					}
 					this._Radius1.Entity = value;
 					if ((value != null))
 					{
-						value.FromTos1.Add(this);
+						value.FromToRadius1.Add(this);
 						this._RadiusToId = value.Id;
 					}
 					else
@@ -1088,16 +1617,16 @@ namespace Business
 			}
 		}
 		
-		private void attach_MovingPrices(MovingPrice entity)
+		private void attach_PricePerLbsBetweens(PricePerLbsBetween entity)
 		{
 			this.SendPropertyChanging();
-			entity.FromTo = this;
+			entity.FromToRadius = this;
 		}
 		
-		private void detach_MovingPrices(MovingPrice entity)
+		private void detach_PricePerLbsBetweens(PricePerLbsBetween entity)
 		{
 			this.SendPropertyChanging();
-			entity.FromTo = null;
+			entity.FromToRadius = null;
 		}
 	}
 	
@@ -2137,13 +2666,7 @@ namespace Business
 		
 		private int _Id;
 		
-		private string _StateNums;
-		
 		private System.Nullable<int> _FromToId;
-		
-		private EntitySet<PricePerMile> _PricePerMiles;
-		
-		private EntityRef<FromTo> _FromTo;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2151,16 +2674,12 @@ namespace Business
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnStateNumsChanging(string value);
-    partial void OnStateNumsChanged();
     partial void OnFromToIdChanging(System.Nullable<int> value);
     partial void OnFromToIdChanged();
     #endregion
 		
 		public MovingPrice()
 		{
-			this._PricePerMiles = new EntitySet<PricePerMile>(new Action<PricePerMile>(this.attach_PricePerMiles), new Action<PricePerMile>(this.detach_PricePerMiles));
-			this._FromTo = default(EntityRef<FromTo>);
 			OnCreated();
 		}
 		
@@ -2184,26 +2703,6 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StateNums", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string StateNums
-		{
-			get
-			{
-				return this._StateNums;
-			}
-			set
-			{
-				if ((this._StateNums != value))
-				{
-					this.OnStateNumsChanging(value);
-					this.SendPropertyChanging();
-					this._StateNums = value;
-					this.SendPropertyChanged("StateNums");
-					this.OnStateNumsChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromToId", DbType="Int")]
 		public System.Nullable<int> FromToId
 		{
@@ -2215,62 +2714,11 @@ namespace Business
 			{
 				if ((this._FromToId != value))
 				{
-					if (this._FromTo.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnFromToIdChanging(value);
 					this.SendPropertyChanging();
 					this._FromToId = value;
 					this.SendPropertyChanged("FromToId");
 					this.OnFromToIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MovingPrice_PricePerMile", Storage="_PricePerMiles", ThisKey="Id", OtherKey="MovingPricesId")]
-		public EntitySet<PricePerMile> PricePerMiles
-		{
-			get
-			{
-				return this._PricePerMiles;
-			}
-			set
-			{
-				this._PricePerMiles.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FromTo_MovingPrice", Storage="_FromTo", ThisKey="FromToId", OtherKey="Id", IsForeignKey=true)]
-		public FromTo FromTo
-		{
-			get
-			{
-				return this._FromTo.Entity;
-			}
-			set
-			{
-				FromTo previousValue = this._FromTo.Entity;
-				if (((previousValue != value) 
-							|| (this._FromTo.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FromTo.Entity = null;
-						previousValue.MovingPrices.Remove(this);
-					}
-					this._FromTo.Entity = value;
-					if ((value != null))
-					{
-						value.MovingPrices.Add(this);
-						this._FromToId = value.Id;
-					}
-					else
-					{
-						this._FromToId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("FromTo");
 				}
 			}
 		}
@@ -2293,18 +2741,6 @@ namespace Business
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_PricePerMiles(PricePerMile entity)
-		{
-			this.SendPropertyChanging();
-			entity.MovingPrice = this;
-		}
-		
-		private void detach_PricePerMiles(PricePerMile entity)
-		{
-			this.SendPropertyChanging();
-			entity.MovingPrice = null;
 		}
 	}
 	
@@ -3125,23 +3561,23 @@ namespace Business
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PricePerMile")]
-	public partial class PricePerMile : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PricePerLbsBetween")]
+	public partial class PricePerLbsBetween : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _Id;
 		
-		private int _MilesFrom;
+		private int _LbsFrom;
 		
-		private int _MilesTo;
+		private int _LbsTo;
 		
 		private decimal _Cost;
 		
-		private System.Nullable<int> _MovingPricesId;
+		private System.Nullable<int> _FromTo;
 		
-		private EntityRef<MovingPrice> _MovingPrice;
+		private EntityRef<FromToRadius> _FromToRadius;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3149,19 +3585,19 @@ namespace Business
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnMilesFromChanging(int value);
-    partial void OnMilesFromChanged();
-    partial void OnMilesToChanging(int value);
-    partial void OnMilesToChanged();
+    partial void OnLbsFromChanging(int value);
+    partial void OnLbsFromChanged();
+    partial void OnLbsToChanging(int value);
+    partial void OnLbsToChanged();
     partial void OnCostChanging(decimal value);
     partial void OnCostChanged();
-    partial void OnMovingPricesIdChanging(System.Nullable<int> value);
-    partial void OnMovingPricesIdChanged();
+    partial void OnFromToChanging(System.Nullable<int> value);
+    partial void OnFromToChanged();
     #endregion
 		
-		public PricePerMile()
+		public PricePerLbsBetween()
 		{
-			this._MovingPrice = default(EntityRef<MovingPrice>);
+			this._FromToRadius = default(EntityRef<FromToRadius>);
 			OnCreated();
 		}
 		
@@ -3185,42 +3621,42 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MilesFrom", DbType="Int NOT NULL")]
-		public int MilesFrom
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LbsFrom", DbType="Int NOT NULL")]
+		public int LbsFrom
 		{
 			get
 			{
-				return this._MilesFrom;
+				return this._LbsFrom;
 			}
 			set
 			{
-				if ((this._MilesFrom != value))
+				if ((this._LbsFrom != value))
 				{
-					this.OnMilesFromChanging(value);
+					this.OnLbsFromChanging(value);
 					this.SendPropertyChanging();
-					this._MilesFrom = value;
-					this.SendPropertyChanged("MilesFrom");
-					this.OnMilesFromChanged();
+					this._LbsFrom = value;
+					this.SendPropertyChanged("LbsFrom");
+					this.OnLbsFromChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MilesTo", DbType="Int NOT NULL")]
-		public int MilesTo
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LbsTo", DbType="Int NOT NULL")]
+		public int LbsTo
 		{
 			get
 			{
-				return this._MilesTo;
+				return this._LbsTo;
 			}
 			set
 			{
-				if ((this._MilesTo != value))
+				if ((this._LbsTo != value))
 				{
-					this.OnMilesToChanging(value);
+					this.OnLbsToChanging(value);
 					this.SendPropertyChanging();
-					this._MilesTo = value;
-					this.SendPropertyChanged("MilesTo");
-					this.OnMilesToChanged();
+					this._LbsTo = value;
+					this.SendPropertyChanged("LbsTo");
+					this.OnLbsToChanged();
 				}
 			}
 		}
@@ -3245,60 +3681,259 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MovingPricesId", DbType="Int")]
-		public System.Nullable<int> MovingPricesId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromTo", DbType="Int")]
+		public System.Nullable<int> FromTo
 		{
 			get
 			{
-				return this._MovingPricesId;
+				return this._FromTo;
 			}
 			set
 			{
-				if ((this._MovingPricesId != value))
+				if ((this._FromTo != value))
 				{
-					if (this._MovingPrice.HasLoadedOrAssignedValue)
+					if (this._FromToRadius.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnMovingPricesIdChanging(value);
+					this.OnFromToChanging(value);
 					this.SendPropertyChanging();
-					this._MovingPricesId = value;
-					this.SendPropertyChanged("MovingPricesId");
-					this.OnMovingPricesIdChanged();
+					this._FromTo = value;
+					this.SendPropertyChanged("FromTo");
+					this.OnFromToChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MovingPrice_PricePerMile", Storage="_MovingPrice", ThisKey="MovingPricesId", OtherKey="Id", IsForeignKey=true)]
-		public MovingPrice MovingPrice
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FromToRadius_PricePerLbsBetween", Storage="_FromToRadius", ThisKey="FromTo", OtherKey="Id", IsForeignKey=true)]
+		public FromToRadius FromToRadius
 		{
 			get
 			{
-				return this._MovingPrice.Entity;
+				return this._FromToRadius.Entity;
 			}
 			set
 			{
-				MovingPrice previousValue = this._MovingPrice.Entity;
+				FromToRadius previousValue = this._FromToRadius.Entity;
 				if (((previousValue != value) 
-							|| (this._MovingPrice.HasLoadedOrAssignedValue == false)))
+							|| (this._FromToRadius.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._MovingPrice.Entity = null;
-						previousValue.PricePerMiles.Remove(this);
+						this._FromToRadius.Entity = null;
+						previousValue.PricePerLbsBetweens.Remove(this);
 					}
-					this._MovingPrice.Entity = value;
+					this._FromToRadius.Entity = value;
 					if ((value != null))
 					{
-						value.PricePerMiles.Add(this);
-						this._MovingPricesId = value.Id;
+						value.PricePerLbsBetweens.Add(this);
+						this._FromTo = value.Id;
 					}
 					else
 					{
-						this._MovingPricesId = default(Nullable<int>);
+						this._FromTo = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("MovingPrice");
+					this.SendPropertyChanged("FromToRadius");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PricePerLbsInside")]
+	public partial class PricePerLbsInside : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Nullable<int> _LbsFrom;
+		
+		private System.Nullable<int> _LbsTo;
+		
+		private System.Nullable<decimal> _Cost;
+		
+		private System.Nullable<int> _FromTo;
+		
+		private EntityRef<FromToArea> _FromToArea;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnLbsFromChanging(System.Nullable<int> value);
+    partial void OnLbsFromChanged();
+    partial void OnLbsToChanging(System.Nullable<int> value);
+    partial void OnLbsToChanged();
+    partial void OnCostChanging(System.Nullable<decimal> value);
+    partial void OnCostChanged();
+    partial void OnFromToChanging(System.Nullable<int> value);
+    partial void OnFromToChanged();
+    #endregion
+		
+		public PricePerLbsInside()
+		{
+			this._FromToArea = default(EntityRef<FromToArea>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LbsFrom", DbType="Int")]
+		public System.Nullable<int> LbsFrom
+		{
+			get
+			{
+				return this._LbsFrom;
+			}
+			set
+			{
+				if ((this._LbsFrom != value))
+				{
+					this.OnLbsFromChanging(value);
+					this.SendPropertyChanging();
+					this._LbsFrom = value;
+					this.SendPropertyChanged("LbsFrom");
+					this.OnLbsFromChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LbsTo", DbType="Int")]
+		public System.Nullable<int> LbsTo
+		{
+			get
+			{
+				return this._LbsTo;
+			}
+			set
+			{
+				if ((this._LbsTo != value))
+				{
+					this.OnLbsToChanging(value);
+					this.SendPropertyChanging();
+					this._LbsTo = value;
+					this.SendPropertyChanged("LbsTo");
+					this.OnLbsToChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(18,4)")]
+		public System.Nullable<decimal> Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromTo", DbType="Int")]
+		public System.Nullable<int> FromTo
+		{
+			get
+			{
+				return this._FromTo;
+			}
+			set
+			{
+				if ((this._FromTo != value))
+				{
+					if (this._FromToArea.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFromToChanging(value);
+					this.SendPropertyChanging();
+					this._FromTo = value;
+					this.SendPropertyChanged("FromTo");
+					this.OnFromToChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FromToArea_PricePerLbsInside", Storage="_FromToArea", ThisKey="FromTo", OtherKey="Id", IsForeignKey=true)]
+		public FromToArea FromToArea
+		{
+			get
+			{
+				return this._FromToArea.Entity;
+			}
+			set
+			{
+				FromToArea previousValue = this._FromToArea.Entity;
+				if (((previousValue != value) 
+							|| (this._FromToArea.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FromToArea.Entity = null;
+						previousValue.PricePerLbsInsides.Remove(this);
+					}
+					this._FromToArea.Entity = value;
+					if ((value != null))
+					{
+						value.PricePerLbsInsides.Add(this);
+						this._FromTo = value.Id;
+					}
+					else
+					{
+						this._FromTo = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("FromToArea");
 				}
 			}
 		}
@@ -3332,15 +3967,15 @@ namespace Business
 		
 		private int _Id;
 		
-		private string _Name;
+		private int _RadiusNumber;
 		
-		private string _StateNums;
+		private string _Region;
 		
-		private EntitySet<ZipCode> _ZipCodes;
+		private EntitySet<Area> _Areas;
 		
-		private EntitySet<FromTo> _FromTos;
+		private EntitySet<FromToRadius> _FromToRadius;
 		
-		private EntitySet<FromTo> _FromTos1;
+		private EntitySet<FromToRadius> _FromToRadius1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -3348,17 +3983,17 @@ namespace Business
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnStateNumsChanging(string value);
-    partial void OnStateNumsChanged();
+    partial void OnRadiusNumberChanging(int value);
+    partial void OnRadiusNumberChanged();
+    partial void OnRegionChanging(string value);
+    partial void OnRegionChanged();
     #endregion
 		
 		public Radius()
 		{
-			this._ZipCodes = new EntitySet<ZipCode>(new Action<ZipCode>(this.attach_ZipCodes), new Action<ZipCode>(this.detach_ZipCodes));
-			this._FromTos = new EntitySet<FromTo>(new Action<FromTo>(this.attach_FromTos), new Action<FromTo>(this.detach_FromTos));
-			this._FromTos1 = new EntitySet<FromTo>(new Action<FromTo>(this.attach_FromTos1), new Action<FromTo>(this.detach_FromTos1));
+			this._Areas = new EntitySet<Area>(new Action<Area>(this.attach_Areas), new Action<Area>(this.detach_Areas));
+			this._FromToRadius = new EntitySet<FromToRadius>(new Action<FromToRadius>(this.attach_FromToRadius), new Action<FromToRadius>(this.detach_FromToRadius));
+			this._FromToRadius1 = new EntitySet<FromToRadius>(new Action<FromToRadius>(this.attach_FromToRadius1), new Action<FromToRadius>(this.detach_FromToRadius1));
 			OnCreated();
 		}
 		
@@ -3382,82 +4017,82 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50)")]
-		public string Name
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RadiusNumber", DbType="Int NOT NULL")]
+		public int RadiusNumber
 		{
 			get
 			{
-				return this._Name;
+				return this._RadiusNumber;
 			}
 			set
 			{
-				if ((this._Name != value))
+				if ((this._RadiusNumber != value))
 				{
-					this.OnNameChanging(value);
+					this.OnRadiusNumberChanging(value);
 					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
+					this._RadiusNumber = value;
+					this.SendPropertyChanged("RadiusNumber");
+					this.OnRadiusNumberChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StateNums", DbType="NVarChar(50)")]
-		public string StateNums
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Region", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Region
 		{
 			get
 			{
-				return this._StateNums;
+				return this._Region;
 			}
 			set
 			{
-				if ((this._StateNums != value))
+				if ((this._Region != value))
 				{
-					this.OnStateNumsChanging(value);
+					this.OnRegionChanging(value);
 					this.SendPropertyChanging();
-					this._StateNums = value;
-					this.SendPropertyChanged("StateNums");
-					this.OnStateNumsChanged();
+					this._Region = value;
+					this.SendPropertyChanged("Region");
+					this.OnRegionChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_ZipCode", Storage="_ZipCodes", ThisKey="Id", OtherKey="RadiusId")]
-		public EntitySet<ZipCode> ZipCodes
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_Area", Storage="_Areas", ThisKey="Id", OtherKey="RadiusId")]
+		public EntitySet<Area> Areas
 		{
 			get
 			{
-				return this._ZipCodes;
+				return this._Areas;
 			}
 			set
 			{
-				this._ZipCodes.Assign(value);
+				this._Areas.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromTo", Storage="_FromTos", ThisKey="Id", OtherKey="RadiusFromId")]
-		public EntitySet<FromTo> FromTos
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromToRadius", Storage="_FromToRadius", ThisKey="Id", OtherKey="RadiusFromId")]
+		public EntitySet<FromToRadius> FromToRadius
 		{
 			get
 			{
-				return this._FromTos;
+				return this._FromToRadius;
 			}
 			set
 			{
-				this._FromTos.Assign(value);
+				this._FromToRadius.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromTo1", Storage="_FromTos1", ThisKey="Id", OtherKey="RadiusToId")]
-		public EntitySet<FromTo> FromTos1
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_FromToRadius1", Storage="_FromToRadius1", ThisKey="Id", OtherKey="RadiusToId")]
+		public EntitySet<FromToRadius> FromToRadius1
 		{
 			get
 			{
-				return this._FromTos1;
+				return this._FromToRadius1;
 			}
 			set
 			{
-				this._FromTos1.Assign(value);
+				this._FromToRadius1.Assign(value);
 			}
 		}
 		
@@ -3481,37 +4116,37 @@ namespace Business
 			}
 		}
 		
-		private void attach_ZipCodes(ZipCode entity)
+		private void attach_Areas(Area entity)
 		{
 			this.SendPropertyChanging();
 			entity.Radius = this;
 		}
 		
-		private void detach_ZipCodes(ZipCode entity)
+		private void detach_Areas(Area entity)
 		{
 			this.SendPropertyChanging();
 			entity.Radius = null;
 		}
 		
-		private void attach_FromTos(FromTo entity)
+		private void attach_FromToRadius(FromToRadius entity)
 		{
 			this.SendPropertyChanging();
 			entity.Radius = this;
 		}
 		
-		private void detach_FromTos(FromTo entity)
+		private void detach_FromToRadius(FromToRadius entity)
 		{
 			this.SendPropertyChanging();
 			entity.Radius = null;
 		}
 		
-		private void attach_FromTos1(FromTo entity)
+		private void attach_FromToRadius1(FromToRadius entity)
 		{
 			this.SendPropertyChanging();
 			entity.Radius1 = this;
 		}
 		
-		private void detach_FromTos1(FromTo entity)
+		private void detach_FromToRadius1(FromToRadius entity)
 		{
 			this.SendPropertyChanging();
 			entity.Radius1 = null;

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZipMoving" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\GitHubProjects\MarkoBaneProjekat\Database\ZipMoving.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;D:\Pedja\Projekti\Zip Moving\ZipMoving\Database\ZipMoving.mdf&quot;;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.AccessoriesTable" Member="AccessoriesTables">
     <Type Name="AccessoriesTable">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -12,9 +12,8 @@
     <Type Name="ZipCode">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Code" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="StateNum" Type="System.Decimal" DbType="Decimal(3,0) NOT NULL" CanBeNull="false" />
-      <Column Name="RadiusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Radius_ZipCode" Member="Radius" ThisKey="RadiusId" OtherKey="Id" Type="Radius" IsForeignKey="true" DeleteRule="SET NULL" />
+      <Column Name="AreaId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Area_ZipCode" Member="Area" ThisKey="AreaId" OtherKey="Id" Type="Area" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Admin" Member="Admins">
@@ -27,6 +26,18 @@
       <Association Name="Admin_Offer" Member="Offers" ThisKey="Id" OtherKey="AdminId" Type="Offer" />
     </Type>
   </Table>
+  <Table Name="dbo.Area" Member="Areas">
+    <Type Name="Area">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Number" Type="System.Decimal" DbType="Decimal(3,0) NOT NULL" CanBeNull="false" />
+      <Column Name="RadiusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Area_ZipCode" Member="ZipCodes" ThisKey="Id" OtherKey="AreaId" Type="ZipCode" />
+      <Association Name="Area_FromToArea" Member="FromToAreas" ThisKey="Id" OtherKey="AreaFromId" Type="FromToArea" />
+      <Association Name="Area_FromToArea1" Member="FromToAreas1" ThisKey="Id" OtherKey="AreaToId" Type="FromToArea" />
+      <Association Name="Area_FromToArea2" Member="FromToAreas2" ThisKey="Id" OtherKey="AreaToId" Type="FromToArea" />
+      <Association Name="Radius_Area" Member="Radius" ThisKey="RadiusId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.Calendar" Member="Calendars">
     <Type Name="Calendar">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -36,14 +47,25 @@
       <Column Name="LateAfternoon" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.FromTo" Member="FromTos">
-    <Type Name="FromTo">
+  <Table Name="dbo.FromToArea" Member="FromToAreas">
+    <Type Name="FromToArea">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AreaFromId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="AreaToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FromToArea_PricePerLbsInside" Member="PricePerLbsInsides" ThisKey="Id" OtherKey="FromTo" Type="PricePerLbsInside" />
+      <Association Name="Area_FromToArea" Member="Area" ThisKey="AreaFromId" OtherKey="Id" Type="Area" IsForeignKey="true" />
+      <Association Name="Area_FromToArea1" Member="Area1" ThisKey="AreaToId" OtherKey="Id" Type="Area" IsForeignKey="true" />
+      <Association Name="Area_FromToArea2" Member="Area2" ThisKey="AreaToId" OtherKey="Id" Type="Area" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FromToRadius" Member="FromToRadius">
+    <Type Name="FromToRadius">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RadiusFromId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="RadiusToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="FromTo_MovingPrice" Member="MovingPrices" ThisKey="Id" OtherKey="FromToId" Type="MovingPrice" />
-      <Association Name="Radius_FromTo" Member="Radius" ThisKey="RadiusFromId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
-      <Association Name="Radius_FromTo1" Member="Radius1" ThisKey="RadiusToId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
+      <Association Name="FromToRadius_PricePerLbsBetween" Member="PricePerLbsBetweens" ThisKey="Id" OtherKey="FromTo" Type="PricePerLbsBetween" />
+      <Association Name="Radius_FromToRadius" Member="Radius" ThisKey="RadiusFromId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
+      <Association Name="Radius_FromToRadius1" Member="Radius1" ThisKey="RadiusToId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Information" Member="Informations">
@@ -98,10 +120,7 @@
   <Table Name="dbo.MovingPrices" Member="MovingPrices">
     <Type Name="MovingPrice">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="StateNums" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="FromToId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="MovingPrice_PricePerMile" Member="PricePerMiles" ThisKey="Id" OtherKey="MovingPricesId" Type="PricePerMile" />
-      <Association Name="FromTo_MovingPrice" Member="FromTo" ThisKey="FromToId" OtherKey="Id" Type="FromTo" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Offer" Member="Offers">
@@ -138,24 +157,34 @@
       <Association Name="Information_Offer1" Member="Information1" ThisKey="InformationToId" OtherKey="Id" Type="Information" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PricePerMile" Member="PricePerMiles">
-    <Type Name="PricePerMile">
+  <Table Name="dbo.PricePerLbsBetween" Member="PricePerLbsBetweens">
+    <Type Name="PricePerLbsBetween">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="MilesFrom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MilesTo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LbsFrom" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LbsTo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,4) NOT NULL" CanBeNull="false" />
-      <Column Name="MovingPricesId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="MovingPrice_PricePerMile" Member="MovingPrice" ThisKey="MovingPricesId" OtherKey="Id" Type="MovingPrice" IsForeignKey="true" />
+      <Column Name="FromTo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FromToRadius_PricePerLbsBetween" Member="FromToRadius" ThisKey="FromTo" OtherKey="Id" Type="FromToRadius" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PricePerLbsInside" Member="PricePerLbsInsides">
+    <Type Name="PricePerLbsInside">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="LbsFrom" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="LbsTo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(18,4)" CanBeNull="true" />
+      <Column Name="FromTo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="FromToArea_PricePerLbsInside" Member="FromToArea" ThisKey="FromTo" OtherKey="Id" Type="FromToArea" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Radius" Member="Radius">
     <Type Name="Radius">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="StateNums" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="Radius_ZipCode" Member="ZipCodes" ThisKey="Id" OtherKey="RadiusId" Type="ZipCode" />
-      <Association Name="Radius_FromTo" Member="FromTos" ThisKey="Id" OtherKey="RadiusFromId" Type="FromTo" />
-      <Association Name="Radius_FromTo1" Member="FromTos1" ThisKey="Id" OtherKey="RadiusToId" Type="FromTo" />
+      <Column Name="RadiusNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Region" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Radius_Area" Member="Areas" ThisKey="Id" OtherKey="RadiusId" Type="Area" />
+      <Association Name="Radius_FromToRadius" Member="FromToRadius" ThisKey="Id" OtherKey="RadiusFromId" Type="FromToRadius" />
+      <Association Name="Radius_FromToRadius1" Member="FromToRadius1" ThisKey="Id" OtherKey="RadiusToId" Type="FromToRadius" />
     </Type>
   </Table>
   <Table Name="dbo.Room" Member="Rooms">

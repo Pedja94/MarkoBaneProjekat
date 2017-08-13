@@ -95,6 +95,7 @@ namespace Business.DataAccess
 
                 areaRead = new AreaDTO()
                 {
+                    Id = query.Id,
                     Number = query.Number,
                     RadiusId = (int)query.RadiusId
                 };

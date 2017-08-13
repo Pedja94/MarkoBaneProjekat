@@ -24,7 +24,8 @@ namespace Business.DataFiling
 
                     foreach(FileInfo file in Files)
                     {
-                        int areaNumber = Int32.Parse(file.Name);
+                        string[] niz = file.Name.Split('.');
+                        int areaNumber = Int32.Parse(niz[0]);
                         AreaDTO area = new AreaDTO()
                         {
                             Id = 1,

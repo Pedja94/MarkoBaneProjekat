@@ -13,7 +13,7 @@ namespace Business.DataFiling
 {
     public static class PricePerLbsBetweenData
     {
-        public static void PricePerLbsInsideFiling()
+        public static void PricePerLbsBetweenFiling()
         {
             string[] region = new string[] { "GA", "IL", "MD" };
             int[] priceLevels = new int[] { 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 12000, 14000, 16000, 18000, 20000, 22000 };

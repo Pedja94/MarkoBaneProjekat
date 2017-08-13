@@ -50,6 +50,7 @@ namespace Business.DataAccess
 
                 pricePerLbsBetweenRead = new PricePerLbsBetweenDTO()
                 {
+                    Id = query.Id,
                     LbsFrom = query.LbsFrom,
                     LbsTo = query.LbsTo,
                     Cost = query.Cost,

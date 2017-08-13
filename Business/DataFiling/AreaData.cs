@@ -17,14 +17,15 @@ namespace Business.DataFiling
             string[] region = new string[3] { "GA", "IL", "MD" };
             
             for (int i = 0; i < 3; i++)
-                for (int j = 0; j <=4; j++)
+                for (int j = 1; j <=4; j++)
                 { 
                     DirectoryInfo d = new DirectoryInfo("D:\\Zip Codes\\General\\"+region[i] + "\\" + region[i] + " " + j.ToString());
                     FileInfo[] Files = d.GetFiles("*.txt");
 
                     foreach(FileInfo file in Files)
                     {
-                        int areaNumber = Int32.Parse(file.Name);
+                        string[] niz = file.Name.Split('.');
+                        int areaNumber = Int32.Parse(niz[0]);
                         AreaDTO area = new AreaDTO()
                         {
                             Id = 1,

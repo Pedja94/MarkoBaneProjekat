@@ -48,6 +48,7 @@ namespace Business.DataAccess
 
                 zipCodeRead = new ZipCodeDTO()
                 {
+                    Id = query.Id,
                     Code = query.Code,
                     AreaId = (int)query.AreaId
                 };

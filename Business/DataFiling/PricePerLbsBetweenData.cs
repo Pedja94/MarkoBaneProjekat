@@ -34,18 +34,25 @@ namespace Business.DataFiling
                         string readZipCodes = File.ReadAllText(path);
                         string[] lines = readZipCodes.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
+                        int radiusFrom = Radiuses.ReadIdFromRegionAndNumber(region[i], j);
+                        int radiusTo = Radiuses.ReadIdFromRegionAndNumber(regionTo, radiusNumberTo);
+
+                        int fromTo = Radiuses.CreateFromToRadius(radiusFrom, radiusTo);
+                        
                         for (int k = 0; k < lines.Length; k++)
                         {
+
                             PricePerLbsBetweenDTO pricePerLbsBetween = new PricePerLbsBetweenDTO()
                             {
                                 Id = 1,
                                 LbsFrom = (k > 0) ? priceLevels[k - 1] + 1 : 0,
                                 LbsTo = priceLevels[k],
                                 Cost = Decimal.Parse(lines[k]),
-                                FromTo = 1 // FromTo = FindFromToBetweenId(region[i], j, regionTo, radiusNumberTo);
+                                FromTo = fromTo
                             };
 
                             PricePerLbsBetweens.Create(pricePerLbsBetween);
+
                         }
                     }
                 }

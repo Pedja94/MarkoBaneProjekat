@@ -32,7 +32,7 @@ namespace Business.DataAccess
             }
             return -1;
         }
-
+        
         public static RadiusDTO Read(int RadiusId)
         {
             RadiusDTO radiusRead = null;
@@ -160,6 +160,54 @@ namespace Business.DataAccess
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        public static int CreateFromToRadius(int idFrom, int idTo)
+        {
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                Business.FromToRadius fromToRadius = new Business.FromToRadius()
+                {
+                    RadiusFromId = idFrom,
+                    RadiusToId = idTo
+                };
+
+                db.FromToRadius.InsertOnSubmit(fromToRadius);
+                db.SubmitChanges();
+
+                return fromToRadius.Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return -1;
+        }
+
+        public static int FindFromToBetweenId(string regionFrom, int radiusNumberFrom, string regionTo, int radiusNumberTo)
+        {
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                int idFrom = ReadIdFromRegionAndNumber(regionFrom, radiusNumberFrom);
+                int idTo = ReadIdFromRegionAndNumber(regionTo, radiusNumberTo);
+
+                var query =
+                    (from fromtoradius in db.FromToRadius
+                     where fromtoradius.RadiusFromId == idFrom
+                     && fromtoradius.RadiusToId == idTo
+                     select fromtoradius).Single();
+
+                return (int)query.Id;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            return -1;
         }
 
     }

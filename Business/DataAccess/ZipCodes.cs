@@ -133,5 +133,50 @@ namespace Business.DataAccess
             }
         }
 
+        public static AreaDTO ReadAreaFromZipCode(ZipCodeDTO zipCode)
+        {
+            AreaDTO areaRead = null;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from area in db.Areas
+                     where area.Id == zipCode.AreaId
+                     select area).Single();
+
+                areaRead = new AreaDTO()
+                {
+                    Number = query.Number,
+                    RadiusId = (int)query.RadiusId
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return areaRead;
+        }
+
+        public static bool SameRegion(ZipCodeDTO zipCodeFrom, ZipCodeDTO zipCodeTo)
+        {
+            AreaDTO areaFrom = new AreaDTO();
+            AreaDTO areaTo = new AreaDTO();
+
+            areaFrom = ReadAreaFromZipCode(zipCodeFrom);
+            areaTo = ReadAreaFromZipCode(zipCodeTo);
+
+            RadiusDTO radiusFrom = new RadiusDTO();
+            RadiusDTO radiusTo = new RadiusDTO();
+
+            radiusFrom = Areas.ReadRadiusFromArea(areaFrom);
+            radiusTo = Areas.ReadRadiusFromArea(areaTo);
+
+            return (radiusFrom.Region == radiusTo.Region) ? true : false; 
+        }
+
+
     }
 }

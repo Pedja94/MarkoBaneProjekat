@@ -17,35 +17,69 @@ namespace Business.DataFiling
         {
             string[] region = new string[] { "GA", "IL", "MD" };
             int[] numberOfAreas = new int[] { 24, 25, 20 };
+            int[][] matrixOfAreas = new int[12][];
+
+            //GA
+            matrixOfAreas[0] = new int[] { 1, 2, 9, 10 };
+            matrixOfAreas[1] = new int[] { 3, 4, 5, 6, 7, 8, 11, 12 };
+            matrixOfAreas[2] = new int[] { 13, 14, 15, 16, 17, 18, 19, 20, 21 };
+            matrixOfAreas[3] = new int[] { 22, 23, 24 };
+            //IL
+            matrixOfAreas[4] = new int[] { 1, 4, 5 };
+            matrixOfAreas[5] = new int[] { 2, 3, 6, 7, 8 };
+            matrixOfAreas[6] = new int[] { 9, 10, 13, 14, 15, 16 };
+            matrixOfAreas[7] = new int[] { 11, 12, 17, 19, 20, 21, 22, 23, 24, 25 };
+            //MD
+            matrixOfAreas[8] = new int[] { 1, 2, 3, 4, 5, 6};
+            matrixOfAreas[9] = new int[] { 7, 8, 9, 10, 11 };
+            matrixOfAreas[10] = new int[] { 12, 13, 14, 15, 20 };
+            matrixOfAreas[11] = new int[] { 16, 17, 18, 19 };
+
+
             int[] priceLevels = new int[] { 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 12000, 14000, 16000, 18000, 20000, 22000 };
 
             for (int i = 0; i < 3; i++)
-                for (int j = 1; j <= numberOfAreas[i]; j++)
+            {
+                for (int j = 0; j < 4; j++)
                 {
-                    DirectoryInfo d = new DirectoryInfo("D:\\Moving Prices\\Inside\\" + region[i] + "\\" + j.ToString());
-                    FileInfo[] Files = d.GetFiles("*.txt");
-
-                    foreach (FileInfo file in Files)
+                    int matrixOfAreasI = 4 * i + j;
+                    for (int l = 0; l < matrixOfAreas[matrixOfAreasI].Length; l++)
                     {
-                        string path = "D:\\Moving Prices\\Inside\\" + region[i] + "\\" + j.ToString() + "\\" + file.Name;
-                        string readZipCodes = File.ReadAllText(path);
-                        string[] lines = readZipCodes.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+                        DirectoryInfo d = new DirectoryInfo("D:\\Moving Prices\\Inside\\" + region[i] + "\\" + j.ToString() + "\\" + matrixOfAreas[matrixOfAreasI][l].ToString());
+                        FileInfo[] Files = d.GetFiles("*.txt");
 
-                        for (int k = 0; k < lines.Length; k++)
+                        foreach (FileInfo file in Files)
                         {
-                            PricePerLbsInsideDTO pricePerLbsInside = new PricePerLbsInsideDTO()
-                            {
-                                Id = 1,
-                                LbsFrom = (k > 0) ? priceLevels[k - 1] + 1 : 0,
-                                LbsTo = priceLevels[k],
-                                Cost = Decimal.Parse(lines[k]),
-                                FromTo = 1 // FromTo = FindFromToInsideId(j, Int32.Parse(file.Name));
-                            };
+                            string path = "D:\\Moving Prices\\Inside\\" + region[i] + "\\" + j.ToString() + "\\" + matrixOfAreas[matrixOfAreasI][l].ToString() + "\\" + file.Name;
+                            string readZipCodes = File.ReadAllText(path);
+                            string[] lines = readZipCodes.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-                            PricePerLbsInsides.Create(pricePerLbsInside);
+                            int regionId = Radiuses.ReadIdFromRegionAndNumber(region[i], j);
+
+                            int areaFrom = Areas.ReadIdFromNumberAndRadiusId(j, regionId);
+                            int areaTo = Areas.ReadIdFromNumberAndRadiusId(Int32.Parse(file.Name), regionId);
+
+                            int fromTo = Areas.CreateFromToArea(areaFrom, areaTo);
+                            
+                            for (int k = 0; k < lines.Length; k++)
+                            {
+                                PricePerLbsInsideDTO pricePerLbsInside = new PricePerLbsInsideDTO()
+                                {
+                                    Id = 1,
+                                    LbsFrom = (k > 0) ? priceLevels[k - 1] + 1 : 0,
+                                    LbsTo = priceLevels[k],
+                                    Cost = Decimal.Parse(lines[k]),
+                                    FromTo = fromTo
+                                };
+
+                                PricePerLbsInsides.Create(pricePerLbsInside);
+                            }
                         }
+
                     }
                 }
+            }
+                
         }
     }
 }

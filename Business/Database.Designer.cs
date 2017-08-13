@@ -30,12 +30,12 @@ namespace Business
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertAccessoriesTable(AccessoriesTable instance);
-    partial void UpdateAccessoriesTable(AccessoriesTable instance);
-    partial void DeleteAccessoriesTable(AccessoriesTable instance);
     partial void InsertZipCode(ZipCode instance);
     partial void UpdateZipCode(ZipCode instance);
     partial void DeleteZipCode(ZipCode instance);
+    partial void InsertAccessoriesTable(AccessoriesTable instance);
+    partial void UpdateAccessoriesTable(AccessoriesTable instance);
+    partial void DeleteAccessoriesTable(AccessoriesTable instance);
     partial void InsertAdmin(Admin instance);
     partial void UpdateAdmin(Admin instance);
     partial void DeleteAdmin(Admin instance);
@@ -87,7 +87,7 @@ namespace Business
     #endregion
 		
 		public DatabaseDataContext() : 
-				base(global::Business.Properties.Settings.Default.ZipMovingConnectionString, mappingSource)
+				base(global::Business.Properties.Settings.Default.ZipMovingConnectionString2, mappingSource)
 		{
 			OnCreated();
 		}
@@ -116,19 +116,19 @@ namespace Business
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<AccessoriesTable> AccessoriesTables
-		{
-			get
-			{
-				return this.GetTable<AccessoriesTable>();
-			}
-		}
-		
 		public System.Data.Linq.Table<ZipCode> ZipCodes
 		{
 			get
 			{
 				return this.GetTable<ZipCode>();
+			}
+		}
+		
+		public System.Data.Linq.Table<AccessoriesTable> AccessoriesTables
+		{
+			get
+			{
+				return this.GetTable<AccessoriesTable>();
 			}
 		}
 		
@@ -261,140 +261,6 @@ namespace Business
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccessoriesTable")]
-	public partial class AccessoriesTable : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Name;
-		
-		private decimal _Cost;
-		
-		private string _Description;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnCostChanging(decimal value);
-    partial void OnCostChanged();
-    partial void OnDescriptionChanging(string value);
-    partial void OnDescriptionChanged();
-    #endregion
-		
-		public AccessoriesTable()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(25) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(5,2) NOT NULL")]
-		public decimal Cost
-		{
-			get
-			{
-				return this._Cost;
-			}
-			set
-			{
-				if ((this._Cost != value))
-				{
-					this.OnCostChanging(value);
-					this.SendPropertyChanging();
-					this._Cost = value;
-					this.SendPropertyChanged("Cost");
-					this.OnCostChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(100)")]
-		public string Description
-		{
-			get
-			{
-				return this._Description;
-			}
-			set
-			{
-				if ((this._Description != value))
-				{
-					this.OnDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._Description = value;
-					this.SendPropertyChanged("Description");
-					this.OnDescriptionChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ZipCode")]
 	public partial class ZipCode : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -521,6 +387,140 @@ namespace Business
 						this._AreaId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Area");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccessoriesTable")]
+	public partial class AccessoriesTable : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Name;
+		
+		private decimal _Cost;
+		
+		private string _Description;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnCostChanging(decimal value);
+    partial void OnCostChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public AccessoriesTable()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(25) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Cost", DbType="Decimal(5,2) NOT NULL")]
+		public decimal Cost
+		{
+			get
+			{
+				return this._Cost;
+			}
+			set
+			{
+				if ((this._Cost != value))
+				{
+					this.OnCostChanging(value);
+					this.SendPropertyChanging();
+					this._Cost = value;
+					this.SendPropertyChanged("Cost");
+					this.OnCostChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(100)")]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
 				}
 			}
 		}

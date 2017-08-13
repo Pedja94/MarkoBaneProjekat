@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZipMoving" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=&quot;D:\Pedja\Projekti\Zip Moving\ZipMoving\Database\ZipMoving.mdf&quot;;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.AccessoriesTable" Member="AccessoriesTables">
-    <Type Name="AccessoriesTable">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
-      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-    </Type>
-  </Table>
+  <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Marko\Documents\GitHub\MarkoBaneProjekat\Database\ZipMoving.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.ZipCode" Member="ZipCodes">
     <Type Name="ZipCode">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Code" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
       <Column Name="AreaId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Area_ZipCode" Member="Area" ThisKey="AreaId" OtherKey="Id" Type="Area" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AccessoriesTable" Member="AccessoriesTables">
+    <Type Name="AccessoriesTable">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
+      <Column Name="Cost" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.Admin" Member="Admins">

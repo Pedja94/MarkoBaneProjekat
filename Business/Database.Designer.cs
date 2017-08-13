@@ -30,12 +30,12 @@ namespace Business
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertZipCode(ZipCode instance);
-    partial void UpdateZipCode(ZipCode instance);
-    partial void DeleteZipCode(ZipCode instance);
     partial void InsertAccessoriesTable(AccessoriesTable instance);
     partial void UpdateAccessoriesTable(AccessoriesTable instance);
     partial void DeleteAccessoriesTable(AccessoriesTable instance);
+    partial void InsertZipCodeHomeEstimate(ZipCodeHomeEstimate instance);
+    partial void UpdateZipCodeHomeEstimate(ZipCodeHomeEstimate instance);
+    partial void DeleteZipCodeHomeEstimate(ZipCodeHomeEstimate instance);
     partial void InsertAdmin(Admin instance);
     partial void UpdateAdmin(Admin instance);
     partial void DeleteAdmin(Admin instance);
@@ -84,6 +84,9 @@ namespace Business
     partial void InsertRoomItem(RoomItem instance);
     partial void UpdateRoomItem(RoomItem instance);
     partial void DeleteRoomItem(RoomItem instance);
+    partial void InsertZipCode(ZipCode instance);
+    partial void UpdateZipCode(ZipCode instance);
+    partial void DeleteZipCode(ZipCode instance);
     #endregion
 		
 		public DatabaseDataContext() : 
@@ -116,19 +119,19 @@ namespace Business
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<ZipCode> ZipCodes
-		{
-			get
-			{
-				return this.GetTable<ZipCode>();
-			}
-		}
-		
 		public System.Data.Linq.Table<AccessoriesTable> AccessoriesTables
 		{
 			get
 			{
 				return this.GetTable<AccessoriesTable>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ZipCodeHomeEstimate> ZipCodeHomeEstimates
+		{
+			get
+			{
+				return this.GetTable<ZipCodeHomeEstimate>();
 			}
 		}
 		
@@ -259,155 +262,12 @@ namespace Business
 				return this.GetTable<RoomItem>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ZipCode")]
-	public partial class ZipCode : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private string _Code;
-		
-		private System.Nullable<int> _AreaId;
-		
-		private EntityRef<Area> _Area;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnCodeChanging(string value);
-    partial void OnCodeChanged();
-    partial void OnAreaIdChanging(System.Nullable<int> value);
-    partial void OnAreaIdChanged();
-    #endregion
-		
-		public ZipCode()
-		{
-			this._Area = default(EntityRef<Area>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		public System.Data.Linq.Table<ZipCode> ZipCodes
 		{
 			get
 			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
-		public string Code
-		{
-			get
-			{
-				return this._Code;
-			}
-			set
-			{
-				if ((this._Code != value))
-				{
-					this.OnCodeChanging(value);
-					this.SendPropertyChanging();
-					this._Code = value;
-					this.SendPropertyChanged("Code");
-					this.OnCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AreaId", DbType="Int")]
-		public System.Nullable<int> AreaId
-		{
-			get
-			{
-				return this._AreaId;
-			}
-			set
-			{
-				if ((this._AreaId != value))
-				{
-					if (this._Area.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAreaIdChanging(value);
-					this.SendPropertyChanging();
-					this._AreaId = value;
-					this.SendPropertyChanged("AreaId");
-					this.OnAreaIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_ZipCode", Storage="_Area", ThisKey="AreaId", OtherKey="Id", IsForeignKey=true)]
-		public Area Area
-		{
-			get
-			{
-				return this._Area.Entity;
-			}
-			set
-			{
-				Area previousValue = this._Area.Entity;
-				if (((previousValue != value) 
-							|| (this._Area.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Area.Entity = null;
-						previousValue.ZipCodes.Remove(this);
-					}
-					this._Area.Entity = value;
-					if ((value != null))
-					{
-						value.ZipCodes.Add(this);
-						this._AreaId = value.Id;
-					}
-					else
-					{
-						this._AreaId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Area");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<ZipCode>();
 			}
 		}
 	}
@@ -521,6 +381,157 @@ namespace Business
 					this._Description = value;
 					this.SendPropertyChanged("Description");
 					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ZipCodeHomeEstimate")]
+	public partial class ZipCodeHomeEstimate : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Code;
+		
+		private System.Nullable<int> _RadiusId;
+		
+		private EntityRef<Radius> _Radius;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnCodeChanging(string value);
+    partial void OnCodeChanged();
+    partial void OnRadiusIdChanging(System.Nullable<int> value);
+    partial void OnRadiusIdChanged();
+    #endregion
+		
+		public ZipCodeHomeEstimate()
+		{
+			this._Radius = default(EntityRef<Radius>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this.OnCodeChanging(value);
+					this.SendPropertyChanging();
+					this._Code = value;
+					this.SendPropertyChanged("Code");
+					this.OnCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RadiusId", DbType="Int")]
+		public System.Nullable<int> RadiusId
+		{
+			get
+			{
+				return this._RadiusId;
+			}
+			set
+			{
+				if ((this._RadiusId != value))
+				{
+					if (this._Radius.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRadiusIdChanging(value);
+					this.SendPropertyChanging();
+					this._RadiusId = value;
+					this.SendPropertyChanged("RadiusId");
+					this.OnRadiusIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_ZipCodeHomeEstimate", Storage="_Radius", ThisKey="RadiusId", OtherKey="Id", IsForeignKey=true)]
+		public Radius Radius
+		{
+			get
+			{
+				return this._Radius.Entity;
+			}
+			set
+			{
+				Radius previousValue = this._Radius.Entity;
+				if (((previousValue != value) 
+							|| (this._Radius.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Radius.Entity = null;
+						previousValue.ZipCodeHomeEstimates.Remove(this);
+					}
+					this._Radius.Entity = value;
+					if ((value != null))
+					{
+						value.ZipCodeHomeEstimates.Add(this);
+						this._RadiusId = value.Id;
+					}
+					else
+					{
+						this._RadiusId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Radius");
 				}
 			}
 		}
@@ -744,13 +755,13 @@ namespace Business
 		
 		private System.Nullable<int> _RadiusId;
 		
-		private EntitySet<ZipCode> _ZipCodes;
-		
 		private EntitySet<FromToArea> _FromToAreas;
 		
 		private EntitySet<FromToArea> _FromToAreas1;
 		
 		private EntitySet<FromToArea> _FromToAreas2;
+		
+		private EntitySet<ZipCode> _ZipCodes;
 		
 		private EntityRef<Radius> _Radius;
 		
@@ -768,10 +779,10 @@ namespace Business
 		
 		public Area()
 		{
-			this._ZipCodes = new EntitySet<ZipCode>(new Action<ZipCode>(this.attach_ZipCodes), new Action<ZipCode>(this.detach_ZipCodes));
 			this._FromToAreas = new EntitySet<FromToArea>(new Action<FromToArea>(this.attach_FromToAreas), new Action<FromToArea>(this.detach_FromToAreas));
 			this._FromToAreas1 = new EntitySet<FromToArea>(new Action<FromToArea>(this.attach_FromToAreas1), new Action<FromToArea>(this.detach_FromToAreas1));
 			this._FromToAreas2 = new EntitySet<FromToArea>(new Action<FromToArea>(this.attach_FromToAreas2), new Action<FromToArea>(this.detach_FromToAreas2));
+			this._ZipCodes = new EntitySet<ZipCode>(new Action<ZipCode>(this.attach_ZipCodes), new Action<ZipCode>(this.detach_ZipCodes));
 			this._Radius = default(EntityRef<Radius>);
 			OnCreated();
 		}
@@ -840,19 +851,6 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_ZipCode", Storage="_ZipCodes", ThisKey="Id", OtherKey="AreaId")]
-		public EntitySet<ZipCode> ZipCodes
-		{
-			get
-			{
-				return this._ZipCodes;
-			}
-			set
-			{
-				this._ZipCodes.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_FromToArea", Storage="_FromToAreas", ThisKey="Id", OtherKey="AreaFromId")]
 		public EntitySet<FromToArea> FromToAreas
 		{
@@ -889,6 +887,19 @@ namespace Business
 			set
 			{
 				this._FromToAreas2.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_ZipCode", Storage="_ZipCodes", ThisKey="Id", OtherKey="AreaId")]
+		public EntitySet<ZipCode> ZipCodes
+		{
+			get
+			{
+				return this._ZipCodes;
+			}
+			set
+			{
+				this._ZipCodes.Assign(value);
 			}
 		}
 		
@@ -946,18 +957,6 @@ namespace Business
 			}
 		}
 		
-		private void attach_ZipCodes(ZipCode entity)
-		{
-			this.SendPropertyChanging();
-			entity.Area = this;
-		}
-		
-		private void detach_ZipCodes(ZipCode entity)
-		{
-			this.SendPropertyChanging();
-			entity.Area = null;
-		}
-		
 		private void attach_FromToAreas(FromToArea entity)
 		{
 			this.SendPropertyChanging();
@@ -992,6 +991,18 @@ namespace Business
 		{
 			this.SendPropertyChanging();
 			entity.Area2 = null;
+		}
+		
+		private void attach_ZipCodes(ZipCode entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = this;
+		}
+		
+		private void detach_ZipCodes(ZipCode entity)
+		{
+			this.SendPropertyChanging();
+			entity.Area = null;
 		}
 	}
 	
@@ -3971,6 +3982,8 @@ namespace Business
 		
 		private string _Region;
 		
+		private EntitySet<ZipCodeHomeEstimate> _ZipCodeHomeEstimates;
+		
 		private EntitySet<Area> _Areas;
 		
 		private EntitySet<FromToRadius> _FromToRadius;
@@ -3991,6 +4004,7 @@ namespace Business
 		
 		public Radius()
 		{
+			this._ZipCodeHomeEstimates = new EntitySet<ZipCodeHomeEstimate>(new Action<ZipCodeHomeEstimate>(this.attach_ZipCodeHomeEstimates), new Action<ZipCodeHomeEstimate>(this.detach_ZipCodeHomeEstimates));
 			this._Areas = new EntitySet<Area>(new Action<Area>(this.attach_Areas), new Action<Area>(this.detach_Areas));
 			this._FromToRadius = new EntitySet<FromToRadius>(new Action<FromToRadius>(this.attach_FromToRadius), new Action<FromToRadius>(this.detach_FromToRadius));
 			this._FromToRadius1 = new EntitySet<FromToRadius>(new Action<FromToRadius>(this.attach_FromToRadius1), new Action<FromToRadius>(this.detach_FromToRadius1));
@@ -4057,6 +4071,19 @@ namespace Business
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_ZipCodeHomeEstimate", Storage="_ZipCodeHomeEstimates", ThisKey="Id", OtherKey="RadiusId")]
+		public EntitySet<ZipCodeHomeEstimate> ZipCodeHomeEstimates
+		{
+			get
+			{
+				return this._ZipCodeHomeEstimates;
+			}
+			set
+			{
+				this._ZipCodeHomeEstimates.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Radius_Area", Storage="_Areas", ThisKey="Id", OtherKey="RadiusId")]
 		public EntitySet<Area> Areas
 		{
@@ -4114,6 +4141,18 @@ namespace Business
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_ZipCodeHomeEstimates(ZipCodeHomeEstimate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Radius = this;
+		}
+		
+		private void detach_ZipCodeHomeEstimates(ZipCodeHomeEstimate entity)
+		{
+			this.SendPropertyChanging();
+			entity.Radius = null;
 		}
 		
 		private void attach_Areas(Area entity)
@@ -4486,6 +4525,157 @@ namespace Business
 						this._RoomId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Room");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ZipCode")]
+	public partial class ZipCode : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Code;
+		
+		private System.Nullable<int> _AreaId;
+		
+		private EntityRef<Area> _Area;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnCodeChanging(string value);
+    partial void OnCodeChanged();
+    partial void OnAreaIdChanging(System.Nullable<int> value);
+    partial void OnAreaIdChanged();
+    #endregion
+		
+		public ZipCode()
+		{
+			this._Area = default(EntityRef<Area>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Code", DbType="NVarChar(10) NOT NULL", CanBeNull=false)]
+		public string Code
+		{
+			get
+			{
+				return this._Code;
+			}
+			set
+			{
+				if ((this._Code != value))
+				{
+					this.OnCodeChanging(value);
+					this.SendPropertyChanging();
+					this._Code = value;
+					this.SendPropertyChanged("Code");
+					this.OnCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AreaId", DbType="Int")]
+		public System.Nullable<int> AreaId
+		{
+			get
+			{
+				return this._AreaId;
+			}
+			set
+			{
+				if ((this._AreaId != value))
+				{
+					if (this._Area.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAreaIdChanging(value);
+					this.SendPropertyChanging();
+					this._AreaId = value;
+					this.SendPropertyChanged("AreaId");
+					this.OnAreaIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Area_ZipCode", Storage="_Area", ThisKey="AreaId", OtherKey="Id", IsForeignKey=true)]
+		public Area Area
+		{
+			get
+			{
+				return this._Area.Entity;
+			}
+			set
+			{
+				Area previousValue = this._Area.Entity;
+				if (((previousValue != value) 
+							|| (this._Area.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Area.Entity = null;
+						previousValue.ZipCodes.Remove(this);
+					}
+					this._Area.Entity = value;
+					if ((value != null))
+					{
+						value.ZipCodes.Add(this);
+						this._AreaId = value.Id;
+					}
+					else
+					{
+						this._AreaId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Area");
 				}
 			}
 		}

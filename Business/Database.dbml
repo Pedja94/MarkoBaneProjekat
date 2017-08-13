@@ -1,19 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ZipMoving" Class="DatabaseDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Marko\Documents\GitHub\MarkoBaneProjekat\Database\ZipMoving.mdf;Integrated Security=True;Connect Timeout=30" SettingsObjectName="Business.Properties.Settings" SettingsPropertyName="ZipMovingConnectionString2" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.ZipCode" Member="ZipCodes">
-    <Type Name="ZipCode">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Code" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
-      <Column Name="AreaId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Area_ZipCode" Member="Area" ThisKey="AreaId" OtherKey="Id" Type="Area" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.AccessoriesTable" Member="AccessoriesTables">
     <Type Name="AccessoriesTable">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(25) NOT NULL" CanBeNull="false" />
       <Column Name="Cost" Type="System.Decimal" DbType="Decimal(5,2) NOT NULL" CanBeNull="false" />
       <Column Name="Description" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ZipCodeHomeEstimate" Member="ZipCodeHomeEstimates">
+    <Type Name="ZipCodeHomeEstimate">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="RadiusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Radius_ZipCodeHomeEstimate" Member="Radius" ThisKey="RadiusId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Admin" Member="Admins">
@@ -31,10 +31,10 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Number" Type="System.Decimal" DbType="Decimal(3,0) NOT NULL" CanBeNull="false" />
       <Column Name="RadiusId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Area_ZipCode" Member="ZipCodes" ThisKey="Id" OtherKey="AreaId" Type="ZipCode" />
       <Association Name="Area_FromToArea" Member="FromToAreas" ThisKey="Id" OtherKey="AreaFromId" Type="FromToArea" />
       <Association Name="Area_FromToArea1" Member="FromToAreas1" ThisKey="Id" OtherKey="AreaToId" Type="FromToArea" />
       <Association Name="Area_FromToArea2" Member="FromToAreas2" ThisKey="Id" OtherKey="AreaToId" Type="FromToArea" />
+      <Association Name="Area_ZipCode" Member="ZipCodes" ThisKey="Id" OtherKey="AreaId" Type="ZipCode" />
       <Association Name="Radius_Area" Member="Radius" ThisKey="RadiusId" OtherKey="Id" Type="Radius" IsForeignKey="true" />
     </Type>
   </Table>
@@ -182,6 +182,7 @@
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="RadiusNumber" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Region" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Radius_ZipCodeHomeEstimate" Member="ZipCodeHomeEstimates" ThisKey="Id" OtherKey="RadiusId" Type="ZipCodeHomeEstimate" />
       <Association Name="Radius_Area" Member="Areas" ThisKey="Id" OtherKey="RadiusId" Type="Area" />
       <Association Name="Radius_FromToRadius" Member="FromToRadius" ThisKey="Id" OtherKey="RadiusFromId" Type="FromToRadius" />
       <Association Name="Radius_FromToRadius1" Member="FromToRadius1" ThisKey="Id" OtherKey="RadiusToId" Type="FromToRadius" />
@@ -203,6 +204,14 @@
       <Column Name="ItemId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Item_RoomItem" Member="Item" ThisKey="ItemId" OtherKey="Id" Type="Item" IsForeignKey="true" />
       <Association Name="Room_RoomItem" Member="Room" ThisKey="RoomId" OtherKey="Id" Type="Room" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ZipCode" Member="ZipCodes">
+    <Type Name="ZipCode">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="AreaId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Area_ZipCode" Member="Area" ThisKey="AreaId" OtherKey="Id" Type="Area" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

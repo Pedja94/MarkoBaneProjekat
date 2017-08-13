@@ -68,6 +68,7 @@
     <Compile Include="DataFiling\PricePerLbsInsideData.cs" />
     <Compile Include="DataFiling\RadiusData.cs" />
     <Compile Include="DataFiling\ZipCodeData.cs" />
+    <Compile Include="DataFiling\ZipCodeHomeEstimateData.cs" />
     <Compile Include="DTO\AccessoriesTableDTO.cs" />
     <Compile Include="DTO\AdminDTO.cs" />
     <Compile Include="DTO\AreaDTO.cs" />

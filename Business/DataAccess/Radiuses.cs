@@ -48,11 +48,7 @@ namespace Business.DataAccess
 
                 radiusRead = new RadiusDTO()
                 {
-<<<<<<< HEAD
-
-=======
-                    Id = query.Id,
->>>>>>> 9a1e80c5a6edd802bc6fe01dc66be1e852ad937e
+                    Id = RadiusId,
                     RadiusNumber = query.RadiusNumber,
                     Region = query.Region,
                 };           

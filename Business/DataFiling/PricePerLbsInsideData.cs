@@ -16,7 +16,6 @@ namespace Business.DataFiling
         public static void PricePerLbsInsideFiling()
         {
             string[] region = new string[] { "GA", "IL", "MD" };
-            int[] numberOfAreas = new int[] { 24, 25, 20 };
             int[][] matrixOfAreas = new int[12][];
 
             //GA
@@ -54,10 +53,10 @@ namespace Business.DataFiling
                             string readZipCodes = File.ReadAllText(path);
                             string[] lines = readZipCodes.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-                            int regionId = Radiuses.ReadIdFromRegionAndNumber(region[i], j);
+                            int radiusId = Radiuses.ReadIdFromRegionAndNumber(region[i], j);
 
-                            int areaFrom = Areas.ReadIdFromNumberAndRadiusId(j, regionId);
-                            int areaTo = Areas.ReadIdFromNumberAndRadiusId(Int32.Parse(file.Name), regionId);
+                            int areaFrom = Areas.ReadIdFromNumberAndRadiusId(j, radiusId);
+                            int areaTo = Areas.ReadIdFromNumberAndRadiusId(Int32.Parse(file.Name), radiusId);
 
                             int fromTo = Areas.CreateFromToArea(areaFrom, areaTo);
                             

@@ -177,6 +177,44 @@ namespace Business.DataAccess
             return (radiusFrom.Region == radiusTo.Region) ? true : false; 
         }
 
+        public static bool PossibleMoving(ZipCodeDTO zipCodeFrom, ZipCodeDTO zipCodeTo)
+        {
+            AreaDTO areaFrom = new AreaDTO();
+            AreaDTO areaTo = new AreaDTO();
+
+            areaFrom = ReadAreaFromZipCode(zipCodeFrom);
+            areaTo = ReadAreaFromZipCode(zipCodeTo);
+
+            RadiusDTO radiusFrom = new RadiusDTO();
+            RadiusDTO radiusTo = new RadiusDTO();
+
+            radiusFrom = Areas.ReadRadiusFromArea(areaFrom);
+            radiusTo = Areas.ReadRadiusFromArea(areaTo);
+
+            if ((!(radiusFrom.Region == radiusTo.Region)) || (Areas.FindFromToInsideId(areaFrom.Id, areaTo.Id) != -1))
+                return true;
+            else 
+                return false;
+        }
+
+        public static bool PossibleFromToAreaMoving(ZipCodeDTO zipCodeFrom, ZipCodeDTO zipCodeTo)
+        {
+            AreaDTO areaFrom = new AreaDTO();
+            AreaDTO areaTo = new AreaDTO();
+
+            areaFrom = ReadAreaFromZipCode(zipCodeFrom);
+            areaTo = ReadAreaFromZipCode(zipCodeTo);
+
+            if (Areas.FindFromToInsideId(areaFrom.Id, areaTo.Id) != -1)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool PossibleFromToRadiusMoving(ZipCodeDTO zipCodeFrom, ZipCodeDTO zipCodeTo)
+        {
+            return true;
+        }
 
     }
 }

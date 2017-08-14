@@ -61,6 +61,34 @@ namespace Business.DataAccess
             return zipCodeRead;
         }
 
+        public static ZipCodeDTO ReadFromZipCodeString(string zipCodeString)
+        {
+            ZipCodeDTO zipCodeRead = null;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from zipcode in db.ZipCodes
+                     where zipcode.Code == zipCodeString
+                     select zipcode).Single();
+
+                zipCodeRead = new ZipCodeDTO()
+                {
+                    Id = query.Id,
+                    Code = query.Code,
+                    AreaId = (int)query.AreaId
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return zipCodeRead;
+        }
+
         public static List<ZipCodeDTO> ReadAll()
         {
             List<ZipCodeDTO> zipCodes = new List<ZipCodeDTO>();
@@ -216,6 +244,8 @@ namespace Business.DataAccess
         {
             return true;
         }
+
+        
 
     }
 }

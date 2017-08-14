@@ -212,6 +212,35 @@ namespace ZipMoving.Models
 
         }
 
+
+        public string TotalCostString()
+        {
+            Hashtable tabela = (Hashtable)HttpContext.Current.Session["InventoryOffer"];
+
+            string totalCostString = "";
+
+            foreach (DictionaryEntry pair in tabela)
+            {
+                RoomDTO soba = Rooms.Read((int)pair.Key);
+
+                List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
+                int totalWeight = 0;
+
+                foreach (ItemDTO item in items)
+                {
+                    totalWeight += (int)item.Weight;
+                    if (item.Packing > 0)
+                    {
+                        totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";
+        
+                    }
+                }
+
+            }
+
+            return totalCostString;
+        }
+
         public bool ToEmail(int id)
         {
             //OfferDTO offer = Offers.Read(id);

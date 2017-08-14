@@ -337,12 +337,13 @@ namespace ZipMoving.Models
                 totalCostString += "_";
 
             totalCostString += "\n";
-            /*
+            
             if (AdditionalStopOffAtDelivery.Equals("Yes"))
             {
                 totalCostString += "Extra delivery location - 80$\n";
+                totalCost += 80;
             }
-            */
+            
 
             if (ElevatorDelivery.Equals("Yes"))
             {

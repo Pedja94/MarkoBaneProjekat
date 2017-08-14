@@ -219,24 +219,56 @@ namespace ZipMoving.Models
 
             string totalCostString = "";
 
+            List<ItemDTO> itemsWithPackingFee = new List<ItemDTO>();
+            List<ItemDTO> itemsWithAditionalFee = new List<ItemDTO>();
+            int totalWeight = 0;
+
+            /*totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";*/
+
             foreach (DictionaryEntry pair in tabela)
             {
                 RoomDTO soba = Rooms.Read((int)pair.Key);
 
                 List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
-                int totalWeight = 0;
 
                 foreach (ItemDTO item in items)
                 {
                     totalWeight += (int)item.Weight;
                     if (item.Packing > 0)
-                    {
-                        totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";
-        
-                    }
+                        itemsWithPackingFee.Add(item);
+                    if (item.AdditionalFee > 0)
+                        itemsWithAditionalFee.Add(item);
                 }
-
             }
+
+            ZipCodeDTO zipCodeFrom = ZipCodes.ReadFromZipCodeString(ZIPPickup);
+            ZipCodeDTO zipCodeTo = ZipCodes.ReadFromZipCodeString(ZIPDelivery);
+
+            totalCostString += "TOTAL COST\n\n";
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "Total weight: " + totalWeight.ToString() + " - " + ZipCodes.ReturnPriceFromZipCodesAndLbs(zipCodeFrom, zipCodeTo, totalWeight) + "\n";
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            foreach (ItemDTO item in itemsWithPackingFee)
+            {
+                totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "\n"; 
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            foreach (ItemDTO item in itemsWithAditionalFee)
+            {
+                totalCostString += "Aditional fee for " + item.Name + " - " + item.AdditionalFee + "\n";
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
 
             return totalCostString;
         }

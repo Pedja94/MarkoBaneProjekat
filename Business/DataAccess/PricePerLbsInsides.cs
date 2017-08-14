@@ -65,6 +65,38 @@ namespace Business.DataAccess
             return pricePerLbsInsideRead;
         }
 
+        public static PricePerLbsInsideDTO ReadFromLbsAndFromToArea(int lbs, int fromToArea)
+        {
+            PricePerLbsInsideDTO pricePerLbsInsideRead = null;
+
+            try
+            {
+                DatabaseDataContext db = new DatabaseDataContext();
+
+                var query =
+                    (from priceperlbsinside in db.PricePerLbsInsides
+                     where priceperlbsinside.LbsFrom <= lbs
+                     && priceperlbsinside.LbsTo >= lbs
+                     && priceperlbsinside.FromTo == fromToArea
+                     select priceperlbsinside).Single();
+
+                pricePerLbsInsideRead = new PricePerLbsInsideDTO()
+                {
+                    Id = query.Id,
+                    LbsFrom = (int)query.LbsFrom,
+                    LbsTo = (int)query.LbsTo,
+                    Cost = query.Cost,
+                    FromTo = (int)query.FromTo
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+            return pricePerLbsInsideRead;
+        }
+
         public static List<PricePerLbsInsideDTO> ReadAll()
         {
             List<PricePerLbsInsideDTO> pricePerLbsInsides = new List<PricePerLbsInsideDTO>();

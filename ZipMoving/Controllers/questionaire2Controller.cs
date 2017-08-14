@@ -54,5 +54,35 @@ namespace ZipMoving.Controllers
             //List<ItemDTO> items = Business.DataAccess.Items.ReadAllInRoom(Int32.Parse(room));
             return Json(new { SelectedRoom = SelectedRoom }, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult CheckPickupZipCode(string code)
+        {
+            ZipCodeDTO zipCode = ZipCodes.ReadFromZipCodeString(code);
+            bool res = false;
+            if (zipCode != null)
+                res = true;
+
+            return Json(res , JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CheckDeliveryZipCode(string codeFrom, string codeTo)
+        {
+            ZipCodeDTO zipCodeFrom = ZipCodes.ReadFromZipCodeString(codeFrom);
+            ZipCodeDTO zipCodeTo = ZipCodes.ReadFromZipCodeString(codeTo);
+
+            if (zipCodeFrom != null && zipCodeTo != null)
+            {
+                if (ZipCodes.PossibleMoving(zipCodeFrom, zipCodeTo))
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                else
+                    return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

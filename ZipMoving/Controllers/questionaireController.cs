@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ZipMoving.Models;
+using Business.DataAccess;
+using Business.DTO;
 
 namespace ZipMoving.Controllers
 {
@@ -29,6 +31,36 @@ namespace ZipMoving.Controllers
             }
 
             return View("~/Views/questionaire/questionaire.cshtml", model);
+        }
+
+        [HttpGet]
+        public JsonResult CheckPickupZipCode(string code)
+        {
+            ZipCodeDTO zipCode = ZipCodes.ReadFromZipCodeString(code);
+            bool res = false;
+            if (zipCode != null)
+                res = true;
+
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult CheckDeliveryZipCode(string codeFrom, string codeTo)
+        {
+            ZipCodeDTO zipCodeFrom = ZipCodes.ReadFromZipCodeString(codeFrom);
+            ZipCodeDTO zipCodeTo = ZipCodes.ReadFromZipCodeString(codeTo);
+
+            if (zipCodeFrom != null && zipCodeTo != null)
+            {
+                if (ZipCodes.PossibleMoving(zipCodeFrom, zipCodeTo))
+                    return Json(true, JsonRequestBehavior.AllowGet);
+                else
+                    return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }

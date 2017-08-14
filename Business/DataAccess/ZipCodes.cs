@@ -105,6 +105,7 @@ namespace Business.DataAccess
                 {
                     ZipCodeDTO zipCodeRead = new ZipCodeDTO()
                     {
+                        Id = zipcode.Id,
                         Code = zipcode.Code,
                         AreaId = (int)zipcode.AreaId
                     };
@@ -177,6 +178,7 @@ namespace Business.DataAccess
 
                 areaRead = new AreaDTO()
                 {
+                    Id = query.Id,
                     Number = query.Number,
                     RadiusId = (int)query.RadiusId
                 };

@@ -36,7 +36,7 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Select one of the types")]
         public string PresentAtPickup { get; set; } //1 - My self, 2 - Someone Else, 3 - I'm Not Sure
 
-        [Required(ErrorMessage = "Field can't be empty")]
+        [CustomZipCodePickupValidator]
         public string ZIPPickup { get; set; }
 
         [Required(ErrorMessage = "Select one of the types")]
@@ -45,13 +45,13 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Select one of the types")]
         public string MovingFrom { get; set; } //1 - House, 2 - Townhouse, 3 - Apartment, 4 - Office, 5 - Storage
 
-        [Required(ErrorMessage = "Select one of the types")]
+        //[Required(ErrorMessage = "Select one of the types")]
         public string SizeOfOfficePickup { get; set; } //1 - 10x5, 2 - 10x10, 3 - 10x15, 4 - 10x20, 5 - 10x25, 6 - 10x30, 7 - >30
 
-        [Required(ErrorMessage = "Select one of the types")]
+        //[Required(ErrorMessage = "Select one of the types")]
         public string COIPickup { get; set; } //1 - Yes, 2 - No, 3 - I'm Not Sure
 
-        [Required(ErrorMessage = "Select one of the types")]
+        //[Required(ErrorMessage = "Select one of the types")]
         public string ElevatorPickup { get; set; } //1 - Yes, 2 - No, 3 - I'm Not Sure
 
         [Required(ErrorMessage = "Select one of the types")]
@@ -62,16 +62,19 @@ namespace ZipMoving.Models
 
 
         //Delivery Information
-        [Required(ErrorMessage = "Field can't be empty")]
+        [CustomZipCodeDeliveryValidator]
         public string ZIPDelivery { get; set; }
+
+        [Required(ErrorMessage = "Select one of the types")]
+        public string AdditionalStopOffAtDelivery { get; set; } //1 - Yes, 2 - No, 3 - Not Sure
 
         [Required(ErrorMessage = "Select one of the types")]
         public string MovingTo { get; set; } //1 - House, 2 - Townhouse, 3 - Apartment, 4 - Office, 5 - Public Storage
 
-        [Required(ErrorMessage = "Select one of the types")]
+        //[Required(ErrorMessage = "Select one of the types")]
         public string COIDelivery { get; set; } //1 - Yes, 2 - No, 3 - I'm Not Sure
 
-        [Required(ErrorMessage = "Select one of the types")]
+        //[Required(ErrorMessage = "Select one of the types")]
         public string ElevatorDelivery { get; set; } //1 - Yes, 2 - No, 3 - I'm Not Sure
 
         [Required(ErrorMessage = "Select one of the types")]

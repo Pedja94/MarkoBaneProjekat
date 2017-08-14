@@ -222,6 +222,8 @@
                     <div class="col-md-4 col-md-offset-4 text-center" style="font-size:medium;">
                         @Html.TextBoxFor(m => m.ZIPPickup, new { @class = "form-control", @id = "zipINPUT", @name = "zipINPUT", @placeholder = "ZIP CODE", @style = "text-align:center;", })
                         @Html.ValidationMessageFor(model => model.ZIPPickup, "", new { @class = "text-danger" })
+                        <hr />
+                        <label id= "zipInputText" class = "text-danger" hidden></label>
                     </div>
                 </div>
                 <!-- 3rd row end -->
@@ -269,30 +271,30 @@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingFrom, "House") House                  
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "House", new { @id="House"}) House                  
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingFrom, "Townhouse") Townhouse                   
-                                </label>
-                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-                            <div class="form-group radio">
-                                <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingFrom, "Apartment") Apartment                
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Townhouse", new { @id = "Townhouse" }) Townhouse                   
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingFrom, "Office") Office                       
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Apartment", new { @id = "Apartment" }) Apartment                
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingFrom, "Storage") Storage               
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Office", new { @id = "Office" }) Office                       
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.MovingFrom, "Storage", new { @id = "Storage" }) Storage               
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
@@ -302,6 +304,7 @@
                 <!-- 5th row end -->
                 <br><br><br>
                 <!--6th row start -->
+                <div id="SizeOfStorage" hidden>
                 <div class="row">
 
                     <div class="col-md-12 text-center">
@@ -315,15 +318,17 @@
                         @Html.ValidationMessageFor(model => model.SizeOfOfficePickup, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                    <br><br><br>
+                </div>
                 <!-- 6th row end -->
-                <br><br><br>
 
                 <!-- 7th row start -->
+                <div id="COI" hidden>
                 <div class="row">
 
                     <div class="col-md-12 text-center">
                         <h3 style="font-weight:bold;">
-                            Does your apartment building/office regulate COI?
+                            Does your apartment building regulate COI?
                         </h3>
                         <p style="font-size:small; color:gray;">(Certificate of Insurance)</p>
                     </div>
@@ -350,9 +355,11 @@
                         @Html.ValidationMessageFor(model => model.COIPickup, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                    <br><br><br>
+                </div>
                 <!-- 7th row end -->
-                <br><br><br>
                 <!-- 8th row start -->
+                <div id="Elevator" hidden>
                 <div class="row">
 
                     <div class="col-md-12 text-center">
@@ -381,8 +388,9 @@
                         @Html.ValidationMessageFor(model => model.ElevatorPickup, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                    <br><br><br>
+                </div>
                 <!-- 8th row end -->
-                <br><br><br>
                 <!-- 9th row start -->
                 <div class="row">
 
@@ -447,6 +455,13 @@
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking Further Away (more than 75ft) </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "I'm Not Sure") I'm Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <br>
                             @Html.ValidationMessageFor(model => model.ParkingPickup, "", new { @class = "text-danger" })
                             <br><br><br><br>
@@ -487,10 +502,47 @@
                             @Html.TextBoxFor(m => m.ZIPDelivery, new { @class = "form-control", @id = "zipINPUT1", @name = "zipINPUT1", @placeholder = "ZIP CODE", @style = "text-align:center;", })
                             @Html.ValidationMessageFor(model => model.ZIPDelivery, "", new { @class = "text-danger" })
                             @*<input type="text" class="form-control" id="zipINPUT" placeholder="ZIP CODE" style="text-align:center;">*@
+                            <hr />
+                            <label id="zipInputText1" class="text-info" hidden></label>
                         </div>
                     </div>
                 </div>
                 <!-- 1st row end -->
+                <br><br><br>
+                <!-- 4th row start -->
+                <div class="row">
+
+                    <div class="col-md-12 text-center">
+                        <h3 style="font-weight:bold;">Do you have additional stop off at the delivery location?</h3>
+                    </div>
+
+                    <div class="col-md-12 text-center" style="font-size:medium;">
+                        @*ovde je stajao form tag umesto div (dole)*@
+                        <div class="form-inline">
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Yes") Yes
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "No") No
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
+                                </label>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                            <div class="form-group radio">
+                                <label class="onHoverOurs">
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Not Sure") Not Sure
+                                    @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Not Sure </span>*@
+                                </label>
+                            </div>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.AdditionalStopOffAtPickup, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <!-- 4th row end -->
                 <br><br><br>
                 <!-- 2nd row start -->
                 <div class="row">
@@ -504,34 +556,34 @@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingTo, "House") House
+                                    @Html.RadioButtonFor(m => m.MovingTo, "House", new { @id="House1"}) House
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> House </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingTo, "Townhouse") Townhouse
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Townhouse", new { @id = "Townhouse1" }) Townhouse
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Townhouse </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingTo, "Apartment") Apartment
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Apartment", new { @id = "Apartment1" }) Apartment
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Apartment </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingTo, "Office") Office
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Office", new { @id = "Office1" }) Office
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Office </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.MovingTo, "Public Storage") Public Storage
+                                    @Html.RadioButtonFor(m => m.MovingTo, "Storage", new { @id = "Storage1" }) Storage
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Public Storage </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -542,11 +594,12 @@
                 <!-- 2nd row end -->
                 <br><br><br>
                 <!-- 3rd row start -->
+                <div id="COI1" hidden>
                 <div class="row">
 
                     <div class="col-md-12 text-center">
                         <h3 style="font-weight:bold;">
-                            Does your apartment building/office regulate COI?
+                            Does your apartment building regulate COI?
                         </h3>
                         <p style="font-size:small; color:#FFF;">(Certificate of Insurance)</p>
                     </div>
@@ -579,7 +632,9 @@
                 </div>
                 <!-- 3rd row end -->
                 <br><br><br>
+                </div>
                 <!-- 4th row start -->
+                <div id="Elevator1" hidden>
                 <div class="row">
 
                     <div class="col-md-12 text-center">
@@ -614,6 +669,7 @@
                 </div>
                 <!-- 4th row end -->
                 <br><br><br>
+                </div>
 
                 <!-- 5th row start -->
                 <div class="row">
@@ -1201,7 +1257,7 @@
         </script>
 
         <script src="~/Scripts/AddRoom.js"></script>
-
+        <script src="~/Scripts/QuestionaireLogic.js"></script>
 
 </body>
 

@@ -81,6 +81,7 @@ namespace Business.DataAccess
                 {
                     PricePerLbsInsideDTO pricePerLbsInsideRead = new PricePerLbsInsideDTO()
                     {
+                        Id = pricePerLbsInside.Id,
                         LbsFrom = (int)pricePerLbsInside.LbsFrom,
                         LbsTo = (int)pricePerLbsInside.LbsTo,
                         Cost = pricePerLbsInside.Cost,

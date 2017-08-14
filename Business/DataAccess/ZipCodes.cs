@@ -247,7 +247,47 @@ namespace Business.DataAccess
             return true;
         }
 
-        
+        public static int ReturnPriceFromZipCodesAndLbs(ZipCodeDTO zipCodeFrom, ZipCodeDTO zipCodeTo, int lbs)
+        {
+            AreaDTO areaFrom = new AreaDTO();
+            AreaDTO areaTo = new AreaDTO();
+
+            areaFrom = ReadAreaFromZipCode(zipCodeFrom);
+            areaTo = ReadAreaFromZipCode(zipCodeTo);
+
+            RadiusDTO radiusFrom = new RadiusDTO();
+            RadiusDTO radiusTo = new RadiusDTO();
+
+            radiusFrom = Areas.ReadRadiusFromArea(areaFrom);
+            radiusTo = Areas.ReadRadiusFromArea(areaTo);
+
+            if (radiusFrom.Region != radiusTo.Region)
+            {
+                int fromToBetweenId = Radiuses.FindFromToBetweenId(radiusFrom.Region, radiusFrom.RadiusNumber, radiusTo.Region, radiusTo.RadiusNumber);
+                if (fromToBetweenId != -1)
+                {
+                    PricePerLbsBetweenDTO pricePerLbsBetween =  PricePerLbsBetweens.ReadFromLbsAndFromToRadius(lbs, fromToBetweenId);
+                    return (int)pricePerLbsBetween.Cost;
+                } 
+                else
+                {
+                    return -1;
+                }
+            }
+            else 
+            {
+                int fromToInsideId = Areas.FindFromToInsideId(areaFrom.Id, areaTo.Id); 
+                if (fromToInsideId != -1)
+                {
+                    PricePerLbsInsideDTO pricePerLbsInside = PricePerLbsInsides.ReadFromLbsAndFromToArea(lbs, fromToInsideId);
+                    return (int)pricePerLbsInside.Cost;
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+        }
 
     }
 }

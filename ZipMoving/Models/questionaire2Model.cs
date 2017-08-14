@@ -222,26 +222,175 @@ namespace ZipMoving.Models
 
             string totalCostString = "";
 
+            List<ItemDTO> itemsWithPackingFee = new List<ItemDTO>();
+            List<ItemDTO> itemsWithAditionalFee = new List<ItemDTO>();
+            int totalWeight = 0;
+
+            int totalCost = 0;
+
+            /*totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";*/
+
             foreach (DictionaryEntry pair in tabela)
             {
                 RoomDTO soba = Rooms.Read((int)pair.Key);
 
                 List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
-                int totalWeight = 0;
 
                 foreach (ItemDTO item in items)
                 {
                     totalWeight += (int)item.Weight;
                     if (item.Packing > 0)
-                    {
-                        totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";
-        
-                    }
+                        itemsWithPackingFee.Add(item);
+                    if (item.AdditionalFee > 0)
+                        itemsWithAditionalFee.Add(item);
                 }
-
             }
 
+            ZipCodeDTO zipCodeFrom = ZipCodes.ReadFromZipCodeString(ZIPPickup);
+            ZipCodeDTO zipCodeTo = ZipCodes.ReadFromZipCodeString(ZIPDelivery);
+
+            totalCostString += "TOTAL COST\n\n";
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "\n";
+
+            int pricePerLbs = ZipCodes.ReturnPriceFromZipCodesAndLbs(zipCodeFrom, zipCodeTo, totalWeight);
+            totalCost += pricePerLbs;
+
+            totalCostString += "Total weight: " + totalWeight.ToString() + " - " + pricePerLbs + "\n";
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "\n";
+
+            foreach (ItemDTO item in itemsWithPackingFee)
+            {
+                totalCostString += "Packing fee for " + item.Name + " - " + item.Packing.ToString() + "$\n";
+                totalCost += (int)item.Packing;
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "\n";
+
+            foreach (ItemDTO item in itemsWithAditionalFee)
+            {
+                totalCostString += "Aditional fee for " + item.Name + " - " + item.AdditionalFee.ToString() + "$\n";
+                totalCost += (int)item.AdditionalFee;
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "\n";
+
+            if (AdditionalStopOffAtPickup.Equals("Yes"))
+            {
+                totalCostString += "Extra pickup location - 80$\n";
+                totalCost += 80;
+            }
+
+            if (ElevatorPickup.Equals("Yes"))
+            {
+                int elevatorCost = totalWeight / 100;
+                elevatorCost = elevatorCost * 2;
+                totalCost += elevatorCost;
+                totalCostString += "Elevator use at pickup - " + elevatorCost.ToString() + "$\n";
+            }
+
+            if (StairsPickup.Contains("10"))
+            {
+                int stairsCost = totalWeight / 100;
+                stairsCost = (int)(stairsCost * 1.5);
+                totalCost += stairsCost;
+                totalCostString += "Stairs besides inside of facility at pickup- " + stairsCost.ToString() + "$\n";
+            }
+            else if (StairsPickup.Contains("20"))
+            {
+                int stairsCost = totalWeight / 100;
+                stairsCost = stairsCost * 3;
+                totalCost += stairsCost;
+                totalCostString += "Stairs besides inside of facility at pickup - " + stairsCost.ToString() + "$\n";
+            }
+            else if (StairsPickup.Contains("Sure"))
+            {
+                totalCostString += "Stairs besides inside of facility at pickup - Every 10 steps 1.5$ per 100lbs\n";
+            }
+
+            if (ParkingPickup.Contains("Away"))
+            {
+                int longCarryCost = totalWeight / 100;
+                longCarryCost = (int)(longCarryCost * 1.5);
+                totalCost += longCarryCost;
+                totalCostString += "Long carry (over 75ft) at pickup - " + longCarryCost.ToString() + "$\n";
+            } 
+            else if (ParkingPickup.Contains("Sure"))
+            {
+                totalCostString += "Long carry (over 75ft) at pickup - Every 75ft 1.5$ per 100lbs\n";
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "\n";
+            /*
+            if (AdditionalStopOffAtDelivery.Equals("Yes"))
+            {
+                totalCostString += "Extra delivery location - 80$\n";
+            }
+            */
+
+            if (ElevatorDelivery.Equals("Yes"))
+            {
+                int elevatorCost = totalWeight / 100;
+                elevatorCost = elevatorCost * 2;
+                totalCost += elevatorCost;
+                totalCostString += "Elevator use at delivery - " + elevatorCost.ToString() + "$\n";
+            }
+
+            if (StairsDelivery.Contains("10"))
+            {
+                int stairsCost = totalWeight / 100;
+                stairsCost = (int)(stairsCost * 1.5);
+                totalCost += stairsCost;
+                totalCostString += "Stairs besides inside of facility at delivery - " + stairsCost.ToString() + "$\n";
+            }
+            else if (StairsDelivery.Contains("20"))
+            {
+                int stairsCost = totalWeight / 100;
+                stairsCost = stairsCost * 3;
+                totalCost += stairsCost;
+                totalCostString += "Stairs besides inside of facility at delivery - " + stairsCost.ToString() + "$\n";
+            }
+            else if (StairsDelivery.Contains("Sure"))
+            {
+                totalCostString += "Stairs besides inside of facility at delivery - Every 10 steps 1.5$ per 100lbs\n";
+            }
+
+            if (ParkingDelivery.Contains("Away"))
+            {
+                int longCarryCost = totalWeight / 100;
+                longCarryCost = (int)(longCarryCost * 1.5);
+                totalCost += longCarryCost;
+                totalCostString += "Long carry (over 75ft) at delivery - " + longCarryCost.ToString() + "$\n";
+            }
+            else if (ParkingDelivery.Contains("Sure"))
+            {
+                totalCostString += "Long carry(over 75ft) at delivery - Every 75ft 1.5$ per 100lbs\n";
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+
+            totalCostString += "\nTotal estimate price: " + totalCost.ToString() + "\n"; 
+
+
             return totalCostString;
+
         }
 
         public bool ToEmail(int id)

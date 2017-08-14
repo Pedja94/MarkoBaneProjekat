@@ -101,6 +101,28 @@
                         </div>
                         <hr>
 
+                        <div class="row">
+
+                            <!-- FULL NAME START -->
+                            <div class="col-md-8 col-md-offset-2 ">
+                                <h3>Your home address?</h3>
+                                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address", @name = "address", @placeholder = "Address", })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+
+                            <!-- FULL NAME START -->
+                            <div class="col-md-8 col-md-offset-2 ">
+                                <h3>Your E-mail Address or Phone Number</h3>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @name = "email", @placeholder = "Email", })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <hr>
+
                         <!-- FULL NAME END -->
                         <!-- TYPE OF MOVE START -->
                         <div class="row">

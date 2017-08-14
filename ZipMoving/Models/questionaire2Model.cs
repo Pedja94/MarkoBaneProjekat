@@ -21,6 +21,12 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Field can't be empty")]
         public string FullName { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        public string Address { get; set; }
+
+        [CustomEmailPhoneValidator]
+        public string Email { get; set; }
+
         [Required(ErrorMessage = "Select one of the types")]
         public string TypeOfMove { get; set; } //1 - In State, 2 - Out Of the State
 

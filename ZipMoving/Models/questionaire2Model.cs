@@ -214,12 +214,12 @@ namespace ZipMoving.Models
 
         public bool ToEmail(int id)
         {
-            OfferDTO offer = Offers.Read(id);
+            //OfferDTO offer = Offers.Read(id);
 
             System.Net.Mail.MailMessage m = new System.Net.Mail.MailMessage(
-               new System.Net.Mail.MailAddress("zipmovingsender@outlook.com", "Questionaire with Inventory:" + offer.Serial),
+               new System.Net.Mail.MailAddress("zipmovingsender@outlook.com", "Questionaire with Inventory"),
                new System.Net.Mail.MailAddress("zipmovingreceiver@outlook.com"));
-            m.Subject = "Questionaire with Inventory:" + offer.Serial;
+            m.Subject = "Questionaire with Inventory";
 
             if (WhenToMove == null || WhenToMove == "")
                 WhenToMove = "I'm Not Sure";

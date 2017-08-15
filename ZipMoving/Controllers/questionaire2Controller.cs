@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using ZipMoving.Models;
 using Business.DataAccess;
@@ -83,6 +84,23 @@ namespace ZipMoving.Controllers
             {
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpGet]
+        public JsonResult ReturnTotalCost(TotalCostData data)
+        {
+            questionaire2Model model = new questionaire2Model();
+            string retVal = model.TotalCostString();
+
+            return Json(retVal, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult ValidateEmail(string email)
+        {
+            CustomEmailPhoneValidator validator = new CustomEmailPhoneValidator();
+            
+            return Json(validator.IsValid(email), JsonRequestBehavior.AllowGet);
         }
     }
 }

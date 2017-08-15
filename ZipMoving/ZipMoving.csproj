@@ -153,6 +153,7 @@
     <Compile Include="Models\CustomDataValidation.cs" />
     <Compile Include="Models\questionaire2Model.cs" />
     <Compile Include="Models\questionaireModel.cs" />
+    <Compile Include="Models\TotalCostData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -595,6 +596,7 @@
     <Content Include="Scripts\QuestionaireLogic.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\SubmitOffer.js" />
     <Content Include="Scripts\Zabuto Calendar\calendar-master\examples\action.html" />
     <Content Include="Scripts\Zabuto Calendar\calendar-master\examples\basic_usage.html" />
     <Content Include="Scripts\Zabuto Calendar\calendar-master\examples\display_settings.html" />

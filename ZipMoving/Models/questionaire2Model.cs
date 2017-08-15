@@ -24,7 +24,6 @@ namespace ZipMoving.Models
         [Required(ErrorMessage = "Field can't be empty")]
         public string Address { get; set; }
 
-        [CustomEmailPhoneValidator]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Select one of the types")]
@@ -230,6 +229,7 @@ namespace ZipMoving.Models
 
             /*totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";*/
 
+            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             foreach (DictionaryEntry pair in tabela)
             {
                 RoomDTO soba = Rooms.Read((int)pair.Key);

@@ -30,6 +30,26 @@ namespace ZipMoving.Models
                 return new ValidationResult("Field can't be empty");
             }
         }
+
+        public override bool IsValid(object value)
+        {
+            if (value != null)
+            {
+                string email = value.ToString();
+
+                if (!Regex.IsMatch(email, @"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", RegexOptions.IgnoreCase)
+                    && !Regex.IsMatch(email, @"^([0-9\(\)\/\+ \-]*)$", RegexOptions.IgnoreCase))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public class CustomZipCodePickupValidator : ValidationAttribute

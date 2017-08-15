@@ -108,8 +108,6 @@
                                 <h3>Your home address?</h3>
                                 @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @id = "address", @name = "address", @placeholder = "Address", })
                                 @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-
-                                @Html.HiddenFor(m => m.Email, new { @value = "something@gmail.com"})
                             </div>
                         </div>
                         <hr>
@@ -1201,11 +1199,52 @@
                             </div>
 
                             <!-- NEW ROOM MODAL ENDING -->
+
+                            <!-- Total Cost MODAL START -->
+                            <!-- Modal -->
+                            <div id="totalCostModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog" style="width:70%;">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header " style="background-color:white; color:green;">
+                                            <h4 class="modal-title" style="font-weight:700;">Total cost</h4>
+                                        </div>
+
+                                        <div class="modal-body " style="border-bottom:none;">
+                                            @*ovde je stajalo form*@
+                                            <div>
+                                                <div id="TotalCost" style="color:green;">
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer" style="text-align:center; border-top:none;">
+                                            <p style="font-size:small;color:green;"> If you are satisfied with offer enter your email address or phone number and click on submit. Email will be sent to Zip Moving and you will get replay. For additional information <a href="/index/index#contact">contact us</a>. </p>
+                                            <p style="font-size:small;color:green;"> E-mail or phone number:</p>
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @id = "email", @name = "email", @placeholder = "Email", })
+                                            <label id="emailText" class="text-danger" hidden></label>
+                                            <div>
+                                                <button type="button" onclick="SubmitOffer()" class="btn btn-default fa-align-left" data-dismiss="modal" style="color:green;">Submit <span class="glyphicon glyphicon-ok"></span></button>
+                                                <button type="button" onclick="Cancel()" class="btn btn-default fa-align-right" data-dismiss="modal" style="color:red;">Cancel <span class="glyphicon"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+                            <!-- Total Cost MODAL ENDING -->
                             <!-- CREATE YOUR ONLINE INVENTORY ENDING -->
  
                             
                             <span>
-                                <button type="submit" class="btn btn-success">Submit Everything&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
+                                <button class="btn btn-success" onclick="OpenModal()">Submit Everything&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
+                                <button id="SubmitAll" type="submit" class="btn btn-success" hidden>Submit Everything&nbsp;&nbsp;<span class="glyphicon glyphicon-check"></span></button>
                             </span>
 
                         </div>
@@ -1258,6 +1297,7 @@
 
         <script src="~/Scripts/AddRoom.js"></script>
         <script src="~/Scripts/QuestionaireLogic.js"></script>
+        <script src="~/Scripts/SubmitOffer.js"></script>
 
 </body>
 

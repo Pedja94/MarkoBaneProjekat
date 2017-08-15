@@ -400,14 +400,15 @@ namespace ZipMoving.Models
                 totalCostString += "Full packing service - " + fullPackingServiceCost.ToString() + "$\n";
             }
 
-            totalCostString += "Storage Services (First Month Free) - 56$ per 700Lbs\n";
+            if (Additional[1].isChecked == true)
+            {
+                totalCostString += "Storage Services (First Month Free) - 56$ per 700Lbs\n";
+            }
 
             for (int i = 0; i < 80; i++)
                 totalCostString += "_";
-
-            totalCostString += "\nTotal estimate price: " + totalCost.ToString() + "\n"; 
-
-
+            
+            totalCostString += "\nTotal estimate price: " + totalCost.ToString() + "\n";
 
 
             return totalCostString;

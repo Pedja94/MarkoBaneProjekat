@@ -222,7 +222,7 @@ namespace ZipMoving.Models
             string totalCostString = "";
 
             List<ItemDTO> itemsWithPackingFee = new List<ItemDTO>();
-            List<ItemDTO> itemsWithAditionalFee = new List<ItemDTO>();
+            List<ItemDTO> itemsWithAdditionalFee = new List<ItemDTO>();
             int totalWeight = 0;
 
             int totalCost = 0;
@@ -236,13 +236,16 @@ namespace ZipMoving.Models
 
                 List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
 
+                int j = 0;
+
                 foreach (ItemDTO item in items)
                 {
-                    totalWeight += (int)item.Weight;
+                    totalWeight += (int)item.Weight * ((int[])pair.Value)[j];
                     if (item.Packing > 0)
                         itemsWithPackingFee.Add(item);
                     if (item.AdditionalFee > 0)
-                        itemsWithAditionalFee.Add(item);
+                        itemsWithAdditionalFee.Add(item);
+                    j++;
                 }
             }
 
@@ -277,7 +280,7 @@ namespace ZipMoving.Models
 
             totalCostString += "\n";
 
-            foreach (ItemDTO item in itemsWithAditionalFee)
+            foreach (ItemDTO item in itemsWithAdditionalFee)
             {
                 totalCostString += "Aditional fee for " + item.Name + " - " + item.AdditionalFee.ToString() + "$\n";
                 totalCost += (int)item.AdditionalFee;
@@ -387,7 +390,25 @@ namespace ZipMoving.Models
             for (int i = 0; i < 80; i++)
                 totalCostString += "_";
 
-            totalCostString += "\nTotal estimate price: " + totalCost.ToString() + "\n"; 
+            totalCostString += "\n";
+
+            if (Additional[0].isChecked == true)
+            {
+                int fullPackingServiceCost = totalWeight / 100;
+                fullPackingServiceCost = fullPackingServiceCost * 23;
+                totalCost += fullPackingServiceCost;
+                totalCostString += "Full packing service - " + fullPackingServiceCost.ToString() + "$\n";
+            }
+
+            if (Additional[1].isChecked == true)
+            {
+                totalCostString += "Storage Services (First Month Free) - 56$ per 700Lbs\n";
+            }
+
+            for (int i = 0; i < 80; i++)
+                totalCostString += "_";
+            
+            totalCostString += "\nTotal estimate price: " + totalCost.ToString() + "\n";
 
 
             return totalCostString;

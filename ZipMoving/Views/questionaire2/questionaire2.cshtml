@@ -233,22 +233,22 @@
                         <h3 style="font-weight:bold;">Do you have additional stop off at the pickup location?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="AdditionalStopPickup" class="col-md-12 text-center" style="font-size:medium;">
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Yes") Yes         
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Yes", new { @name = "AdditionalStopOffAtPickup"}) Yes         
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "No") No          
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "No", new { @name = "AdditionalStopOffAtPicup"}) No          
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Not Sure") Not Sure          
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Not Sure", new { @name = "AdditionalStopOffAtPickup"}) Not Sure          
                                 </label>
                             </div>
                         </div>
@@ -318,6 +318,38 @@
                 </div>
                     <br><br><br>
                 </div>
+
+                <div id="HowFullIsStorage" hidden>
+                    <div class="row">
+
+                        <div class="col-md-12 text-center">
+                            <h3 style="font-weight:bold;">How full is your storage?</h3>
+                        </div>
+
+                        <div id="FullStorage"class="col-md-12 text-center" style="font-size:medium;">
+                            <div class="form-inline">
+                                <div class="form-group radio">
+                                    <label class="onHoverOurs">
+                                        @Html.RadioButtonFor(m => m.HowFullIsStoragePickup, "Low") Low
+                                    </label>
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-group radio">
+                                    <label class="onHoverOurs">
+                                        @Html.RadioButtonFor(m => m.HowFullIsStoragePickup, "Medium") Medium
+                                    </label>
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                <div class="form-group radio">
+                                    <label class="onHoverOurs">
+                                        @Html.RadioButtonFor(m => m.HowFullIsStoragePickup, "Full") Full
+                                    </label>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.HowFullIsStoragePickup, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br><br><br>
+                </div>
                 <!-- 6th row end -->
 
                 <!-- 7th row start -->
@@ -364,22 +396,22 @@
                         <h3 style="font-weight:bold;">Are movers required to use elevator at the pickup location?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="ElevatorP" class="col-md-12 text-center" style="font-size:medium;">
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "Yes") Yes                        
+                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "Yes", new { @name = "ElevatorPickup" }) Yes                        
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "No") No                     
+                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "No", new { @name = "ElevatorPickup" }) No                     
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "I'm Not Sure") I'm Not Sure                        
+                                    @Html.RadioButtonFor(m => m.ElevatorPickup, "I'm Not Sure", new { @name = "ElevatorPickup" }) I'm Not Sure                        
                                 </label>
                             </div>
                         </div>
@@ -396,7 +428,7 @@
                         <h3 style="font-weight:bold;">Are movers required to use any stairs (Besides the stairs inside of the House/Apartment/Office)?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="StairsP" class="col-md-12 text-center" style="font-size:medium;">
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
@@ -405,19 +437,19 @@
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsPickup, "Yes, more than 10 steps") Yes, more than 10 steps                       
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "Yes, more than 10 steps", new { @name = "StairsPickup" }) Yes, more than 10 steps                       
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsPickup, "Yes, more than 20 steps") Yes, more than 20 steps                   
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "Yes, more than 20 steps", new { @name = "StairsPickup" }) Yes, more than 20 steps                   
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsPickup, "I'm Not Sure") I'm Not Sure                  
+                                    @Html.RadioButtonFor(m => m.StairsPickup, "I'm Not Sure", new { @name = "StairsPickup" }) I'm Not Sure                  
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
@@ -433,30 +465,30 @@
                         <h3 style="font-weight:bold;">How is the parking on the pickup location?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="ParkingP" class="col-md-12 text-center" style="font-size:medium;">
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Private Driveway") Private Driveway                   
+                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Private Driveway", new { @name = "ParkingPickup"}) Private Driveway                   
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Street Parking in Front (Less than 75ft)") Street Parking in Front (Less than 75ft)
+                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Street Parking in Front (Less than 75ft)", new { @name = "ParkingPickup" }) Street Parking in Front (Less than 75ft)
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking in Front (Less than 75ft) </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Street Parking Further Away (more than 75ft)") Street Parking Further Away (more than 75ft)
+                                    @Html.RadioButtonFor(m => m.ParkingPickup, "Street Parking Further Away (more than 75ft)", new { @name = "ParkingPickup" }) Street Parking Further Away (more than 75ft)
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking Further Away (more than 75ft) </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "I'm Not Sure") I'm Not Sure
+                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "I'm Not Sure", new { @name = "ParkingPickup" }) I'm Not Sure
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -514,30 +546,30 @@
                         <h3 style="font-weight:bold;">Do you have additional stop off at the delivery location?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="AdditionalStopDelivery"class="col-md-12 text-center" style="font-size:medium;">
                         @*ovde je stajao form tag umesto div (dole)*@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Yes") Yes
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtDelivery, "Yes", new { @name = "AdditionalStopOffAtDelivery" }) Yes
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "No") No
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtDelivery, "No", new { @name = "AdditionalStopOffAtDelivery" }) No
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Not Sure") Not Sure
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtDelivery, "Not Sure", new { @name = "AdditionalStopOffAtDelivery" }) Not Sure
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Not Sure </span>*@
                                 </label>
                             </div>
                         </div>
-                        @Html.ValidationMessageFor(model => model.AdditionalStopOffAtPickup, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.AdditionalStopOffAtDelivery, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <!-- 4th row end -->
@@ -639,25 +671,25 @@
                         <h3 style="font-weight:bold;">Are movers required to use elevator at the delivery location?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="ElevatorD"class="col-md-12 text-center" style="font-size:medium;">
                         @*ovde je stajao form tag umesto div (dole)*@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "Yes") Yes
+                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "Yes", new { @name = "ElevatorDelivery"}) Yes
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "No") No
+                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "No", new { @name = "ElevatorDelivery" }) No
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "I'm Not Sure") I'm Not Sure
+                                    @Html.RadioButtonFor(m => m.ElevatorDelivery, "I'm Not Sure", new { @name = "ElevatorDelivery" }) I'm Not Sure
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
                                 </label>
                             </div>
@@ -676,32 +708,32 @@
                         <h3 style="font-weight:bold;">Are movers required to use any stairs (Beside the stairs inside of the House/Apartment/Office)?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="StairsD" class="col-md-12 text-center" style="font-size:medium;">
                         @*ovde je stajao form tag umesto div (dole)*@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsDelivery, "No, only stairs inside of the House/Apartment/Office") No, only stairs inside of the House/Apartment/Office
+                                    @Html.RadioButtonFor(m => m.StairsDelivery, "No, only stairs inside of the House/Apartment/Office", new { @name = "StairsDelivery"}) No, only stairs inside of the House/Apartment/Office
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> No, only stairs inside of the House/Apartment/Office </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsDelivery, "Yes, more than 10 steps") Yes, more than 10 steps
+                                    @Html.RadioButtonFor(m => m.StairsDelivery, "Yes, more than 10 steps", new { @name = "StairsDelivery" }) Yes, more than 10 steps
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, more than 10 steps </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsDelivery, "Yes, more than 20 steps") Yes, more than 20 steps
+                                    @Html.RadioButtonFor(m => m.StairsDelivery, "Yes, more than 20 steps", new { @name = "StairsDelivery" }) Yes, more than 20 steps
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Yes, more than 20 steps </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.StairsDelivery, "I'm Not Sure") I'm Not Sure
+                                    @Html.RadioButtonFor(m => m.StairsDelivery, "I'm Not Sure", new { @name = "StairsDelivery" }) I'm Not Sure
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -718,32 +750,32 @@
                         <h3 style="font-weight:bold;">How is the parking on the delivery location?</h3>
                     </div>
 
-                    <div class="col-md-12 text-center" style="font-size:medium;">
+                    <div id="ParkingD" class="col-md-12 text-center" style="font-size:medium;">
                         @*ovde je stajao form tag umesto div (dole)*@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "Private Driveway") Private Driveway
+                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "Private Driveway", new { @name = "ParkingDelivery"}) Private Driveway
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Private Driveway </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "Street Parking in Front") Street Parking in Front
+                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "Street Parking in Front", new { @name = "ParkingDelivery" }) Street Parking in Front
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking in Front </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "Street Parking in Front, Further Away (more than 75ft)") Street Parking in Front, Further Away (more than 75ft)
+                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "Street Parking in Front, Further Away (more than 75ft)", new { @name = "ParkingDelivery" }) Street Parking in Front, Further Away (more than 75ft)
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Street Parking in Front, Further Away (more than 75ft) </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "I'm Not Sure") I'm Not Sure
+                                    @Html.RadioButtonFor(m => m.ParkingDelivery, "I'm Not Sure", new { @name = "ParkingDelivery" }) I'm Not Sure
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> I'm Not Sure </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -885,7 +917,7 @@
                         <div class="col-md-4 col-xs-offset-2">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBoxFor(m => m.Additional[0].isChecked) Full Parking Service
+                                    @Html.CheckBoxFor(m => m.Additional[0].isChecked, new { @id = "FullPackingService"}) Full Packing Service
                                     @Html.HiddenFor(m => m.Additional[0].text)
                                     @*<input type="checkbox" value="">Full Parking Service*@
                                 </label>
@@ -894,7 +926,7 @@
                         <div class="col-md-4 col-xs-offset-2">
                             <div class="checkbox">
                                 <label>
-                                    @Html.CheckBoxFor(m => m.Additional[1].isChecked) Storage Services (First Month Free)
+                                    @Html.CheckBoxFor(m => m.Additional[1].isChecked, new { @id = "StorageService"}) Storage Services (First Month Free)
                                     @Html.HiddenFor(m => m.Additional[1].text)
                                     @*<input type="checkbox" value="">Storage Services (First Month Free)*@
                                 </label>
@@ -1037,6 +1069,7 @@
 
 
                             <!-- CREATE YOUR ONLNE INVENTORY START -->
+                            <div id="inventory" hidden>
                             <section id="services">
                                 <div class="container">
                                     <div class="row">
@@ -1111,6 +1144,7 @@
                                     </div>
                                 </div>
                             </section>
+                             </div>
 
 
 

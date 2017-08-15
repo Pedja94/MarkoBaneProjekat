@@ -11,6 +11,7 @@ namespace ZipMoving.Models
         public string ElevatorPickup { get; set; }
         public string StairsPickup { get; set; }
         public string ParkingPickup { get; set; }
+        public string HowFullIsStoragePickup { get; set; }
         public string AdditionalStopOffAtDelivery { get; set; }
         public string ElevatorDelivery { get; set; }
         public string StairsDelivery { get; set; }

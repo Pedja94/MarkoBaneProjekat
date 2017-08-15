@@ -68,30 +68,40 @@ function ReturnResult1(data) {
 
 //hiddenPickup
 $("#House").click(function () {
+    $("#inventory").show();
+    $("#HowFullIsStorage").hide();
     $("#SizeOfStorage").hide();
     $("#COI").hide();
     $("#Elevator").hide();
 });
 
 $("#Townhouse").click(function () {
+    $("#inventory").show();
+    $("#HowFullIsStorage").hide();
     $("#SizeOfStorage").hide();
     $("#COI").hide();
     $("#Elevator").hide();
 });
 
 $("#Apartment").click(function () {
+    $("#inventory").show();
+    $("#HowFullIsStorage").hide();
     $("#SizeOfStorage").hide();
     $("#COI").show();
     $("#Elevator").show();
 });
 
 $("#Office").click(function () {
+    $("#inventory").show();
+    $("#HowFullIsStorage").hide();
     $("#SizeOfStorage").hide();
     $("#COI").hide();
     $("#Elevator").show();
 });
 
 $("#Storage").click(function () {
+    $("#inventory").hide();
+    $("#HowFullIsStorage").show();
     $("#SizeOfStorage").show();
     $("#COI").hide();
     $("#Elevator").show();

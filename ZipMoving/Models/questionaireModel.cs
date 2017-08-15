@@ -48,6 +48,8 @@ namespace ZipMoving.Models
         //[Required(ErrorMessage = "Select one of the types")]
         public string SizeOfOfficePickup { get; set; } //1 - 10x5, 2 - 10x10, 3 - 10x15, 4 - 10x20, 5 - 10x25, 6 - 10x30, 7 - >30
 
+        public string HowFullIsStoragePickup { get; set; }
+
         //[Required(ErrorMessage = "Select one of the types")]
         public string COIPickup { get; set; } //1 - Yes, 2 - No, 3 - I'm Not Sure
 

@@ -346,6 +346,38 @@
                     <br><br><br>
                 </div>
                 <!-- 6th row end -->
+
+                <div id="HowFullIsStorige" hidden>
+                    <div class="row">
+
+                        <div class="col-md-12 text-center">
+                            <h3 style="font-weight:bold;">How full is your storage?</h3>
+                        </div>
+
+                        <div class="col-md-12 text-center" style="font-size:medium;">
+                            <div class="form-inline">
+                                <div class="form-group radio">
+                                    <label class="onHoverOurs">
+                                        @Html.RadioButtonFor(m => m.HowFullIsStoragePickup, "Low") Low
+                                    </label>
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-group radio">
+                                    <label class="onHoverOurs">
+                                        @Html.RadioButtonFor(m => m.HowFullIsStoragePickup, "Medium") Medium
+                                    </label>
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                <div class="form-group radio">
+                                    <label class="onHoverOurs">
+                                        @Html.RadioButtonFor(m => m.HowFullIsStoragePickup, "Full") Full
+                                    </label>
+                                </div>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.HowFullIsStoragePickup, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br><br><br>
+                </div>
                 <!-- 7th row start -->
                 <div id="COI" hidden>
                     <div class="row">
@@ -552,25 +584,25 @@
                         <div class="form-inline">
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Yes") Yes
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtDelivery, "Yes") Yes
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"><span> Yes </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "No") No
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtDelivery, "No") No
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> No </span>*@
                                 </label>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                             <div class="form-group radio">
                                 <label class="onHoverOurs">
-                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtPickup, "Not Sure") Not Sure
+                                    @Html.RadioButtonFor(m => m.AdditionalStopOffAtDelivery, "Not Sure") Not Sure
                                     @*<input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option1"><span> Not Sure </span>*@
                                 </label>
                             </div>
                         </div>
-                        @Html.ValidationMessageFor(model => model.AdditionalStopOffAtPickup, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.AdditionalStopOffAtDelivery, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <!-- 4th row end -->
@@ -922,7 +954,7 @@
                             <div class="col-md-4 col-xs-offset-2">
                                 <div class="checkbox">
                                     <label>
-                                        @Html.CheckBoxFor(m => m.Additional[0].isChecked) Full Parking Service
+                                        @Html.CheckBoxFor(m => m.Additional[0].isChecked) Full Packing Service
                                         @Html.HiddenFor(m => m.Additional[0].text)
                                         @*<input type="checkbox" value="">Full Parking Service*@
                                     </label>

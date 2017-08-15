@@ -1,7 +1,53 @@
-﻿function OpenModal()
+﻿var myObject = new Object();
+myObject.AdditionalStopOffAtPickup = "";
+myObject.ElevatorPickup = "";
+myObject.StairsPickup = "";
+myObject.ParkingPickup = "";
+myObject.HowFullIsStoragePickup = "";
+myObject.AdditionalStopOffAtDelivery = "";
+myObject.ElevatorDelivery = "";
+myObject.StairsDelivery = "";
+myObject.ParkingDelivery = "";
+myObject.FullPackingService = false;
+myObject.StorageService = false;
+
+$("#AdditionalStopPickup").click(function () {
+    myObject.AdditionalStopOffAtPickup = $('input[name=AdditionalStopOffAtPickup]:checked').val(); 
+});
+$("#ElevatorP").click(function () {
+    myObject.ElevatorPickup = $('input[name=ElevatorPickup]:checked').val();
+});
+$("#StairsP").click(function () {
+    myObject.StairsPickup = $('input[name=StairsPickup]:checked').val();
+});
+$("#ParkingP").click(function () {
+    myObject.ParkingPickup = $('input[name=ParkingPickup]:checked').val();
+});
+$("#AdditionalStopDelivery").click(function () {
+    myObject.AdditionalStopOffAtDelivery = $('input[name=AdditionalStopOffAtDelivery]:checked').val();
+});
+$("#ElevatorD").click(function () {
+    myObject.ElevatorDelivery = $('input[name=ElevatorDelivery]:checked').val();
+});
+$("#StairsD").click(function () {
+    myObject.StairsDelivery = $('input[name=StairsDelivery]:checked').val();
+});
+$("#ParkingD").click(function () {
+    myObject.ParkingDelivery = $('input[name=ParkingDelivery]:checked').val();
+});
+$("#FullPackingService").click(function () {
+    myObject.FullPackingService = $("#FullPackingService").is(':checked');
+});
+$("#StorageService").click(function () {
+    myObject.StorageService = $("#StorageService").is(':checked');
+});
+$("#FullStorage").click(function () {
+    myObject.HowFullIsStoragePickup = $('input[name=HowFullIsStoragePickup]:checked').val();
+});
+
+function OpenModal()
 {
-    var send = { };
-    $.get("ReturnTotalCost", send, function (data) {
+    $.get("ReturnTotalCost", myObject, function (data) {
         $("#TotalCost").html(data);
         $("#totalCostModal").modal("show");
     });

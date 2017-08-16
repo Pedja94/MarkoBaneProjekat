@@ -63,9 +63,6 @@ namespace Business
     partial void InsertItem(Item instance);
     partial void UpdateItem(Item instance);
     partial void DeleteItem(Item instance);
-    partial void InsertMovingPrice(MovingPrice instance);
-    partial void UpdateMovingPrice(MovingPrice instance);
-    partial void DeleteMovingPrice(MovingPrice instance);
     partial void InsertOffer(Offer instance);
     partial void UpdateOffer(Offer instance);
     partial void DeleteOffer(Offer instance);
@@ -81,9 +78,6 @@ namespace Business
     partial void InsertRoom(Room instance);
     partial void UpdateRoom(Room instance);
     partial void DeleteRoom(Room instance);
-    partial void InsertRoomItem(RoomItem instance);
-    partial void UpdateRoomItem(RoomItem instance);
-    partial void DeleteRoomItem(RoomItem instance);
     partial void InsertZipCode(ZipCode instance);
     partial void UpdateZipCode(ZipCode instance);
     partial void DeleteZipCode(ZipCode instance);
@@ -207,14 +201,6 @@ namespace Business
 			}
 		}
 		
-		public System.Data.Linq.Table<MovingPrice> MovingPrices
-		{
-			get
-			{
-				return this.GetTable<MovingPrice>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Offer> Offers
 		{
 			get
@@ -252,14 +238,6 @@ namespace Business
 			get
 			{
 				return this.GetTable<Room>();
-			}
-		}
-		
-		public System.Data.Linq.Table<RoomItem> RoomItems
-		{
-			get
-			{
-				return this.GetTable<RoomItem>();
 			}
 		}
 		
@@ -2421,15 +2399,17 @@ namespace Business
 		
 		private System.Nullable<decimal> _Weight;
 		
-		private System.Nullable<decimal> _Dimension;
-		
 		private System.Nullable<decimal> _Packing;
 		
 		private System.Nullable<decimal> _AdditionalFee;
 		
+		private System.Nullable<decimal> _CuFt;
+		
+		private System.Nullable<int> _RoomId;
+		
 		private EntitySet<InventoryItem> _InventoryItems;
 		
-		private EntitySet<RoomItem> _RoomItems;
+		private EntityRef<Room> _Room;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2443,18 +2423,20 @@ namespace Business
     partial void OnIconLinkChanged();
     partial void OnWeightChanging(System.Nullable<decimal> value);
     partial void OnWeightChanged();
-    partial void OnDimensionChanging(System.Nullable<decimal> value);
-    partial void OnDimensionChanged();
     partial void OnPackingChanging(System.Nullable<decimal> value);
     partial void OnPackingChanged();
     partial void OnAdditionalFeeChanging(System.Nullable<decimal> value);
     partial void OnAdditionalFeeChanged();
+    partial void OnCuFtChanging(System.Nullable<decimal> value);
+    partial void OnCuFtChanged();
+    partial void OnRoomIdChanging(System.Nullable<int> value);
+    partial void OnRoomIdChanged();
     #endregion
 		
 		public Item()
 		{
 			this._InventoryItems = new EntitySet<InventoryItem>(new Action<InventoryItem>(this.attach_InventoryItems), new Action<InventoryItem>(this.detach_InventoryItems));
-			this._RoomItems = new EntitySet<RoomItem>(new Action<RoomItem>(this.attach_RoomItems), new Action<RoomItem>(this.detach_RoomItems));
+			this._Room = default(EntityRef<Room>);
 			OnCreated();
 		}
 		
@@ -2538,26 +2520,6 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Dimension", DbType="Decimal(10,2)")]
-		public System.Nullable<decimal> Dimension
-		{
-			get
-			{
-				return this._Dimension;
-			}
-			set
-			{
-				if ((this._Dimension != value))
-				{
-					this.OnDimensionChanging(value);
-					this.SendPropertyChanging();
-					this._Dimension = value;
-					this.SendPropertyChanged("Dimension");
-					this.OnDimensionChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Packing", DbType="Decimal(10,2)")]
 		public System.Nullable<decimal> Packing
 		{
@@ -2598,6 +2560,50 @@ namespace Business
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CuFt", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> CuFt
+		{
+			get
+			{
+				return this._CuFt;
+			}
+			set
+			{
+				if ((this._CuFt != value))
+				{
+					this.OnCuFtChanging(value);
+					this.SendPropertyChanging();
+					this._CuFt = value;
+					this.SendPropertyChanged("CuFt");
+					this.OnCuFtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", DbType="Int")]
+		public System.Nullable<int> RoomId
+		{
+			get
+			{
+				return this._RoomId;
+			}
+			set
+			{
+				if ((this._RoomId != value))
+				{
+					if (this._Room.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRoomIdChanging(value);
+					this.SendPropertyChanging();
+					this._RoomId = value;
+					this.SendPropertyChanged("RoomId");
+					this.OnRoomIdChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_InventoryItem", Storage="_InventoryItems", ThisKey="Id", OtherKey="ItemId")]
 		public EntitySet<InventoryItem> InventoryItems
 		{
@@ -2611,16 +2617,37 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_RoomItem", Storage="_RoomItems", ThisKey="Id", OtherKey="ItemId")]
-		public EntitySet<RoomItem> RoomItems
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_Item", Storage="_Room", ThisKey="RoomId", OtherKey="Id", IsForeignKey=true)]
+		public Room Room
 		{
 			get
 			{
-				return this._RoomItems;
+				return this._Room.Entity;
 			}
 			set
 			{
-				this._RoomItems.Assign(value);
+				Room previousValue = this._Room.Entity;
+				if (((previousValue != value) 
+							|| (this._Room.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Room.Entity = null;
+						previousValue.Items.Remove(this);
+					}
+					this._Room.Entity = value;
+					if ((value != null))
+					{
+						value.Items.Add(this);
+						this._RoomId = value.Id;
+					}
+					else
+					{
+						this._RoomId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Room");
+				}
 			}
 		}
 		
@@ -2654,104 +2681,6 @@ namespace Business
 		{
 			this.SendPropertyChanging();
 			entity.Item = null;
-		}
-		
-		private void attach_RoomItems(RoomItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Item = this;
-		}
-		
-		private void detach_RoomItems(RoomItem entity)
-		{
-			this.SendPropertyChanging();
-			entity.Item = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MovingPrices")]
-	public partial class MovingPrice : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private System.Nullable<int> _FromToId;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnFromToIdChanging(System.Nullable<int> value);
-    partial void OnFromToIdChanged();
-    #endregion
-		
-		public MovingPrice()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FromToId", DbType="Int")]
-		public System.Nullable<int> FromToId
-		{
-			get
-			{
-				return this._FromToId;
-			}
-			set
-			{
-				if ((this._FromToId != value))
-				{
-					this.OnFromToIdChanging(value);
-					this.SendPropertyChanging();
-					this._FromToId = value;
-					this.SendPropertyChanged("FromToId");
-					this.OnFromToIdChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -4202,11 +4131,9 @@ namespace Business
 		
 		private string _Name;
 		
-		private string _IconLink;
-		
 		private EntitySet<InventoryRoom> _InventoryRooms;
 		
-		private EntitySet<RoomItem> _RoomItems;
+		private EntitySet<Item> _Items;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4216,14 +4143,12 @@ namespace Business
     partial void OnIdChanged();
     partial void OnNameChanging(string value);
     partial void OnNameChanged();
-    partial void OnIconLinkChanging(string value);
-    partial void OnIconLinkChanged();
     #endregion
 		
 		public Room()
 		{
 			this._InventoryRooms = new EntitySet<InventoryRoom>(new Action<InventoryRoom>(this.attach_InventoryRooms), new Action<InventoryRoom>(this.detach_InventoryRooms));
-			this._RoomItems = new EntitySet<RoomItem>(new Action<RoomItem>(this.attach_RoomItems), new Action<RoomItem>(this.detach_RoomItems));
+			this._Items = new EntitySet<Item>(new Action<Item>(this.attach_Items), new Action<Item>(this.detach_Items));
 			OnCreated();
 		}
 		
@@ -4247,7 +4172,7 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(20) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
 		public string Name
 		{
 			get
@@ -4267,26 +4192,6 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IconLink", DbType="NVarChar(500)")]
-		public string IconLink
-		{
-			get
-			{
-				return this._IconLink;
-			}
-			set
-			{
-				if ((this._IconLink != value))
-				{
-					this.OnIconLinkChanging(value);
-					this.SendPropertyChanging();
-					this._IconLink = value;
-					this.SendPropertyChanged("IconLink");
-					this.OnIconLinkChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_InventoryRoom", Storage="_InventoryRooms", ThisKey="Id", OtherKey="RoomId")]
 		public EntitySet<InventoryRoom> InventoryRooms
 		{
@@ -4300,16 +4205,16 @@ namespace Business
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomItem", Storage="_RoomItems", ThisKey="Id", OtherKey="RoomId")]
-		public EntitySet<RoomItem> RoomItems
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_Item", Storage="_Items", ThisKey="Id", OtherKey="RoomId")]
+		public EntitySet<Item> Items
 		{
 			get
 			{
-				return this._RoomItems;
+				return this._Items;
 			}
 			set
 			{
-				this._RoomItems.Assign(value);
+				this._Items.Assign(value);
 			}
 		}
 		
@@ -4345,208 +4250,16 @@ namespace Business
 			entity.Room = null;
 		}
 		
-		private void attach_RoomItems(RoomItem entity)
+		private void attach_Items(Item entity)
 		{
 			this.SendPropertyChanging();
 			entity.Room = this;
 		}
 		
-		private void detach_RoomItems(RoomItem entity)
+		private void detach_Items(Item entity)
 		{
 			this.SendPropertyChanging();
 			entity.Room = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.RoomItem")]
-	public partial class RoomItem : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _Id;
-		
-		private System.Nullable<int> _RoomId;
-		
-		private System.Nullable<int> _ItemId;
-		
-		private EntityRef<Item> _Item;
-		
-		private EntityRef<Room> _Room;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnRoomIdChanging(System.Nullable<int> value);
-    partial void OnRoomIdChanged();
-    partial void OnItemIdChanging(System.Nullable<int> value);
-    partial void OnItemIdChanged();
-    #endregion
-		
-		public RoomItem()
-		{
-			this._Item = default(EntityRef<Item>);
-			this._Room = default(EntityRef<Room>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
-		{
-			get
-			{
-				return this._Id;
-			}
-			set
-			{
-				if ((this._Id != value))
-				{
-					this.OnIdChanging(value);
-					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", DbType="Int")]
-		public System.Nullable<int> RoomId
-		{
-			get
-			{
-				return this._RoomId;
-			}
-			set
-			{
-				if ((this._RoomId != value))
-				{
-					if (this._Room.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnRoomIdChanging(value);
-					this.SendPropertyChanging();
-					this._RoomId = value;
-					this.SendPropertyChanged("RoomId");
-					this.OnRoomIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ItemId", DbType="Int")]
-		public System.Nullable<int> ItemId
-		{
-			get
-			{
-				return this._ItemId;
-			}
-			set
-			{
-				if ((this._ItemId != value))
-				{
-					if (this._Item.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnItemIdChanging(value);
-					this.SendPropertyChanging();
-					this._ItemId = value;
-					this.SendPropertyChanged("ItemId");
-					this.OnItemIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Item_RoomItem", Storage="_Item", ThisKey="ItemId", OtherKey="Id", IsForeignKey=true)]
-		public Item Item
-		{
-			get
-			{
-				return this._Item.Entity;
-			}
-			set
-			{
-				Item previousValue = this._Item.Entity;
-				if (((previousValue != value) 
-							|| (this._Item.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Item.Entity = null;
-						previousValue.RoomItems.Remove(this);
-					}
-					this._Item.Entity = value;
-					if ((value != null))
-					{
-						value.RoomItems.Add(this);
-						this._ItemId = value.Id;
-					}
-					else
-					{
-						this._ItemId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Item");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Room_RoomItem", Storage="_Room", ThisKey="RoomId", OtherKey="Id", IsForeignKey=true)]
-		public Room Room
-		{
-			get
-			{
-				return this._Room.Entity;
-			}
-			set
-			{
-				Room previousValue = this._Room.Entity;
-				if (((previousValue != value) 
-							|| (this._Room.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Room.Entity = null;
-						previousValue.RoomItems.Remove(this);
-					}
-					this._Room.Entity = value;
-					if ((value != null))
-					{
-						value.RoomItems.Add(this);
-						this._RoomId = value.Id;
-					}
-					else
-					{
-						this._RoomId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Room");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	

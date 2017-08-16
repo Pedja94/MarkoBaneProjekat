@@ -20,9 +20,10 @@ namespace Business.DataAccess
                     IconLink = itemCreate.IconLink,
                     Name = itemCreate.Name,
                     Weight = itemCreate.Weight,
-                    Dimension = itemCreate.Dimension,
                     AdditionalFee = itemCreate.AdditionalFee,
-                    Packing = itemCreate.Packing
+                    Packing = itemCreate.Packing,
+                    CuFt = itemCreate.CuFt,
+                    RoomId = itemCreate.RoomId
                 };
 
                 db.Items.InsertOnSubmit(item);
@@ -57,9 +58,10 @@ namespace Business.DataAccess
                     Name = query.Name,
                     Weight = query.Weight,
                     Id = query.Id,
-                    Dimension = query.Dimension,
                     AdditionalFee = query.AdditionalFee,
                     Packing = query.Packing,
+                    CuFt = query.CuFt,
+                    RoomId = query.RoomId
                 };
             }
             catch (Exception ex)
@@ -90,9 +92,10 @@ namespace Business.DataAccess
                         Name = item.Name,
                         Weight = item.Weight,
                         Id = item.Id,
-                        Dimension = item.Dimension,
                         AdditionalFee = item.AdditionalFee,
-                        Packing = item.Packing
+                        Packing = item.Packing,
+                        CuFt = item.CuFt,
+                        RoomId = item.RoomId
                     };
 
                     items.Add(itemRead);
@@ -115,13 +118,23 @@ namespace Business.DataAccess
                 DatabaseDataContext db = new DatabaseDataContext();
 
                 var query =
-                    (from itemroom in db.RoomItems
-                     where itemroom.RoomId == RoomId 
-                     select itemroom.ItemId);
+                    (from item in db.Items
+                     where item.RoomId == RoomId 
+                     select item);
 
-                foreach (int Id in query)
+                foreach (Item Item in query)
                 {
-                    ItemDTO itemRead = Items.Read(Id);
+                    ItemDTO itemRead = new ItemDTO()
+                    {
+                        AdditionalFee = Item.AdditionalFee,
+                        CuFt = Item.CuFt,
+                        IconLink = Item.IconLink,
+                        Id = Item.Id,
+                        Name = Item.Name,
+                        Packing = Item.Packing,
+                        RoomId = RoomId,
+                        Weight = Item.Weight
+                    };
                     items.Add(itemRead);
                 }
             }
@@ -174,9 +187,10 @@ namespace Business.DataAccess
                 query.IconLink = updateItem.IconLink;
                 query.Name = updateItem.Name;
                 query.Weight = updateItem.Weight;
-                query.Dimension = updateItem.Dimension;
                 query.Packing = updateItem.Packing;
                 query.AdditionalFee = updateItem.AdditionalFee;
+                query.CuFt = updateItem.CuFt;
+                query.RoomId = updateItem.RoomId;
 
                 db.SubmitChanges();
             }
@@ -212,13 +226,14 @@ namespace Business.DataAccess
             {
                 DatabaseDataContext db = new DatabaseDataContext();
 
-                RoomItem conn = new RoomItem()
-                {
-                    ItemId = itemId,
-                    RoomId = roomId
-                };
+                var query =
+                    (from item in db.Items
+                     where item.Id == itemId
+                     select item).Single();
 
-                db.RoomItems.InsertOnSubmit(conn);
+                query.RoomId = roomId;
+
+                db.Items.InsertOnSubmit(query);
                 db.SubmitChanges();
             }
             catch (Exception ex)

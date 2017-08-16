@@ -17,7 +17,6 @@ namespace Business.DataAccess
 
                 Room room = new Room()
                 {
-                    IconLink = roomCreate.IconLink,
                     Name = roomCreate.Name,
                 };
 
@@ -49,7 +48,6 @@ namespace Business.DataAccess
 
                 roomRead = new RoomDTO()
                 {
-                    IconLink = query.IconLink,
                     Name = query.Name,
                     Id = query.Id
                 };
@@ -78,38 +76,10 @@ namespace Business.DataAccess
                 {
                     RoomDTO roomRead = new RoomDTO()
                     {
-                        IconLink = room.IconLink,
                         Name = room.Name,
                         Id = room.Id
                     };
 
-                    rooms.Add(roomRead);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-
-            return rooms;
-        }
-
-        public static List<RoomDTO> ReadAllInItem(int ItemId)
-        {
-            List<RoomDTO> rooms = new List<RoomDTO>(); ;
-
-            try
-            {
-                DatabaseDataContext db = new DatabaseDataContext();
-
-                var query =
-                    (from itemroom in db.RoomItems
-                     where itemroom.RoomId == ItemId
-                     select itemroom.RoomId);
-
-                foreach (int Id in query)
-                {
-                    RoomDTO roomRead = Rooms.Read(Id);
                     rooms.Add(roomRead);
                 }
             }
@@ -159,7 +129,6 @@ namespace Business.DataAccess
                      where room.Id == updateRoom.Id
                      select room).Single();
 
-                query.IconLink = updateRoom.IconLink;
                 query.Name = updateRoom.Name;
 
                 db.SubmitChanges();
@@ -182,27 +151,6 @@ namespace Business.DataAccess
                      select room).Single();
 
                 db.Rooms.DeleteOnSubmit(query);
-                db.SubmitChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
-
-        public static void AddItemToRoom(int itemId, int roomId)
-        {
-            try
-            {
-                DatabaseDataContext db = new DatabaseDataContext();
-
-                RoomItem conn = new RoomItem()
-                {
-                    ItemId = itemId,
-                    RoomId = roomId
-                };
-
-                db.RoomItems.InsertOnSubmit(conn);
                 db.SubmitChanges();
             }
             catch (Exception ex)

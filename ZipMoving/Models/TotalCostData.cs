@@ -18,5 +18,6 @@ namespace ZipMoving.Models
         public string ParkingDelivery { get; set; }
         public bool FullPackingService { get; set; }
         public bool StorageService { get; set; }
+        public string StoragePickupDimension { get; set; }
     }
 }

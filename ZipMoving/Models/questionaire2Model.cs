@@ -217,39 +217,93 @@ namespace ZipMoving.Models
         }
 
 
-        public string TotalCostString()
+        public string TotalCostString(TotalCostData totalCostData)
         {
-            Hashtable tabela = (Hashtable)HttpContext.Current.Session["InventoryOffer"];
-
             string totalCostString = "";
 
-            List<ItemDTO> itemsWithPackingFee = new List<ItemDTO>();
-            List<ItemDTO> itemsWithAdditionalFee = new List<ItemDTO>();
             int totalWeight = 0;
 
             int totalCost = 0;
 
+            int storageVolume = 3500;
+
+            List<ItemDTO> itemsWithPackingFee = new List<ItemDTO>();
+            List<ItemDTO> itemsWithAdditionalFee = new List<ItemDTO>();
+
+            if (totalCostData.HowFullIsStoragePickup == null)
+            {
+                Hashtable tabela = (Hashtable)HttpContext.Current.Session["InventoryOffer"];
+
+                foreach (DictionaryEntry pair in tabela)
+                {
+                    RoomDTO soba = Rooms.Read((int)pair.Key);
+
+                    List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
+
+                    int j = 0;
+
+                    foreach (ItemDTO item in items)
+                    {
+                        totalWeight += (int)item.Weight * ((int[])pair.Value)[j];
+                        if (item.Packing > 0)
+                            itemsWithPackingFee.Add(item);
+                        if (item.AdditionalFee > 0)
+                            itemsWithAdditionalFee.Add(item);
+                        j++;
+                    }
+                }
+            } 
+            else
+            {
+                if (totalCostData.StoragePickupDimension.Contains("x5"))
+                {
+                    storageVolume = 500;
+                }
+                else if (totalCostData.StoragePickupDimension.Contains("x10"))
+                {
+                    storageVolume = 1000;
+                }
+                else if (totalCostData.StoragePickupDimension.Contains("x15"))
+                {
+                    storageVolume = 1500;
+                }
+                else if (totalCostData.StoragePickupDimension.Contains("x20"))
+                {
+                    storageVolume = 2000;
+                }
+                else if (totalCostData.StoragePickupDimension.Contains("x25"))
+                {
+                    storageVolume = 2500;
+                }
+                else if (totalCostData.StoragePickupDimension.Contains("x30"))
+                {
+                    storageVolume = 3000;
+                }
+                else 
+                {
+                    storageVolume = 3500;
+                }
+
+                if (totalCostData.HowFullIsStoragePickup.Equals("Low"))
+                {
+                    storageVolume = (int)(storageVolume * 0.3);
+                }
+                else if (totalCostData.HowFullIsStoragePickup.Equals("Medium"))
+                {
+                    storageVolume = (int)(storageVolume * 0.5);
+                }
+                else
+                {
+                    storageVolume = (int)(storageVolume * 0.8);
+                }
+
+                totalWeight = storageVolume * 7;
+            }
+            
+
             /*totalCostString += "Packing fee for " + item.Name + " - " + item.Packing + "$";*/
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            foreach (DictionaryEntry pair in tabela)
-            {
-                RoomDTO soba = Rooms.Read((int)pair.Key);
-
-                List<ItemDTO> items = Items.ReadAllInRoom((int)pair.Key);
-
-                int j = 0;
-
-                foreach (ItemDTO item in items)
-                {
-                    totalWeight += (int)item.Weight * ((int[])pair.Value)[j];
-                    if (item.Packing > 0)
-                        itemsWithPackingFee.Add(item);
-                    if (item.AdditionalFee > 0)
-                        itemsWithAdditionalFee.Add(item);
-                    j++;
-                }
-            }
 
             ZipCodeDTO zipCodeFrom = ZipCodes.ReadFromZipCodeString(ZIPPickup);
             ZipCodeDTO zipCodeTo = ZipCodes.ReadFromZipCodeString(ZIPDelivery);
@@ -264,7 +318,15 @@ namespace ZipMoving.Models
             int pricePerLbs = ZipCodes.ReturnPriceFromZipCodesAndLbs(zipCodeFrom, zipCodeTo, totalWeight);
             totalCost += pricePerLbs;
 
-            totalCostString += "Total weight: " + totalWeight.ToString() + " - " + pricePerLbs + "\n";
+            if ((totalCostData.HowFullIsStoragePickup == null) || (storageVolume < 3500))
+            {
+                totalCostString += "Total weight: " + totalWeight.ToString() + " - " + pricePerLbs + "\n";
+            }
+            else
+            {
+                totalCostString += "Call us for so we can estimate your storage\n";
+            }
+            //totalCostString += "Total weight: " + totalWeight.ToString() + " - " + pricePerLbs + "\n";
 
             for (int i = 0; i < 80; i++)
                 totalCostString += "_";
@@ -281,22 +343,24 @@ namespace ZipMoving.Models
                 totalCostString += "_";
 
             totalCostString += "\n";
-
-            foreach (ItemDTO item in itemsWithAdditionalFee)
+            if (totalCostData.HowFullIsStoragePickup == null)
             {
-                totalCostString += "Aditional fee for " + item.Name + " - " + item.AdditionalFee.ToString() + "$\n";
-                totalCost += (int)item.AdditionalFee;
-            }
+                foreach (ItemDTO item in itemsWithAdditionalFee)
+                {
+                    totalCostString += "Aditional fee for " + item.Name + " - " + item.AdditionalFee.ToString() + "$\n";
+                    totalCost += (int)item.AdditionalFee;
+                }
 
-            for (int i = 0; i < 80; i++)
-                totalCostString += "_";
+                for (int i = 0; i < 80; i++)
+                    totalCostString += "_";
 
-            totalCostString += "\n";
+                totalCostString += "\n";
 
-            if (AdditionalStopOffAtPickup.Equals("Yes"))
-            {
-                totalCostString += "Extra pickup location - 80$\n";
-                totalCost += 80;
+                if (AdditionalStopOffAtPickup.Equals("Yes"))
+                {
+                    totalCostString += "Extra pickup location - 80$\n";
+                    totalCost += 80;
+                }
             }
 
             if (ElevatorPickup.Equals("Yes"))
